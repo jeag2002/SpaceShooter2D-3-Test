@@ -1,0 +1,126 @@
+
+[INFO]  (13/08/2016 - 10:21:49) -  - LogEngine - INITIALIZED! to [DEBUG]  Channel [FILE] 
+[INFO]  (13/08/2016 - 10:21:49) -  - ================ [SSMULTITASKINGMANAGER - INI] ================
+[DEBUG] (13/08/2016 - 10:21:49) -  - [MULTITASKING] -- SET VARIABLES
+[DEBUG] (13/08/2016 - 10:21:49) -  - TaskManager:: [Enemies Roof 1] PID 8236 CreateThread [01298768] - SEMAPHOR [0]
+[DEBUG] (13/08/2016 - 10:21:49) -  - TaskManager:: [Enemies Roof 1] PID 8236 Processing Thread [01298768]
+[DEBUG] (13/08/2016 - 10:21:49) -  - TaskManager:: [Enemies Roof 2] PID 8236 CreateThread [01298898] - SEMAPHOR [0]
+[DEBUG] (13/08/2016 - 10:21:49) -  - TaskInputEvents:: PID 8236 CreateThread [01298c50] - SEMAPHOR [0]
+[DEBUG] (13/08/2016 - 10:21:49) -  - [DYNAMICENTITY] NEW POSITION OF ENTITY ID[4] - THREAD[01298768] (x:0.000000,y:0.000000)
+[DEBUG] (13/08/2016 - 10:21:49) -  - [AnimationEntities::isAnimDynamicElement] Thread[01298768] processing Animation element ID [0]
+[DEBUG] (13/08/2016 - 10:21:49) -  - [IAEntities::isIADynamicElement] Thread [01298768] processing IA element ID [0]
+[DEBUG] (13/08/2016 - 10:21:49) -  - TaskManager:: [Enemies Roof 1] PID 8236 Processing Thread [01298768]
+[DEBUG] (13/08/2016 - 10:21:49) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:49) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:49) -  - [DYNAMICENTITY] NEW POSITION OF ENTITY ID[5] - THREAD[01298768] (x:0.000000,y:0.000000)
+[DEBUG] (13/08/2016 - 10:21:49) -  - [AnimationEntities::isAnimDynamicElement] Thread[01298768] processing Animation element ID [0]
+[DEBUG] (13/08/2016 - 10:21:49) -  - [IAEntities::isIADynamicElement] Thread [01298768] processing IA element ID [0]
+[DEBUG] (13/08/2016 - 10:21:49) -  - TaskManager:: [Enemies Roof 1] PID 8236 Processing Thread [01298768]
+[DEBUG] (13/08/2016 - 10:21:49) -  - [DYNAMICENTITY] NEW POSITION OF ENTITY ID[6] - THREAD[01298768] (x:0.000000,y:0.000000)
+[DEBUG] (13/08/2016 - 10:21:49) -  - [AnimationEntities::isAnimDynamicElement] Thread[01298768] processing Animation element ID [0]
+[DEBUG] (13/08/2016 - 10:21:49) -  - [IAEntities::isIADynamicElement] Thread [01298768] processing IA element ID [0]
+[DEBUG] (13/08/2016 - 10:21:49) -  - TaskManager:: [Enemies Roof 1] PID 8236 Processing Thread [01298768]
+[DEBUG] (13/08/2016 - 10:21:49) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:49) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:49) -  - [DYNAMICENTITY] NEW POSITION OF ENTITY ID[4] - THREAD[01298768] (x:0.000000,y:0.000000)
+[DEBUG] (13/08/2016 - 10:21:49) -  - [AnimationEntities::isAnimDynamicElement] Thread[01298768] processing Animation element ID [0]
+[DEBUG] (13/08/2016 - 10:21:49) -  - [IAEntities::isIADynamicElement] Thread [01298768] processing IA element ID [0]
+[DEBUG] (13/08/2016 - 10:21:49) -  - TaskManager:: [Enemies Roof 1] PID 8236 Processing Thread [01298768]
+[DEBUG] (13/08/2016 - 10:21:49) -  - [MAIN -  TIMER_3] Wait consumers signals
+[DEBUG] (13/08/2016 - 10:21:49) -  - [MAIN -  TIMER_3] Send DONE MSG [6] index [0]
+[DEBUG] (13/08/2016 - 10:21:49) -  - [MAIN -  TIMER_3] Broadcasting Produced
+[DEBUG] (13/08/2016 - 10:21:49) -  - [TaskManager-BROADCAST] CreateThread [01298898] GetMSG [0] index_dataPacket [6] index_data Expected [0]
+[DEBUG] (13/08/2016 - 10:21:49) -  - [DYNAMICENTITY] NEW POSITION OF ENTITY ID[5] - THREAD[01298768] (x:0.000000,y:0.000000)
+[DEBUG] (13/08/2016 - 10:21:49) -  - [AnimationEntities::isAnimDynamicElement] Thread[01298768] processing Animation element ID [0]
+[DEBUG] (13/08/2016 - 10:21:49) -  - [IAEntities::isIADynamicElement] Thread [01298768] processing IA element ID [0]
+[DEBUG] (13/08/2016 - 10:21:49) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:49) -  - TaskManager:: [Enemies Roof 1] PID 8236 Processing Thread [01298768]
+[DEBUG] (13/08/2016 - 10:21:49) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:49) -  - [DYNAMICENTITY] NEW POSITION OF ENTITY ID[6] - THREAD[01298768] (x:0.000000,y:0.000000)
+[DEBUG] (13/08/2016 - 10:21:49) -  - [AnimationEntities::isAnimDynamicElement] Thread[01298768] processing Animation element ID [0]
+[DEBUG] (13/08/2016 - 10:21:49) -  - [IAEntities::isIADynamicElement] Thread [01298768] processing IA element ID [0]
+[DEBUG] (13/08/2016 - 10:21:49) -  - [TaskManager-BROADCAST] CreateThread [01298768] GetMSG [0] index_dataPacket [6] index_data Expected [0]
+[DEBUG] (13/08/2016 - 10:21:49) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:49) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:50) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:50) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:50) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:50) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:50) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:50) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:50) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:50) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:50) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:50) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:51) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:51) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:51) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:51) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:51) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:51) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:51) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:51) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:51) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:51) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:52) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:52) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:52) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:52) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:52) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:52) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:52) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:52) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:52) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:52) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:53) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:53) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:53) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:53) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:53) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:53) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:53) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:53) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:53) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:53) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:54) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:54) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:54) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:54) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:54) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:54) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:54) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:54) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:54) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:54) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:55) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:55) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:55) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:55) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:55) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:55) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:55) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:55) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:55) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:55) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:56) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:56) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:56) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:56) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:56) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:56) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:56) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:56) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:56) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:56) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:57) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:57) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:57) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:57) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:57) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:57) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:57) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:57) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:57) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:57) -  - GLRender::Run launch Renderize!!!
+[DEBUG] (13/08/2016 - 10:21:58) -  - [MAIN -  TIMER_2] Render
+[DEBUG] (13/08/2016 - 10:21:58) -  - GLRender::Run launch Renderize!!!

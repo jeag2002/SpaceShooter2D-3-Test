@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="SSENTITYMANAGER" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/SSENTITYMANAGER" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-std=c++11" />
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add directory="C:/workspaces/libs/SQLITE/sqlite-3.11/include" />
+				</Compiler>
+				<Linker>
+					<Add option="-lsqlite3" />
+					<Add library="C:\workspaces\libs\SQLITE\sqlite-3.11\lib\sqlite3.a" />
+					<Add library="C:\workspaces\libs\SQLITE\sqlite-3.11\lib\sqlite3.lib" />
+					<Add directory="C:/workspaces/libs/SQLITE/sqlite-3.11/lib" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/SSENTITYMANAGER" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="ActorEntity.h" />
+		<Unit filename="AnimationNode.h" />
+		<Unit filename="BlockEntity.h" />
+		<Unit filename="CoreLog.h" />
+		<Unit filename="CoreProfile.h" />
+		<Unit filename="CoreString.h" />
+		<Unit filename="Entity.h" />
+		<Unit filename="ExitEntity.h" />
+		<Unit filename="ImageRes.h" />
+		<Unit filename="ItemEntity.h" />
+		<Unit filename="LightRes.h" />
+		<Unit filename="Main.cpp" />
+		<Unit filename="MemManagerMap.h" />
+		<Unit filename="MemManagerQueue.h" />
+		<Unit filename="MemManagerRes.h" />
+		<Unit filename="MeshEntity.h" />
+		<Unit filename="ParticleRes.h" />
+		<Unit filename="ProfileEngine.h" />
+		<Unit filename="Resource.h" />
+		<Unit filename="ScriptParamRes.h" />
+		<Unit filename="ScriptRes.h" />
+		<Unit filename="ShaderRes.h" />
+		<Unit filename="SoundRes.h" />
+		<Unit filename="StateDestinyRes.h" />
+		<Unit filename="StateRes.h" />
+		<Unit filename="Stdafx.h" />
+		<Unit filename="TiffRes.h" />
+		<Unit filename="TileComponent.h" />
+		<Unit filename="TileComponentCoord.h" />
+		<Unit filename="TileEntity.h" />
+		<Unit filename="WeaponBeanEntity.h" />
+		<Unit filename="WeaponEntity.h" />
+		<Unit filename="data/README.ME.txt" />
+		<Unit filename="data/entityDefinition.txt" />
+		<Unit filename="data/sqlEntity.sql" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

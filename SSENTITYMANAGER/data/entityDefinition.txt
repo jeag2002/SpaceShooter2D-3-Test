@@ -1,0 +1,570 @@
+/*
+Definicion "teórica" de las tablas donde contendrá todos los datos de configuracion del sistema.
+Servirá para definir los objetos, y las tablas relacionadas.
+
+http://www.cplusplus.com/reference/cassert/assert/
+*/
+
+TABLAS:
+
+//TABLA RESOURCES
+
+/*TABLA DEFINICION IMAGEN*/ ==> cache (*)
+#############################################################################
+TABLE RES_IMAGEDEF
+ID          CHAR(20)        //identificador de la imagen ("BURN_1","PLAYER_1")
+ID_GL       UINT            //identificador OPENGL ES
+PATH        CHAR(100)       //situacion de la imagen
+TYPE        CHAR(5)         //tipo de la imagen ("BMP","JPG","PNG","ETC") ==> (identificador numérico?)
+WIDTH       FLOAT
+HEIGHT      FLOAT           //tamanyo en pixeles de la imagen (width x height)
+PARALLAX    BYTE            //trato como parallax (0 = NO; 1 = SI)
+BRG_CONV    BYTE            //conversion imagen de BRG a RGB (Error carga imagenes OPENGL ES)
+LIN_NEAR    BYTE            //habilitado LINEAL_NEAREST (OPENGL ES) (Alineacion LINEAL (0); al objeto mas cercano NEAREST (1))
+CLAMP       BYTE            //habilitado CLAMP (OPENGL ES) (En caso de no ser suitable; REPEAT-Repetir (0), CLAMP-Expandir (1))
+MIPMAP      BYTE            //habilitado MIPMAPPING (OPENGL ES)
+POWER2      BYTE            //conversion imagen a tamanyo multiplo de 2
+TRANSPARENT BYTE            //añadir canal ALPHA (Solo para BMP RGB 888)
+#############################################################################
+
+/*TABLA DEFINICION SCRIPT*/ ==> cache (*)
+#############################################################################
+TABLE RES_SCRIPTDEF
+ID          CHAR(20)        //identificador del script lua ("GAMEPLAY_1","IA_1")
+PATH        CHAR(100)       //situacion del fichero de script lua
+FUNCTION    CHAR(50)        //nombre de la funcion a ejecutarse ("FUNCTION_1","FUNCTION_2")
+
+TABLE RES_SCRIPTDEFPARAM    //evaluar si es necesario crear esta dependencia
+ID          CHAR(20)        //script lua
+FUNCTION    CHAR(50)        //nombre de la funcion a ejecutarse
+IO          BYTE            //0(INPUT); 1(OUTPUT)
+NAME        CHAR(10)        //nombre del parametro
+TYPEPAR     CHAR(6)         //tipo del parametro ("INT","CHAR","STRING","FLOAT","DOUBLE") ==> (identificador numérico?)
+VALUE       CHAR(6)         //valor por defecto del script
+
+(Nota ... la relacion puede ser N a N... pero lo vamos a definir de 1 a N, a causa del campo "VALUE", y a la complicacion que resulta de gestionarlo)
+#############################################################################
+
+/*TABLA DEFINICION SONIDO*/ ==> cache (*)
+#############################################################################
+TABLE RES_SOUNDDEF
+ID          CHAR(20)        //identificador del script de sonido ("MUSIC_1","WAV_1")
+PATH        CHAR(100)       //situacion del clip de sonido
+EXT         CHAR(5)         //extension de sonido (WAV,OGG) ==> (identificador numerico?)
+TYPE        INT             //0->clip musical. 1->efecto de sonido.
+
+#############################################################################
+
+/*TABLA DEFINICION ESTADOS*/ (este creo que el motor debe cargarlo y tenerlo residente siempre en memoria)
+#############################################################################
+TABLE RES_STATEDEF
+ID          INT             //index del state
+TYPE        INT             //TYPE of STATE 0->Game; 1->Menu; 2->Splash
+PATH        CHAR(100)       //situacion de la definicion de un nivel.
+STATE       INT             //0->START, 1->UPDATE, 2->RUN, 3->STOP, 4->CLEAR
+
+TABLE RES_STATEDESTINYDEF
+ID              INT             //index del state
+TYPE_ACTION     INT             //0->Forward;(se ha pasado de nivel) 1->Finish;(ha acabado el nivel) 2->Stop;(se ha pausado el nivel) 3->Error; (error) 4->Minimapa;
+ID_NEXT_ACTION  INT             //index del state siguiente
+ID_ACTION_PAR   INT             //index del state padre
+
+#############################################################################
+
+/*TABLA DEFINICION TIFF*/ ==> cache (*)
+#############################################################################
+TABLE RES_TIFFDEF
+ID          CHAR(20)        //identificador del TIFF (fuente)
+PATH        CHAR(100)       //situacion de la fuente
+SIZE        FLOAT           //tamaño de la fuente
+R_COLOR     INT
+G_COLOR     INT
+B_COLOR     INT
+#############################################################################
+
+/*TABLA DEFINICION SHADER*/ ==> (almacen en memoria, no eliminable)
+#############################################################################
+TABLE RES_SHADER
+ID         CHAR(20)     //identificador del SHADER
+PATH       CHAR(100)    //situacion de la fuente
+TYPE       INT          //(0=>vertex shader, 1=fragment shader, 2=geometry shader)
+#############################################################################
+
+/*TABLA DEFINICION PARTICULA*/ ==> cache (*)
+#############################################################################
+TABLE RES_PARTICLEDEF
+ID          CHAR(20)       //identificador PARTICULA
+ID_IMAGE    CHAR(20)       //identificador IMAGEN_ASOCIADA
+X_1         FLOAT
+Y_1         FLOAT
+SCALE       INT
+MAX         INT
+ALPHA_INF   INT
+ALPHA_SUP   INT
+R_COLOR_INF INT
+G_COLOR_INF INT
+B_COLOR_INF INT
+R_COLOR_SUP INT
+G_COLOR_SUP INT
+B_COLOR_SUP INT
+VELOCITY    FLOAT
+DIRECTION   FLOAT
+SPREAD      INT
+LENGTH      INT
+#############################################################################
+
+/*
+Primera implementacion sobre definiciones de luces (se perfilará al final)
+Configurará luces sobre materiales; luces ambientales o focos.
+*/
+
+/*TABLA DEFINICION LUCES*/ ==> cache (*)
+#############################################################################
+TABLE RES_LIGHTRES
+
+ID          CHAR(20)    //identificador LUZ
+ID_TYPE     INT         //0->luz ambiental; 1->foco; 2->material
+
+POS_X       FLOAT
+POS_Y       FLOAT
+POS_Z       FLOAT
+POS_W       FLOAT       //posicion luz
+
+DIR_X       FLOAT
+DIR_Y       FLOAT
+DIR_Z       FLOAT       //direccion luz -(FOCO)
+
+CONST_AT    FLOAT       //atenuacion constante  - (FOCO)
+LIN_AT      FLOAT       //atenuacion lineal     - (FOCO)
+QA_AT       FLOAT       //atenuacion cuadratica - (FOCO)
+
+CUT_OFF     FLOAT       //spot - cutoff         - (FOCO) longitud del foco
+SPOT_EXP    FLOAT       //spot - exp            - (FOCO) amplitud del foco
+
+AMB_X       FLOAT
+AMB_Y       FLOAT
+AMB_Z       FLOAT
+AMB_W       FLOAT       //luz ambiental.
+
+DIF_X       FLOAT
+DIF_Y       FLOAT
+DIF_Z       FLOAT
+DIF_W       FLOAT       //luz difusa.
+
+SPE_X       FLOAT
+SPE_Y       FLOAT
+SPE_Z       FLOAT
+SPE_W       FLOAT       //luz specular.
+
+EMI_X       FLOAT
+EMI_Y       FLOAT
+EMI_Z       FLOAT
+EMI_W       FLOAT       //Emision.            - (MATERIAL)
+
+SHININ      FLOAT       //brillo
+#############################################################################
+
+//TABLA ENTITIES
+/*TABLA TILE*/ ==> (TILE)  ==> cache(**)
+#############################################################################
+TABLE ENT_TILE             //-->Definicion TILES
+
+ID              INT        //identificador TILE
+POS_X           FLOAT
+POS_Y           FLOAT      //sit X,Y (inicio de coordenadas)
+WIDTH           FLOAT
+HEIGHT          FLOAT      //width x height
+
+TABLE ENT_TILE_COMP        //-->Definicion componentes de un tile.
+
+IDCOMP          INT        //identificador COMPONENTE TILE
+ID              INT        //identificador TILE asociado.
+POS_X_COMP      FLOAT
+POS_Y_COMP      FLOAT      //situacion x,y referencial del componente
+WIDTH_COMP      FLOAT
+HEIGHT_COMP     FLOAT      //width x height del componente
+IMAGE           CHAR(20)   //identificador IMAGE componente
+IMAGE_CMB       CHAR(20)
+MASK            CHAR(20)   //identificador MASK componente
+MASK_CMB        CHAR(20)
+LIGHTMAP        CHAR(20)   //identificador LIGHTMAP componente
+LIGHTMAP_CMB    CHAR(20)
+BUMPMAP         CHAR(20)   //identificador BUMPMAP componente
+BUMPMAP_CMB     CHAR(20)
+
+TABLE ENT_TILE_COMP_BUFF   //-->definicion de un fotograma del componente.
+
+IDBUFF          INT
+IDCOMP          INT
+ID              INT
+COORD           CHAR(100)  //-->coordinates of texture.
+#############################################################################
+
+/*TABLA MESH*/ ==> cache(****)
+#############################################################################
+TABLE ENT_MESH             //-->Definicion MESHES
+ID              INT        //-->identificador MESH
+SKELETON        CHAR(100)  //-->coordenadas VERTICES, COORD_TEXTURES, NORMALS, ORDER_OF_RENDERING
+ID_IMAGE        CHAR(100)  //-->imagenes texturas.
+#############################################################################
+
+/*TABLA ANIMATION*/ ==> cache(****)
+#############################################################################
+TABLE ENT_ANIMATION        //-->definicion de una animacion
+
+ID              INT        //identificador animacion
+ANIM_SCRIPT_ID  CHAR(20)   //identificador SCRIPT ANIMACION
+NUM_NODES       INT        //numero nodes
+GRAPH_NODES     CHAR(100)  //matrix del nodo.
+
+TABLE ENT_ANIMATION_NODE   //-->definicion de un nodo de una animacion.
+
+ID_ANIMATION    INT
+ID_NODE         INT
+X_NODE          FLOAT
+Y_NODE          FLOAT
+LENGHT          INT
+ANGLE           FLOAT
+IS_ROOT         BYTE        //gestion si es root o no
+ID_TILE         INT         //ID_TILE asociado (2D)
+ID_MESH         INT         //ID_MESH asociado (3D)
+#############################################################################
+
+/*TABLA ACTOR*/ ==> (Jugador/Enemigo) ==> cache(***)
+#############################################################################
+TABLE ENT_ACTOR           //-->definicion actor
+
+ID              INT       //identificador del ACTOR
+ID_ANIMATION    INT       //identificador ANIMATION
+
+INC             FLOAT
+SHIELD          FLOAT
+LIVE            FLOAT
+SCORE           INT
+
+SCRIPT_IA       CHAR(20)  //Comportamiento IA (Jugador, define el gameplay separado de su animacion)
+LIMIT           CHAR(100) //nodos mapa colision. (mapa luz?)
+SHADE           CHAR(100) //nodos mapa sombreado.
+
+TABLE ENT_ACTOR_COMPONENT_ITEM //-->definicion componentes de un actor.
+
+ID              INT            //identificador del componente
+ID_ACTOR        INT            //identificador del actor.
+ID_ITEM         INT            //identficador del item
+
+TABLE ENT_ACTOR_COMPONENT_WEAPON //-->definicion componente armas
+
+ID              INT           //identificador del componente
+ID_ACTOR        INT           //identificador del actor.
+ID_WEAPON       INT           //identificador del arma.
+
+#############################################################################
+
+/*TABLA BLOCK*/ ==> (Bloque destruible) ==> cache(***)
+#############################################################################
+TABLE ENT_BLOCK
+ID              INT
+ID_TILE         INT         //ID_TILE asociado (2D)
+ID_MESH         INT         //ID_MESH asociado (3D)
+SCRIPT_ANIM     CHAR(20)
+SCRIPT_AI       CHAR(20)
+#############################################################################
+
+/*TABLA ITEM*/ ==> (Bloque item...weapon, key) ==> cache(***)
+#############################################################################
+TABLE ENT_ITEM
+ID              INT
+ID_TILE         INT         //ID_TILE asociado (2D)
+ID_MESH         INT         //ID_MESH asociado (3D)
+VALUE           INT
+SCRIPT_ANIM     CHAR(20)
+SCRIPT_AI       CHAR(20)
+#############################################################################
+
+/*TABLA PORTAL*/ ==> (Bloque elemento generador de enemigos) ==> cache(***)
+#############################################################################
+TABLE ENT_PORTAL
+ID              INT
+ID_TILE         INT         //ID_TILE asociado (2D)
+ID_MESH         INT         //ID_MESH asociado (3D)
+SCRIPT_ANIM     CHAR(20)
+SCRIPT_AI       CHAR(20)
+#############################################################################
+
+/*TABLA TELEPORTER*/ ==> (Bloque escaleras, rampas, ascensores) ==> cache(***) (sirve para ir de un nivel a otro)
+#############################################################################
+TABLE ENT_TELEPORTER
+ID              INT
+ID_TILE         INT         //ID_TILE asociado (2D)
+ID_MESH         INT         //ID_MESH asociado (3D)
+SCRIPT_ANIM     CHAR(20)    //ANIMACION DE UN NIVEL A OTRO.
+SCRIPT_AI       CHAR(20)
+#############################################################################
+
+/*TABLA EXIT*/ ==> (Bloque salida) ==> cache(***)
+#############################################################################
+TABLE ENT_EXIT
+ID              INT
+ID_TILE         INT         //ID_TILE asociado (2D)
+ID_MESH         INT         //ID_MESH asociado (3D)
+SCRIPT_ANIM     CHAR(20)
+SCRIPT_AI       CHAR(20)
+#############################################################################
+
+/*TABLA LAMP*/ ==> (Bloque lampara) ==> cache(***)
+#############################################################################
+TABLE ENT_LAMP
+ID              INT
+ID_LIGHT        INT
+SCRIPT_ANIM     CHAR(20)
+SCRIPT_AI       CHAR(20)        //==>envia una señal a un estimulo programado.
+#############################################################################
+
+/*TABLA BEAM*/ ==> (Bloque BEAM) ==> cache(***)
+#############################################################################
+TABLE ENT_BEAM
+ID              INT
+ID_PARTICLE     INT
+SCRIPT_ANIM     CHAR(20)
+SCRIPT_AI       CHAR(20)        //==>envia una señal a un estimulo programado
+#############################################################################
+
+/*TABLA WEAPON BEAM*/ ==> (Bloque WEAPONS BEAM) ==> cache(***)
+#############################################################################
+TABLE ENT_WEAPONS_BEAM
+ID              INT
+ID_PARTICLE     INT
+ID_TILE         INT
+DAMAGE          INT
+SCRIPT_ANIM     CHAR(20)
+SCRIPT_AI       CHAR(20)        //==>envia una señal a un estimulo programado
+#############################################################################
+
+/*TABLA WEAPONS*/
+#############################################################################
+TABLE ENT_WEAPONS
+ID             INT
+ID_TILE        INT
+SCRIPT_ANIM    CHAR(20)
+SCRIPT_AI      CHAR(20)
+
+TABLE ENT_WEAPONS_BEAM
+ID             INT
+ID_WEAPON      INT
+ID_WEAPON_BEAN INT
+#############################################################################
+
+/*TABLA SWITCH*/ ==> (Bloque interruptor) (en Roles) ==> cache(***)
+#############################################################################
+TABLE ENT_SWITCH
+ID              INT
+ID_SWITCH       INT
+ID_TILE         INT             //ID_TILE asociado (2D)
+ID_MESH         INT             //ID_MESH asociado (3D)
+SCRIPT_SWITCH   CHAR(20)
+SCRIPT_AI       CHAR(20)        //==>envia una señal a un estimulo programado
+#############################################################################
+
+(*)--> Caché diferenciado para cada mantenimiento
+(**)--> Caché de Tiles (Tiles se alimenta de ImagesDef)
+(****)-->Caché de Animaciones (Se alimenta de Scripts, Tiles)
+(***)--> todos los entities se almacenan en una cache de entities. (Se alimenta de ImagesDef, Animaciones, )
+
+
+/*TABLA ROLE SWITCH*/
+#############################################################################
+TABLE ROLES
+ID              INT
+ID_ITEM_SWITCH  INT
+ID_ITEM_BLOCK   INT
+SCRIPT_ROLE     CHAR (20)
+#############################################################################
+
+/*TABLA ROLE TELEPORTER*/
+#############################################################################
+TABLE ROLES
+ID                     INT
+ID_ITEM_TELEPORTER     INT
+ID_ITEM_TELEPORTER     INT
+SCRIPT_ROLE            CHAR (20)
+#############################################################################
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+09-04-2016: Evaluando la posibilidad de integrar LibRocket; No se integra los componentes de widgets/hud en la aplicacion.
+(definir weapon, beam_weapon)
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//TABLA WIDGETS (Elementos 2D del HUD y del menu)
+
+--> Residentes en memoria siempre.
+
+//WIDGETS-CONTAINERS que contienen otros widgets.
+
+/*TABLA CONTAINER*/  ==> contenedor de widgets general
+//(se podría simplificar en una tabla "CONTAINER")
+############################################################################
+TABLE WIDGET_CONTAINER_WINDOW
+
+ID                  INT
+ID_TILE             INT
+X                   FLOAT
+Y                   FLOAT
+WIDTH               FLOAT
+HEIGHT              FLOAT
+SCRIPT_CONTAINER    CHAR(20)
+SCRIPT_AI           CHAR(20)
+
+############################################################################
+
+/*TABLA MSG*/       ==> mensaje
+############################################################################
+TABLE WIDGET_CONTAINER_MSG
+
+ID                  INT
+ID_TILE             INT
+X                   FLOAT
+Y                   FLOAT
+WIDTH               FLOAT
+HEIGHT              FLOAT
+SCRIPT_CONTAINER    CHAR(20)
+SCRIPT_AI           CHAR(20)
+
+############################################################################
+
+/*TABLA CONSOLE*/   ==> consola.
+############################################################################
+TABLE WIDGET_CONTAINER_CONSOLE
+
+ID                  INT
+ID_TILE             INT
+X                   FLOAT
+Y                   FLOAT
+WIDTH               FLOAT
+HEIGHT              FLOAT
+SCRIPT_CONTAINER    CHAR(20)
+SCRIPT_AI           CHAR(20)
+
+############################################################################
+
+/*TABLA RADAR*/       ==> radar
+############################################################################
+TABLE WIDGET_CONTAINER_RADAR
+
+ID                  INT
+ID_TILE             INT
+ID_WIDGET_PARENT    INT
+X                   FLOAT
+Y                   FLOAT
+WIDTH               FLOAT
+HEIGHT              FLOAT
+SCRIPT_CONTAINER    CHAR(20)
+SCRIPT_AI           CHAR(20)
+
+############################################################################
+
+/*TABLA PROGRESSBAR*/  ==> ProgressBar
+############################################################################
+TABLE WIDGET_CONTAINER_PROGRESS
+
+ID                  INT
+ID_TILE             INT
+ID_WIDGET_PARENT    INT
+X                   FLOAT
+Y                   FLOAT
+WIDTH               FLOAT
+HEIGHT              FLOAT
+SCRIPT_CONTAINER    CHAR(20)
+SCRIPT_AI           CHAR(20)
+############################################################################
+
+/*TABLA COUNTER*/  ==> Counter
+############################################################################
+TABLE WIDGET_CONTAINER_COUNTER
+
+ID                  INT
+ID_TILE             INT
+ID_WIDGET_PARENT    INT
+X                   FLOAT
+Y                   FLOAT
+WIDTH               FLOAT
+HEIGHT              FLOAT
+SCRIPT_CONTAINER    CHAR(20)
+SCRIPT_AI           CHAR(20)
+############################################################################
+
+//componentes asociados a un CONTAINER
+############################################################################
+TABLA WIDGET_CONTAINER_COMP_TILE
+ID                  INT
+ID_WIDGET_PARENT    INT
+ID_TILE             INT
+############################################################################
+
+############################################################################
+TABLA WIDGET_CONTAINER_COMP_PAR
+ID                  INT
+ID_WIDGET_PARENT    INT
+ID_PARTICLE         CHAR(20)
+############################################################################
+
+//WIDGETS que son elementos.
+//(se podría simplificar en una tabla "WIDGET")
+/*TABLA BUTTON*/       ==> boton
+############################################################################
+TABLE WIDGET_BUTTON
+ID                  INT
+ID_TILE             INT
+ID_WIDGET_PARENT    INT
+X                   FLOAT
+Y                   FLOAT
+WIDTH               FLOAT
+HEIGHT              FLOAT
+SCRIPT_CONTAINER    CHAR(20)        //->clip animacion pulsado/no pulsado
+SCRIPT_AI           CHAR(20)
+############################################################################
+
+/*TABLA ICON*/         ==> Icono
+############################################################################
+TABLE WIDGET_ICON
+ID                  INT
+ID_TILE             INT
+ID_WIDGET_PARENT    INT
+X                   FLOAT
+Y                   FLOAT
+WIDTH               FLOAT
+HEIGHT              FLOAT
+SCRIPT_AI           CHAR(20)       //->genera signal a partir de un estimulo
+############################################################################
+
+/*TABLA IMAGE*/       ==> Imagen
+############################################################################
+TABLE WIDGET_IMAGE
+ID                  INT
+ID_TILE             INT
+ID_WIDGET_PARENT    INT
+X                   FLOAT
+Y                   FLOAT
+WIDTH               FLOAT
+HEIGHT              FLOAT
+SCRIPT_AI           CHAR(20)    //->genera signal a partir de un estimulo
+############################################################################
+
+/*TABLA LABEL*/       ==> Etiqueta
+############################################################################
+TABLE WIDGET_LABEL
+ID                  INT
+ID_TIFF             INT
+ID_WIDGET_PARENT    INT
+X                   FLOAT
+Y                   FLOAT
+WIDTH               FLOAT
+HEIGHT              FLOAT
+SCRIPT_AI           CHAR(20)    //->genera signal a partir de un estimulo
+############################################################################

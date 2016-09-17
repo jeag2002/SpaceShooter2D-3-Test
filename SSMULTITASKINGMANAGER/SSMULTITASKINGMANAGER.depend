@@ -1,0 +1,680 @@
+# depslib dependency file v1.0
+1463516334 source:c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\memmanager.cpp
+	"MemManager.h"
+
+1465161586 c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\memmanager.h
+	<stdio.h>
+	<stdlib.h>
+	"DynamicEntity.h"
+	"DynamicPlayer.h"
+
+1465426666 c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\stdafx.h
+	<pthread.h>
+	<unistd.h>
+	<sys/types.h>
+	<errno.h>
+	<fcntl.h>
+	<signal.h>
+	<windows.h>
+	<SDL.h>
+	<iostream>
+	<fstream>
+	<string>
+	<stdio.h>
+	<stdlib.h>
+	<cmath>
+	<vector>
+	<map>
+	<queue>
+	<time.h>
+	<algorithm>
+	<functional>
+	<semaphore.h>
+
+1338124690 c:\workspaces\libs\pthreads-w32-2-9-1-release\pre-built.2\include\pthread.h
+	<windows.h>
+	"config.h"
+	<time.h>
+	<signal.h>
+	<limits.h>
+	"need_errno.h"
+	<errno.h>
+	<sched.h>
+	<sys/types.h>
+
+1309341964 c:\workspaces\libs\pthreads-w32-2-9-1-release\pre-built.2\include\sched.h
+	"need_errno.h"
+	<errno.h>
+	<sys/types.h>
+	<time.h>
+
+1394940796 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl.h
+	"SDL_main.h"
+	"SDL_stdinc.h"
+	"SDL_assert.h"
+	"SDL_atomic.h"
+	"SDL_audio.h"
+	"SDL_clipboard.h"
+	"SDL_cpuinfo.h"
+	"SDL_endian.h"
+	"SDL_error.h"
+	"SDL_events.h"
+	"SDL_filesystem.h"
+	"SDL_joystick.h"
+	"SDL_gamecontroller.h"
+	"SDL_haptic.h"
+	"SDL_hints.h"
+	"SDL_loadso.h"
+	"SDL_log.h"
+	"SDL_messagebox.h"
+	"SDL_mutex.h"
+	"SDL_power.h"
+	"SDL_render.h"
+	"SDL_rwops.h"
+	"SDL_system.h"
+	"SDL_thread.h"
+	"SDL_timer.h"
+	"SDL_version.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940796 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_main.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940798 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_stdinc.h
+	"SDL_config.h"
+	<sys/types.h>
+	<stdio.h>
+	<stdlib.h>
+	<stddef.h>
+	<stdarg.h>
+	<stdlib.h>
+	<malloc.h>
+	<stddef.h>
+	<stdarg.h>
+	<memory.h>
+	<string.h>
+	<strings.h>
+	<inttypes.h>
+	<stdint.h>
+	<ctype.h>
+	<math.h>
+	<float.h>
+	<iconv.h>
+	"begin_code.h"
+	<alloca.h>
+	<malloc.h>
+	<malloc.h>
+	<malloc.h>
+	<stdlib.h>
+	"close_code.h"
+
+1394940798 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_config.h
+	"SDL_platform.h"
+
+1438214850 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_platform.h
+	"AvailabilityMacros.h"
+	"TargetConditionals.h"
+	<winapifamily.h>
+	"begin_code.h"
+	"close_code.h"
+
+1394940798 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\begin_code.h
+
+1394940798 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\close_code.h
+
+1394940796 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_assert.h
+	"SDL_config.h"
+	"begin_code.h"
+	<signal.h>
+	"close_code.h"
+
+1394940796 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_atomic.h
+	"SDL_stdinc.h"
+	"SDL_platform.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940796 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_audio.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_endian.h"
+	"SDL_mutex.h"
+	"SDL_thread.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940796 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_error.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940796 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_endian.h
+	"SDL_stdinc.h"
+	<endian.h>
+	"begin_code.h"
+	"close_code.h"
+
+1394940798 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_mutex.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940798 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_thread.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_atomic.h"
+	"SDL_mutex.h"
+	"begin_code.h"
+	<process.h>
+	"close_code.h"
+
+1394940798 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_rwops.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940796 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_clipboard.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940796 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_cpuinfo.h
+	"SDL_stdinc.h"
+	<intrin.h>
+	<intrin.h>
+	<altivec.h>
+	<mmintrin.h>
+	<mm3dnow.h>
+	<xmmintrin.h>
+	<emmintrin.h>
+	"begin_code.h"
+	"close_code.h"
+
+1394940796 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_events.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"SDL_keyboard.h"
+	"SDL_mouse.h"
+	"SDL_joystick.h"
+	"SDL_gamecontroller.h"
+	"SDL_quit.h"
+	"SDL_gesture.h"
+	"SDL_touch.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940798 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_video.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_surface.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940798 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_pixels.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940798 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_rect.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_pixels.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940798 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_surface.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_blendmode.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940796 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_blendmode.h
+	"begin_code.h"
+	"close_code.h"
+
+1394940796 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_keyboard.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_keycode.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940796 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_keycode.h
+	"SDL_stdinc.h"
+	"SDL_scancode.h"
+
+1394940798 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_scancode.h
+	"SDL_stdinc.h"
+
+1394940796 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_mouse.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940796 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_joystick.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940796 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_gamecontroller.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_rwops.h"
+	"SDL_joystick.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940798 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_quit.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+
+1394940796 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_gesture.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"SDL_touch.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940798 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_touch.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940796 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_filesystem.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940796 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_haptic.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_joystick.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940796 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_hints.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940796 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_loadso.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940796 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_log.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940796 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_messagebox.h
+	"SDL_stdinc.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940798 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_power.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940798 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_render.h
+	"SDL_stdinc.h"
+	"SDL_rect.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940798 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_system.h
+	"SDL_stdinc.h"
+	"SDL_keyboard.h"
+	"SDL_render.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940798 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_timer.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394940798 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_version.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1463864821 source:c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\task.cpp
+	"Task.h"
+
+1465343957 c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\task.h
+	<pthread.h>
+
+1463515111 source:c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\thread.cpp
+	"Thread.h"
+
+1463515694 c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\thread.h
+	"Stdafx.h"
+
+1465343791 c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\dynamicentity.h
+	"SDL.h"
+	"Task.h"
+	"QueueManager.h"
+	"LogEngine.h"
+
+1464295926 c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\observer.h
+	"EventMsg.h"
+	<stdlib.h>
+
+1464295908 c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\subject.h
+	"EventMsg.h"
+	<vector>
+	"Observer.h"
+
+1465517259 c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\eventmsg.h
+
+1465685213 source:c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\main.cpp
+	"Stdafx.h"
+	"TaskManager.h"
+	"TaskRemPlayer.h"
+	"TimerTask.h"
+	"TaskGarbageManager.h"
+	"TaskInputEvents.h"
+	"Subject.h"
+	"DynamicEntity.h"
+	"DynamicPlayer.h"
+	"MemManager.h"
+	"QueueManager.h"
+	"GLRender.h"
+	"CollisionEntities.h"
+	"AnimationEntities.h"
+	"IAEntities.h"
+	"LogEngine.h"
+
+1465671930 c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\taskmanager.h
+	"Stdafx.h"
+	"MemManager.h"
+	"QueueManager.h"
+	"LogEngine.h"
+	"Subject.h"
+	"CollisionEntities.h"
+	"AnimationEntities.h"
+	"IAEntities.h"
+
+1468631692 c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\queuemanager.h
+	"EventMsg.h"
+	"MemManager.h"
+	"LogEngine.h"
+	<queue>
+
+1465670095 source:c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\taskmanager.cpp
+	"TaskManager.h"
+
+1465642825 source:c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\logengine.cpp
+	"LogEngine.h"
+
+1459676917 c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\logengine.h
+	"Stdafx.h"
+
+1465672072 c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\collisionentities.h
+	"MemManager.h"
+	"LogEngine.h"
+
+1465673690 c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\animationentities.h
+	"MemManager.h"
+	"LogEngine.h"
+
+1465673602 c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\iaentities.h
+	"MemManager.h"
+	"LogEngine.h"
+
+1465505457 source:c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\dynamicentity.cpp
+	"DynamicEntity.h"
+
+1465642067 c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\dynamicplayer.h
+	"Observer.h"
+	"LogEngine.h"
+
+1465672231 c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\taskremplayer.h
+	"Stdafx.h"
+	"MemManager.h"
+	"QueueManager.h"
+	"LogEngine.h"
+	"CollisionEntities.h"
+	"AnimationEntities.h"
+	"IAEntities.h"
+
+1465670771 source:c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\taskremplayer.cpp
+	"TaskRemPlayer.h"
+
+1465340860 c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\timertask.h
+	"Stdafx.h"
+	"LogEngine.h"
+	"QueueManager.h"
+
+1465342498 c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\glrender.h
+	"LogEngine.h"
+
+1465344452 source:c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\timertask.cpp
+	"TimerTask.h"
+
+1465340768 c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\taskgarbagemanager.h
+	"Stdafx.h"
+	"MemManager.h"
+	"LogEngine.h"
+
+1465340942 source:c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\taskgarbagemanager.cpp
+	"TaskGarbageManager.h"
+
+1306680998 c:\workspaces\libs\pthreads-w32-2-9-1-release\pre-built.2\include\semaphore.h
+	"need_errno.h"
+	<errno.h>
+
+1465673499 source:c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\collisionentities.cpp
+	"CollisionEntities.h"
+
+1465679369 source:c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\dynamicplayer.cpp
+	"DynamicPlayer.h"
+
+1465682934 c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\taskinputevents.h
+	<pthread.h>
+	<SDL.h>
+	"MemManager.h"
+	"QueueManager.h"
+	"LogEngine.h"
+	"Subject.h"
+	"CollisionEntities.h"
+	"AnimationEntities.h"
+	"IAEntities.h"
+
+1465685522 source:c:\workspaces\development\workcodeblocks\ssmultitaskingmanager\taskinputevents.cpp
+	"TaskInputEvents.h"
+
+1465673499 source:c:\workspaces\workcodeblocks\ssmultitaskingmanager\collisionentities.cpp
+	"CollisionEntities.h"
+
+1465672072 c:\workspaces\workcodeblocks\ssmultitaskingmanager\collisionentities.h
+	"MemManager.h"
+	"LogEngine.h"
+
+1469876653 c:\workspaces\workcodeblocks\ssmultitaskingmanager\memmanager.h
+	<stdio.h>
+	<stdlib.h>
+	"DynamicEntity.h"
+	"DynamicPlayer.h"
+
+1470435835 c:\workspaces\workcodeblocks\ssmultitaskingmanager\dynamicentity.h
+	"SDL.h"
+	"Task.h"
+	"QueueManager.h"
+	"LogEngine.h"
+
+1465343957 c:\workspaces\workcodeblocks\ssmultitaskingmanager\task.h
+	<pthread.h>
+
+1469876725 c:\workspaces\workcodeblocks\ssmultitaskingmanager\queuemanager.h
+	"EventMsg.h"
+	"LogEngine.h"
+	<queue>
+
+1465517259 c:\workspaces\workcodeblocks\ssmultitaskingmanager\eventmsg.h
+
+1459676917 c:\workspaces\workcodeblocks\ssmultitaskingmanager\logengine.h
+	"Stdafx.h"
+
+1465426666 c:\workspaces\workcodeblocks\ssmultitaskingmanager\stdafx.h
+	<pthread.h>
+	<unistd.h>
+	<sys/types.h>
+	<errno.h>
+	<fcntl.h>
+	<signal.h>
+	<windows.h>
+	<SDL.h>
+	<iostream>
+	<fstream>
+	<string>
+	<stdio.h>
+	<stdlib.h>
+	<cmath>
+	<vector>
+	<map>
+	<queue>
+	<time.h>
+	<algorithm>
+	<functional>
+	<semaphore.h>
+
+1465642067 c:\workspaces\workcodeblocks\ssmultitaskingmanager\dynamicplayer.h
+	"Observer.h"
+	"LogEngine.h"
+
+1464295926 c:\workspaces\workcodeblocks\ssmultitaskingmanager\observer.h
+	"EventMsg.h"
+	<stdlib.h>
+
+1465505457 source:c:\workspaces\workcodeblocks\ssmultitaskingmanager\dynamicentity.cpp
+	"DynamicEntity.h"
+
+1465679369 source:c:\workspaces\workcodeblocks\ssmultitaskingmanager\dynamicplayer.cpp
+	"DynamicPlayer.h"
+
+1465642825 source:c:\workspaces\workcodeblocks\ssmultitaskingmanager\logengine.cpp
+	"LogEngine.h"
+
+1469877044 source:c:\workspaces\workcodeblocks\ssmultitaskingmanager\main.cpp
+	"Stdafx.h"
+	"TaskManager.h"
+	"TaskRemPlayer.h"
+	"TimerTask.h"
+	"TaskGarbageManager.h"
+	"TaskInputEvents.h"
+	"Subject.h"
+	"DynamicEntity.h"
+	"DynamicPlayer.h"
+	"MemManager.h"
+	"QueueManager.h"
+	"GLRender.h"
+	"CollisionEntities.h"
+	"AnimationEntities.h"
+	"IAEntities.h"
+	"LogEngine.h"
+
+1465671930 c:\workspaces\workcodeblocks\ssmultitaskingmanager\taskmanager.h
+	"Stdafx.h"
+	"MemManager.h"
+	"QueueManager.h"
+	"LogEngine.h"
+	"Subject.h"
+	"CollisionEntities.h"
+	"AnimationEntities.h"
+	"IAEntities.h"
+
+1464295908 c:\workspaces\workcodeblocks\ssmultitaskingmanager\subject.h
+	"EventMsg.h"
+	<vector>
+	"Observer.h"
+
+1465673690 c:\workspaces\workcodeblocks\ssmultitaskingmanager\animationentities.h
+	"MemManager.h"
+	"LogEngine.h"
+
+1465673602 c:\workspaces\workcodeblocks\ssmultitaskingmanager\iaentities.h
+	"MemManager.h"
+	"LogEngine.h"
+
+1465672231 c:\workspaces\workcodeblocks\ssmultitaskingmanager\taskremplayer.h
+	"Stdafx.h"
+	"MemManager.h"
+	"QueueManager.h"
+	"LogEngine.h"
+	"CollisionEntities.h"
+	"AnimationEntities.h"
+	"IAEntities.h"
+
+1465340860 c:\workspaces\workcodeblocks\ssmultitaskingmanager\timertask.h
+	"Stdafx.h"
+	"LogEngine.h"
+	"QueueManager.h"
+
+1465340768 c:\workspaces\workcodeblocks\ssmultitaskingmanager\taskgarbagemanager.h
+	"Stdafx.h"
+	"MemManager.h"
+	"LogEngine.h"
+
+1465682934 c:\workspaces\workcodeblocks\ssmultitaskingmanager\taskinputevents.h
+	<pthread.h>
+	<SDL.h>
+	"MemManager.h"
+	"QueueManager.h"
+	"LogEngine.h"
+	"Subject.h"
+	"CollisionEntities.h"
+	"AnimationEntities.h"
+	"IAEntities.h"
+
+1465342498 c:\workspaces\workcodeblocks\ssmultitaskingmanager\glrender.h
+	"LogEngine.h"
+
+1469876637 source:c:\workspaces\workcodeblocks\ssmultitaskingmanager\memmanager.cpp
+	"MemManager.h"
+
+1463864821 source:c:\workspaces\workcodeblocks\ssmultitaskingmanager\task.cpp
+	"Task.h"
+
+1465340942 source:c:\workspaces\workcodeblocks\ssmultitaskingmanager\taskgarbagemanager.cpp
+	"TaskGarbageManager.h"
+
+1465685522 source:c:\workspaces\workcodeblocks\ssmultitaskingmanager\taskinputevents.cpp
+	"TaskInputEvents.h"
+
+1465670095 source:c:\workspaces\workcodeblocks\ssmultitaskingmanager\taskmanager.cpp
+	"TaskManager.h"
+
+1465670771 source:c:\workspaces\workcodeblocks\ssmultitaskingmanager\taskremplayer.cpp
+	"TaskRemPlayer.h"
+
+1465344452 source:c:\workspaces\workcodeblocks\ssmultitaskingmanager\timertask.cpp
+	"TimerTask.h"
+

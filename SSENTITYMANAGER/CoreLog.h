@@ -1,0 +1,6 @@
+#ifndef CORELOG_H_INCLUDED
+#define CORELOG_H_INCLUDED
+
+
+
+#endif // CORELOG_H_INCLUDED

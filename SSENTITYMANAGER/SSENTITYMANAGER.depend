@@ -1,0 +1,154 @@
+# depslib dependency file v1.0
+1459267718 source:c:\workspaces\development\workcodeblocks\ssentitymanager\actorfinal.cpp
+
+1459267509 source:c:\workspaces\development\workcodeblocks\ssentitymanager\entityfinal.cpp
+
+1459270940 source:c:\workspaces\development\workcodeblocks\ssentitymanager\memmanagerres.cpp
+
+1459266682 source:c:\workspaces\development\workcodeblocks\ssentitymanager\tilefinal.cpp
+	"TileFinal.h"
+
+1459267070 c:\workspaces\development\workcodeblocks\ssentitymanager\tilefinal.h
+	"Stdafx.h"
+
+1461410831 c:\workspaces\development\workcodeblocks\ssentitymanager\stdafx.h
+	<string>
+	<vector>
+	<map>
+
+1461282589 source:c:\workspaces\development\workcodeblocks\ssentitymanager\main.cpp
+	"Stdafx.h"
+	"ImageRes.h"
+	"ScriptRes.h"
+	"SoundRes.h"
+	"StateRes.h"
+	"TiffRes.h"
+	"ParticleRes.h"
+	"LightRes.h"
+	"ShaderRes.h"
+	"TileEntity.h"
+	"MeshEntity.h"
+	"ActorEntity.h"
+	"BlockEntity.h"
+	"WeaponEntity.h"
+	"ItemEntity.h"
+	"ExitEntity.h"
+	<iostream>
+	<fstream>
+	<vector>
+	<string>
+	<sstream>
+	"sqlite3.h"
+
+1460799614 c:\workspaces\development\workcodeblocks\ssentitymanager\imageres.h
+	"Stdafx.h"
+	"Resource.h"
+
+1458359584 c:\workspaces\libs\sqlite\sqlite-3.11\include\sqlite3.h
+	<stdarg.h>
+
+1461091606 c:\workspaces\development\workcodeblocks\ssentitymanager\resource.h
+
+1460803317 c:\workspaces\development\workcodeblocks\ssentitymanager\scriptres.h
+	"Stdafx.h"
+	"Resource.h"
+	"ScriptParamRes.h"
+
+1460801891 c:\workspaces\development\workcodeblocks\ssentitymanager\scriptparamres.h
+	"Stdafx.h"
+
+1460805976 c:\workspaces\development\workcodeblocks\ssentitymanager\soundres.h
+	"Stdafx.h"
+	"Resource.h"
+	"CoreString.h"
+
+1460806002 c:\workspaces\development\workcodeblocks\ssentitymanager\corestring.h
+	"Stdafx.h"
+
+1460809238 c:\workspaces\development\workcodeblocks\ssentitymanager\stateres.h
+	"Stdafx.h"
+	"CoreString.h"
+	"StateDestinyRes.h"
+
+1460807882 c:\workspaces\development\workcodeblocks\ssentitymanager\statedestinyres.h
+
+1460810673 c:\workspaces\development\workcodeblocks\ssentitymanager\tiffres.h
+	"Stdafx.h"
+	"Resource.h"
+	"CoreString.h"
+
+1460884300 c:\workspaces\development\workcodeblocks\ssentitymanager\particleres.h
+	"Stdafx.h"
+	"Resource.h"
+	"CoreString.h"
+
+1460918017 c:\workspaces\development\workcodeblocks\ssentitymanager\lightres.h
+	"Stdafx.h"
+	"Resource.h"
+	"CoreString.h"
+
+1461005274 c:\workspaces\development\workcodeblocks\ssentitymanager\shaderres.h
+	"Stdafx.h"
+	"Resource.h"
+	"CoreString.h"
+
+1461005982 c:\workspaces\development\workcodeblocks\ssentitymanager\tileentity.h
+	"Stdafx.h"
+	"Resource.h"
+	"CoreString.h"
+	"TileComponent.h"
+
+1461019837 c:\workspaces\development\workcodeblocks\ssentitymanager\tilecomponent.h
+	"Stdafx.h"
+	"Resource.h"
+	"CoreString.h"
+	"TileComponentCoord.h"
+
+1461095142 c:\workspaces\development\workcodeblocks\ssentitymanager\tilecomponentcoord.h
+	"Stdafx.h"
+	"Resource.h"
+	"CoreString.h"
+
+1461021212 c:\workspaces\development\workcodeblocks\ssentitymanager\meshentity.h
+	"Stdafx.h"
+	"Resource.h"
+	"CoreString.h"
+
+1461407236 c:\workspaces\development\workcodeblocks\ssentitymanager\actorentity.h
+	"Stdafx.h"
+	"Entity.h"
+	"CoreString.h"
+	"AnimationNode.h"
+
+1461407214 c:\workspaces\development\workcodeblocks\ssentitymanager\entity.h
+	"Stdafx.h"
+	"Resource.h"
+
+1461277984 c:\workspaces\development\workcodeblocks\ssentitymanager\animationnode.h
+
+1461408316 c:\workspaces\development\workcodeblocks\ssentitymanager\blockentity.h
+	"Stdafx.h"
+	"Entity.h"
+	"CoreString.h"
+
+1461418761 c:\workspaces\development\workcodeblocks\ssentitymanager\weaponentity.h
+	"Stdafx.h"
+	"Entity.h"
+	"CoreString.h"
+	"WeaponBeanEntity.h"
+
+1461411451 c:\workspaces\development\workcodeblocks\ssentitymanager\weaponbeanentity.h
+	"Stdafx.h"
+	"Entity.h"
+	"CoreString.h"
+
+1461408763 c:\workspaces\development\workcodeblocks\ssentitymanager\itementity.h
+	"Stdafx.h"
+	"Entity.h"
+	"CoreString.h"
+
+1461408287 c:\workspaces\development\workcodeblocks\ssentitymanager\exitentity.h
+	"Stdafx.h"
+	"Entity.h"
+	"CoreString.h"
+

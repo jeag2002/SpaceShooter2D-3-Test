@@ -1,0 +1,13 @@
+
+[INFO]  (23/07/2016 - 10:59:15) -  - LogEngine - INITIALIZED! to [DEBUG]  Channel [FILE] 
+[INFO]  (23/07/2016 - 10:59:15) -  - ================ [SSNETWORKMANAGER-SERVER - INI] ================
+[DEBUG] (23/07/2016 - 10:59:15) -  - [SSNETWORKMANAGERSERVER::createEnvirontment] -- SET VARIABLES ON
+[ERROR] (23/07/2016 - 10:59:15) -  - SSNETWORKMANAGERSERVER::initCommunication [4] sockets created
+[INFO]  (23/07/2016 - 10:59:26) -  - LogEngine - INITIALIZED! to [DEBUG]  Channel [FILE] 
+[INFO]  (23/07/2016 - 10:59:26) -  - ================ [SSNETWORKMANAGER-SERVER - INI] ================
+[DEBUG] (23/07/2016 - 10:59:26) -  - [SSNETWORKMANAGERSERVER::createEnvirontment] -- SET VARIABLES ON
+[ERROR] (23/07/2016 - 10:59:26) -  - SSNETWORKMANAGERSERVER::initCommunication [4] sockets created
+[INFO]  (23/07/2016 - 13:02:08) -  - LogEngine - INITIALIZED! to [DEBUG]  Channel [FILE] 
+[INFO]  (23/07/2016 - 13:02:08) -  - ================ [SSNETWORKMANAGER-SERVER - INI] ================
+[DEBUG] (23/07/2016 - 13:02:08) -  - [SSNETWORKMANAGERSERVER::createEnvirontment] -- SET VARIABLES ON
+[ERROR] (23/07/2016 - 13:02:08) -  - SSNETWORKMANAGERSERVER::initCommunication [4] sockets created

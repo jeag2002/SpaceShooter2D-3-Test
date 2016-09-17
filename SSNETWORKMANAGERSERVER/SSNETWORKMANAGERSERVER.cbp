@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="SSNETWORKMANAGERSERVER" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/SSNETWORKMANAGERSERVER" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-pedantic" />
+					<Add option="-std=c++11" />
+					<Add option="-Wextra" />
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-DTCP_NODELAY" />
+					<Add directory="C:/workspaces/libs/SDL_2.0.3/SDL2-devel-2.0.3-mingw/SDL2-2.0.3/i686-w64-mingw32/include/SDL2" />
+					<Add directory="C:/workspaces/libs/SDL_2.0.3/SDL2_net-devel-2.0.1-mingw/SDL2_net-2.0.1/i686-w64-mingw32/include/SDL2" />
+					<Add directory="C:/workspaces/libs/pthreads-w32-2-9-1-release/Pre-built.2/include" />
+				</Compiler>
+				<Linker>
+					<Add option="-lmingw32" />
+					<Add option="-lSDL2main" />
+					<Add option="-lSDL2" />
+					<Add option="-lSDL2_net" />
+					<Add option="-lpthreadGC2" />
+					<Add option="-lpthreadGCE2" />
+					<Add library="C:\workspaces\libs\SDL_2.0.3\SDL2-devel-2.0.3-mingw\SDL2-2.0.3\i686-w64-mingw32\lib\libSDL2.a" />
+					<Add library="C:\workspaces\libs\SDL_2.0.3\SDL2-devel-2.0.3-mingw\SDL2-2.0.3\i686-w64-mingw32\lib\libSDL2.dll.a" />
+					<Add library="C:\workspaces\libs\SDL_2.0.3\SDL2-devel-2.0.3-mingw\SDL2-2.0.3\i686-w64-mingw32\lib\libSDL2_test.a" />
+					<Add library="C:\workspaces\libs\SDL_2.0.3\SDL2-devel-2.0.3-mingw\SDL2-2.0.3\i686-w64-mingw32\lib\libSDL2main.a" />
+					<Add library="C:\workspaces\libs\SDL_2.0.3\SDL2_net-devel-2.0.1-mingw\SDL2_net-2.0.1\i686-w64-mingw32\lib\libSDL2_net.a" />
+					<Add library="C:\workspaces\libs\SDL_2.0.3\SDL2_net-devel-2.0.1-mingw\SDL2_net-2.0.1\i686-w64-mingw32\lib\libSDL2_net.dll.a" />
+					<Add library="C:\workspaces\libs\pthreads-w32-2-9-1-release\Pre-built.2\lib\x86\libpthreadGC2.a" />
+					<Add library="C:\workspaces\libs\pthreads-w32-2-9-1-release\Pre-built.2\lib\x86\libpthreadGCE2.a" />
+					<Add directory="C:/workspaces/libs/SDL_2.0.3/SDL2-devel-2.0.3-mingw/SDL2-2.0.3/i686-w64-mingw32/lib" />
+					<Add directory="C:/workspaces/libs/SDL_2.0.3/SDL2_net-devel-2.0.1-mingw/SDL2_net-2.0.1/i686-w64-mingw32/lib" />
+					<Add directory="C:/workspaces/libs/pthreads-w32-2-9-1-release/Pre-built.2/lib/x86" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/SSNETWORKMANAGERSERVER" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="AnimationEntities.h" />
+		<Unit filename="ClockEngine.h" />
+		<Unit filename="CollisionEntities.cpp" />
+		<Unit filename="CollisionEntities.h" />
+		<Unit filename="CompressPacket.h" />
+		<Unit filename="Concurrent_queue.h" />
+		<Unit filename="Concurrent_queue_UDP.h" />
+		<Unit filename="Constants.h" />
+		<Unit filename="DynamicEntity.cpp" />
+		<Unit filename="DynamicEntity.h" />
+		<Unit filename="EventMsg.cpp" />
+		<Unit filename="EventMsg.h" />
+		<Unit filename="IAEntities.h" />
+		<Unit filename="LogEngine.cpp" />
+		<Unit filename="LogEngine.h" />
+		<Unit filename="Main.cpp" />
+		<Unit filename="MemManager.cpp" />
+		<Unit filename="MemManager.h" />
+		<Unit filename="NetworkClient.cpp" />
+		<Unit filename="NetworkClient.h" />
+		<Unit filename="NetworkClientUDP.cpp" />
+		<Unit filename="NetworkClientUDP.h" />
+		<Unit filename="Observer.h" />
+		<Unit filename="PredictionEngine.cpp" />
+		<Unit filename="PredictionEngine.h" />
+		<Unit filename="QueueManager.cpp" />
+		<Unit filename="QueueManager.h" />
+		<Unit filename="SSNETWORKMANAGERSERVER.log" />
+		<Unit filename="Stdafx.h" />
+		<Unit filename="TCPSession.cpp" />
+		<Unit filename="TCPSession.h" />
+		<Unit filename="Task.cpp" />
+		<Unit filename="Task.h" />
+		<Unit filename="TaskManager.cpp" />
+		<Unit filename="TaskManager.h" />
+		<Unit filename="UDPDispatcherSession.cpp" />
+		<Unit filename="UDPDispatcherSession.h" />
+		<Unit filename="UDPDispatcherSessionManager.cpp" />
+		<Unit filename="UDPDispatcherSessionManager.h" />
+		<Unit filename="UDPSession.cpp" />
+		<Unit filename="UDPSession.h" />
+		<Unit filename="UtilsProtocol.h" />
+		<Unit filename="data/README.TXT.txt" />
+		<Unit filename="lzo/lzoconf.h" />
+		<Unit filename="lzo/lzodefs.h" />
+		<Unit filename="lzo/minilzo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="lzo/minilzo.h" />
+		<Unit filename="pthreadGC2.dll" />
+		<Unit filename="pthreadGCE2.dll" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

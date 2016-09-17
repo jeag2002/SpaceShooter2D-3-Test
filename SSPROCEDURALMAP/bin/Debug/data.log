@@ -1,0 +1,371 @@
+DISPLAY(0) (1920 x 1080) @ 24 bpp SDL_PIXELFORMAT_RGB888GLLaunchSystemsGL11::initOpenGLESSystems --> INIT 
+GLExtensions --> [GL_OES_byte_coordinates GL_OES_fixed_point GL_OES_query_matrix GL_OES_single_precision GL_OES_matrix_get GL_OES_read_format GL_IMG_read_format GL_OES_point_sprite GL_OES_query_matrix GL_OES_texture_env_crossbar GL_OES_texture_mirrored_repeat GL_OES_blend_substract GL_OES_blend_func_separate GL_OES_blend_equation_separate GL_OES_stencil_wrap GL_OES_extended_matrix_palette GL_OES_vertex_half_float GL_OES_compressed_ETC1_RGB8_texture GL_OES_compressed_paletted_texture GL_OES_depth24 GL_OES_depth_texture GL_OES_texture_float GL_OES_texture_half_float GL_OES_texture_cube_map GL_OES_rgb8_rgba8 GL_OES_stencil8 GL_OES_fragment_precision_high GL_OES_element_index_uint GL_IMG_texture_compression_pvrtc GL_OES_framebuffer_object GL_OES_mapbuffer GL_OES_matrix_palette GL_OES_point_size_array GL_OES_draw_texture GL_EXT_multi_draw_arrays GL_IMG_texture_format_BGRA8888]
+
+Detecting caves --- INI
+Size of cave --- 102
+Size of cave --- 7
+Number of caves --- 2
+Detecting caves --- END
+ConectingUnconectedCaves --- INI
+ConectingUnconectedCaves --- BigCave [0]
+ConectingUnconectedCaves --- IndexPrincipal [66] - IndexOthers [6]
+ConectingUnconectedCaves --- Coord BigCave (fila:0,columna:11) - Coord DestCave(fila:3,columna:14)
+PUSH OPENLIST CB--> fila:1 columna:11 G:1 H:5 sizeOPENLIST:2
+PUSH OPENLIST CC--> fila:0 columna:10 H:1 sizeOPENLIST:7
+PUSH OPENLIST CD--> fila:0 columna:12 G:1 H:5 sizeOPENLIST:4
+PUSH CLOSELIST --> fila:0 columna:11 G:0 H:6
+PUSH OPENLIST CB--> fila:2 columna:11 G:2 H:4 sizeOPENLIST:4
+PUSH OPENLIST CC--> fila:1 columna:10 H:2 sizeOPENLIST:6
+PUSH OPENLIST CD--> fila:1 columna:12 G:2 H:4 sizeOPENLIST:6
+PUSH CLOSELIST --> fila:1 columna:11 G:1 H:5
+PUSH OPENLIST CC--> fila:0 columna:9 H:2 sizeOPENLIST:8
+PUSH CLOSELIST --> fila:0 columna:12 G:1 H:5
+PUSH CLOSELIST --> fila:2 columna:11 G:2 H:4
+PUSH CLOSELIST --> fila:1 columna:12 G:2 H:4
+PUSH CLOSELIST --> fila:0 columna:10 G:1 H:7
+PUSH OPENLIST CB--> fila:2 columna:10 G:3 H:5 sizeOPENLIST:3
+PUSH OPENLIST CC--> fila:1 columna:9 H:3 sizeOPENLIST:7
+PUSH CLOSELIST --> fila:1 columna:10 G:2 H:6
+PUSH OPENLIST CC--> fila:0 columna:8 H:3 sizeOPENLIST:9
+PUSH CLOSELIST --> fila:2 columna:10 G:3 H:5
+PUSH CLOSELIST --> fila:0 columna:9 G:2 H:8
+PUSH OPENLIST CB--> fila:2 columna:9 G:4 H:6 sizeOPENLIST:3
+PUSH OPENLIST CC--> fila:1 columna:8 H:4 sizeOPENLIST:8
+PUSH CLOSELIST --> fila:1 columna:9 G:3 H:7
+PUSH OPENLIST CC--> fila:0 columna:7 H:4 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:2 columna:9 G:4 H:6
+PUSH CLOSELIST --> fila:0 columna:8 G:3 H:9
+PUSH OPENLIST CB--> fila:2 columna:8 G:5 H:7 sizeOPENLIST:3
+PUSH OPENLIST CC--> fila:1 columna:7 H:5 sizeOPENLIST:9
+PUSH CLOSELIST --> fila:1 columna:8 G:4 H:8
+PUSH OPENLIST CC--> fila:0 columna:6 H:5 sizeOPENLIST:11
+PUSH CLOSELIST --> fila:2 columna:8 G:5 H:7
+PUSH CLOSELIST --> fila:0 columna:7 G:4 H:10
+PUSH OPENLIST CB--> fila:2 columna:7 G:6 H:8 sizeOPENLIST:3
+PUSH OPENLIST CC--> fila:1 columna:6 H:6 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:1 columna:7 G:5 H:9
+PUSH OPENLIST CC--> fila:0 columna:5 H:6 sizeOPENLIST:12
+PUSH CLOSELIST --> fila:2 columna:7 G:6 H:8
+PUSH CLOSELIST --> fila:0 columna:6 G:5 H:11
+PUSH OPENLIST CB--> fila:2 columna:6 G:7 H:9 sizeOPENLIST:3
+PUSH OPENLIST CC--> fila:1 columna:5 H:7 sizeOPENLIST:11
+PUSH CLOSELIST --> fila:1 columna:6 G:6 H:10
+PUSH OPENLIST CC--> fila:0 columna:4 H:7 sizeOPENLIST:13
+PUSH CLOSELIST --> fila:2 columna:6 G:7 H:9
+PUSH CLOSELIST --> fila:0 columna:5 G:6 H:12
+PUSH OPENLIST CB--> fila:2 columna:5 G:8 H:10 sizeOPENLIST:3
+PUSH OPENLIST CC--> fila:1 columna:4 H:8 sizeOPENLIST:12
+PUSH CLOSELIST --> fila:1 columna:5 G:7 H:11
+PUSH OPENLIST CC--> fila:0 columna:3 H:8 sizeOPENLIST:14
+PUSH CLOSELIST --> fila:2 columna:5 G:8 H:10
+PUSH CLOSELIST --> fila:0 columna:4 G:7 H:13
+PUSH OPENLIST CB--> fila:2 columna:4 G:9 H:11 sizeOPENLIST:3
+PUSH OPENLIST CC--> fila:1 columna:3 H:9 sizeOPENLIST:13
+PUSH CLOSELIST --> fila:1 columna:4 G:8 H:12
+PUSH OPENLIST CC--> fila:0 columna:2 H:9 sizeOPENLIST:15
+PUSH CLOSELIST --> fila:2 columna:4 G:9 H:11
+PUSH CLOSELIST --> fila:0 columna:3 G:8 H:14
+PUSH OPENLIST CB--> fila:2 columna:3 G:10 H:12 sizeOPENLIST:3
+PUSH OPENLIST CC--> fila:1 columna:2 H:10 sizeOPENLIST:14
+PUSH CLOSELIST --> fila:1 columna:3 G:9 H:13
+PUSH OPENLIST CC--> fila:0 columna:1 H:10 sizeOPENLIST:16
+PUSH CLOSELIST --> fila:2 columna:3 G:10 H:12
+PUSH CLOSELIST --> fila:0 columna:2 G:9 H:15
+PUSH OPENLIST CB--> fila:2 columna:2 G:11 H:13 sizeOPENLIST:3
+PUSH OPENLIST CC--> fila:1 columna:1 H:11 sizeOPENLIST:15
+PUSH CLOSELIST --> fila:1 columna:2 G:10 H:14
+PUSH OPENLIST CC--> fila:0 columna:0 H:11 sizeOPENLIST:17
+PUSH CLOSELIST --> fila:2 columna:2 G:11 H:13
+PUSH CLOSELIST --> fila:0 columna:1 G:10 H:16
+PUSH OPENLIST CB--> fila:2 columna:1 G:12 H:14 sizeOPENLIST:3
+PUSH OPENLIST CC--> fila:1 columna:0 H:12 sizeOPENLIST:16
+PUSH CLOSELIST --> fila:1 columna:1 G:11 H:15
+PUSH CLOSELIST --> fila:2 columna:1 G:12 H:14
+PUSH CLOSELIST --> fila:0 columna:0 G:11 H:17
+PUSH OPENLIST CB--> fila:2 columna:0 G:13 H:15 sizeOPENLIST:2
+PUSH CLOSELIST --> fila:1 columna:0 G:12 H:16
+PUSH OPENLIST CB--> fila:3 columna:0 G:14 H:14 sizeOPENLIST:2
+PUSH CLOSELIST --> fila:2 columna:0 G:13 H:15
+PUSH OPENLIST CB--> fila:4 columna:0 G:15 H:15 sizeOPENLIST:2
+PUSH OPENLIST CD--> fila:3 columna:1 G:15 H:13 sizeOPENLIST:3
+PUSH CLOSELIST --> fila:3 columna:0 G:14 H:14
+PUSH OPENLIST CB--> fila:5 columna:0 G:16 H:16 sizeOPENLIST:3
+PUSH OPENLIST CD--> fila:4 columna:1 G:16 H:14 sizeOPENLIST:4
+PUSH CLOSELIST --> fila:3 columna:1 G:15 H:13
+PUSH CLOSELIST --> fila:4 columna:0 G:15 H:15
+PUSH OPENLIST CB--> fila:6 columna:0 G:17 H:17 sizeOPENLIST:3
+PUSH OPENLIST CD--> fila:5 columna:1 G:17 H:15 sizeOPENLIST:4
+PUSH CLOSELIST --> fila:4 columna:1 G:16 H:14
+PUSH CLOSELIST --> fila:5 columna:0 G:16 H:16
+PUSH OPENLIST CB--> fila:7 columna:0 G:18 H:18 sizeOPENLIST:3
+PUSH OPENLIST CD--> fila:6 columna:1 G:18 H:16 sizeOPENLIST:4
+PUSH CLOSELIST --> fila:5 columna:1 G:17 H:15
+PUSH CLOSELIST --> fila:6 columna:0 G:17 H:17
+PUSH OPENLIST CB--> fila:8 columna:0 G:19 H:19 sizeOPENLIST:3
+PUSH OPENLIST CD--> fila:7 columna:1 G:19 H:17 sizeOPENLIST:4
+PUSH CLOSELIST --> fila:6 columna:1 G:18 H:16
+PUSH CLOSELIST --> fila:7 columna:0 G:18 H:18
+PUSH OPENLIST CB--> fila:9 columna:0 G:20 H:20 sizeOPENLIST:3
+PUSH OPENLIST CD--> fila:8 columna:1 G:20 H:18 sizeOPENLIST:4
+PUSH CLOSELIST --> fila:7 columna:1 G:19 H:17
+PUSH CLOSELIST --> fila:8 columna:0 G:19 H:19
+PUSH OPENLIST CB--> fila:10 columna:0 G:21 H:21 sizeOPENLIST:3
+PUSH OPENLIST CD--> fila:9 columna:1 G:21 H:19 sizeOPENLIST:4
+PUSH CLOSELIST --> fila:8 columna:1 G:20 H:18
+PUSH CLOSELIST --> fila:9 columna:0 G:20 H:20
+PUSH OPENLIST CB--> fila:11 columna:0 G:22 H:22 sizeOPENLIST:3
+PUSH OPENLIST CD--> fila:10 columna:1 G:22 H:20 sizeOPENLIST:4
+PUSH CLOSELIST --> fila:9 columna:1 G:21 H:19
+PUSH CLOSELIST --> fila:10 columna:0 G:21 H:21
+PUSH OPENLIST CD--> fila:11 columna:1 G:23 H:21 sizeOPENLIST:3
+PUSH CLOSELIST --> fila:10 columna:1 G:22 H:20
+PUSH CLOSELIST --> fila:11 columna:0 G:22 H:22
+PUSH OPENLIST CD--> fila:11 columna:2 G:24 H:20 sizeOPENLIST:2
+PUSH CLOSELIST --> fila:11 columna:1 G:23 H:21
+PUSH OPENLIST CA--> fila:10 columna:2 G:25 H:19 sizeOPENLIST:2
+PUSH OPENLIST CD--> fila:11 columna:3 G:25 H:19 sizeOPENLIST:3
+PUSH CLOSELIST --> fila:11 columna:2 G:24 H:20
+PUSH OPENLIST CA--> fila:9 columna:2 G:26 H:18 sizeOPENLIST:3
+PUSH OPENLIST CD--> fila:10 columna:3 G:26 H:18 sizeOPENLIST:4
+PUSH CLOSELIST --> fila:10 columna:2 G:25 H:19
+PUSH OPENLIST CD--> fila:11 columna:4 G:26 H:18 sizeOPENLIST:4
+PUSH CLOSELIST --> fila:11 columna:3 G:25 H:19
+PUSH OPENLIST CA--> fila:8 columna:2 G:27 H:17 sizeOPENLIST:4
+PUSH OPENLIST CD--> fila:9 columna:3 G:27 H:17 sizeOPENLIST:5
+PUSH CLOSELIST --> fila:9 columna:2 G:26 H:18
+PUSH OPENLIST CD--> fila:10 columna:4 G:27 H:17 sizeOPENLIST:5
+PUSH CLOSELIST --> fila:10 columna:3 G:26 H:18
+PUSH OPENLIST CD--> fila:11 columna:5 G:27 H:17 sizeOPENLIST:5
+PUSH CLOSELIST --> fila:11 columna:4 G:26 H:18
+PUSH OPENLIST CA--> fila:7 columna:2 G:28 H:16 sizeOPENLIST:5
+PUSH OPENLIST CD--> fila:8 columna:3 G:28 H:16 sizeOPENLIST:6
+PUSH CLOSELIST --> fila:8 columna:2 G:27 H:17
+PUSH OPENLIST CD--> fila:9 columna:4 G:28 H:16 sizeOPENLIST:6
+PUSH CLOSELIST --> fila:9 columna:3 G:27 H:17
+PUSH OPENLIST CD--> fila:10 columna:5 G:28 H:16 sizeOPENLIST:6
+PUSH CLOSELIST --> fila:10 columna:4 G:27 H:17
+PUSH OPENLIST CD--> fila:11 columna:6 G:28 H:16 sizeOPENLIST:6
+PUSH CLOSELIST --> fila:11 columna:5 G:27 H:17
+PUSH OPENLIST CA--> fila:6 columna:2 G:29 H:15 sizeOPENLIST:6
+PUSH OPENLIST CD--> fila:7 columna:3 G:29 H:15 sizeOPENLIST:7
+PUSH CLOSELIST --> fila:7 columna:2 G:28 H:16
+PUSH OPENLIST CD--> fila:8 columna:4 G:29 H:15 sizeOPENLIST:7
+PUSH CLOSELIST --> fila:8 columna:3 G:28 H:16
+PUSH OPENLIST CD--> fila:9 columna:5 G:29 H:15 sizeOPENLIST:7
+PUSH CLOSELIST --> fila:9 columna:4 G:28 H:16
+PUSH OPENLIST CD--> fila:10 columna:6 G:29 H:15 sizeOPENLIST:7
+PUSH CLOSELIST --> fila:10 columna:5 G:28 H:16
+PUSH OPENLIST CD--> fila:11 columna:7 G:29 H:15 sizeOPENLIST:7
+PUSH CLOSELIST --> fila:11 columna:6 G:28 H:16
+PUSH OPENLIST CA--> fila:5 columna:2 G:30 H:14 sizeOPENLIST:7
+PUSH OPENLIST CD--> fila:6 columna:3 G:30 H:14 sizeOPENLIST:8
+PUSH CLOSELIST --> fila:6 columna:2 G:29 H:15
+PUSH OPENLIST CD--> fila:7 columna:4 G:30 H:14 sizeOPENLIST:8
+PUSH CLOSELIST --> fila:7 columna:3 G:29 H:15
+PUSH OPENLIST CD--> fila:8 columna:5 G:30 H:14 sizeOPENLIST:8
+PUSH CLOSELIST --> fila:8 columna:4 G:29 H:15
+PUSH OPENLIST CD--> fila:9 columna:6 G:30 H:14 sizeOPENLIST:8
+PUSH CLOSELIST --> fila:9 columna:5 G:29 H:15
+PUSH OPENLIST CD--> fila:10 columna:7 G:30 H:14 sizeOPENLIST:8
+PUSH CLOSELIST --> fila:10 columna:6 G:29 H:15
+PUSH OPENLIST CD--> fila:11 columna:8 G:30 H:14 sizeOPENLIST:8
+PUSH CLOSELIST --> fila:11 columna:7 G:29 H:15
+PUSH OPENLIST CA--> fila:4 columna:2 G:31 H:13 sizeOPENLIST:8
+PUSH OPENLIST CD--> fila:5 columna:3 G:31 H:13 sizeOPENLIST:9
+PUSH CLOSELIST --> fila:5 columna:2 G:30 H:14
+PUSH OPENLIST CD--> fila:6 columna:4 G:31 H:13 sizeOPENLIST:9
+PUSH CLOSELIST --> fila:6 columna:3 G:30 H:14
+PUSH OPENLIST CD--> fila:7 columna:5 G:31 H:13 sizeOPENLIST:9
+PUSH CLOSELIST --> fila:7 columna:4 G:30 H:14
+PUSH OPENLIST CD--> fila:8 columna:6 G:31 H:13 sizeOPENLIST:9
+PUSH CLOSELIST --> fila:8 columna:5 G:30 H:14
+PUSH OPENLIST CD--> fila:9 columna:7 G:31 H:13 sizeOPENLIST:9
+PUSH CLOSELIST --> fila:9 columna:6 G:30 H:14
+PUSH OPENLIST CD--> fila:10 columna:8 G:31 H:13 sizeOPENLIST:9
+PUSH CLOSELIST --> fila:10 columna:7 G:30 H:14
+PUSH OPENLIST CD--> fila:11 columna:9 G:31 H:13 sizeOPENLIST:9
+PUSH CLOSELIST --> fila:11 columna:8 G:30 H:14
+PUSH OPENLIST CA--> fila:3 columna:2 G:32 H:12 sizeOPENLIST:9
+PUSH OPENLIST CD--> fila:4 columna:3 G:32 H:12 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:4 columna:2 G:31 H:13
+PUSH OPENLIST CD--> fila:5 columna:4 G:32 H:12 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:5 columna:3 G:31 H:13
+PUSH OPENLIST CD--> fila:6 columna:5 G:32 H:12 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:6 columna:4 G:31 H:13
+PUSH OPENLIST CD--> fila:7 columna:6 G:32 H:12 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:7 columna:5 G:31 H:13
+PUSH OPENLIST CD--> fila:8 columna:7 G:32 H:12 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:8 columna:6 G:31 H:13
+PUSH OPENLIST CD--> fila:9 columna:8 G:32 H:12 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:9 columna:7 G:31 H:13
+PUSH OPENLIST CD--> fila:10 columna:9 G:32 H:12 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:10 columna:8 G:31 H:13
+PUSH OPENLIST CD--> fila:11 columna:10 G:32 H:12 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:11 columna:9 G:31 H:13
+PUSH OPENLIST CD--> fila:3 columna:3 G:33 H:11 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:3 columna:2 G:32 H:12
+PUSH OPENLIST CD--> fila:4 columna:4 G:33 H:11 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:4 columna:3 G:32 H:12
+PUSH OPENLIST CD--> fila:5 columna:5 G:33 H:11 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:5 columna:4 G:32 H:12
+PUSH OPENLIST CD--> fila:6 columna:6 G:33 H:11 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:6 columna:5 G:32 H:12
+PUSH OPENLIST CD--> fila:7 columna:7 G:33 H:11 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:7 columna:6 G:32 H:12
+PUSH OPENLIST CD--> fila:8 columna:8 G:33 H:11 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:8 columna:7 G:32 H:12
+PUSH OPENLIST CD--> fila:9 columna:9 G:33 H:11 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:9 columna:8 G:32 H:12
+PUSH OPENLIST CD--> fila:10 columna:10 G:33 H:11 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:10 columna:9 G:32 H:12
+PUSH OPENLIST CD--> fila:11 columna:11 G:33 H:11 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:11 columna:10 G:32 H:12
+PUSH OPENLIST CD--> fila:3 columna:4 G:34 H:10 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:3 columna:3 G:33 H:11
+PUSH OPENLIST CD--> fila:4 columna:5 G:34 H:10 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:4 columna:4 G:33 H:11
+PUSH OPENLIST CD--> fila:5 columna:6 G:34 H:10 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:5 columna:5 G:33 H:11
+PUSH OPENLIST CD--> fila:6 columna:7 G:34 H:10 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:6 columna:6 G:33 H:11
+PUSH OPENLIST CD--> fila:7 columna:8 G:34 H:10 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:7 columna:7 G:33 H:11
+PUSH OPENLIST CD--> fila:8 columna:9 G:34 H:10 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:8 columna:8 G:33 H:11
+PUSH OPENLIST CD--> fila:9 columna:10 G:34 H:10 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:9 columna:9 G:33 H:11
+PUSH OPENLIST CD--> fila:10 columna:11 G:34 H:10 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:10 columna:10 G:33 H:11
+PUSH OPENLIST CD--> fila:11 columna:12 G:34 H:10 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:11 columna:11 G:33 H:11
+PUSH OPENLIST CD--> fila:3 columna:5 G:35 H:9 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:3 columna:4 G:34 H:10
+PUSH OPENLIST CD--> fila:4 columna:6 G:35 H:9 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:4 columna:5 G:34 H:10
+PUSH OPENLIST CD--> fila:5 columna:7 G:35 H:9 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:5 columna:6 G:34 H:10
+PUSH OPENLIST CD--> fila:6 columna:8 G:35 H:9 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:6 columna:7 G:34 H:10
+PUSH OPENLIST CD--> fila:7 columna:9 G:35 H:9 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:7 columna:8 G:34 H:10
+PUSH OPENLIST CD--> fila:8 columna:10 G:35 H:9 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:8 columna:9 G:34 H:10
+PUSH OPENLIST CD--> fila:9 columna:11 G:35 H:9 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:9 columna:10 G:34 H:10
+PUSH OPENLIST CD--> fila:10 columna:12 G:35 H:9 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:10 columna:11 G:34 H:10
+PUSH OPENLIST CD--> fila:11 columna:13 G:35 H:9 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:11 columna:12 G:34 H:10
+PUSH OPENLIST CD--> fila:3 columna:6 G:36 H:8 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:3 columna:5 G:35 H:9
+PUSH OPENLIST CD--> fila:4 columna:7 G:36 H:8 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:4 columna:6 G:35 H:9
+PUSH OPENLIST CD--> fila:5 columna:8 G:36 H:8 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:5 columna:7 G:35 H:9
+PUSH OPENLIST CD--> fila:6 columna:9 G:36 H:8 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:6 columna:8 G:35 H:9
+PUSH OPENLIST CD--> fila:7 columna:10 G:36 H:8 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:7 columna:9 G:35 H:9
+PUSH OPENLIST CD--> fila:8 columna:11 G:36 H:8 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:8 columna:10 G:35 H:9
+PUSH OPENLIST CD--> fila:9 columna:12 G:36 H:8 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:9 columna:11 G:35 H:9
+PUSH OPENLIST CD--> fila:10 columna:13 G:36 H:8 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:10 columna:12 G:35 H:9
+PUSH OPENLIST CD--> fila:11 columna:14 G:36 H:8 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:11 columna:13 G:35 H:9
+PUSH OPENLIST CD--> fila:3 columna:7 G:37 H:7 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:3 columna:6 G:36 H:8
+PUSH OPENLIST CD--> fila:4 columna:8 G:37 H:7 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:4 columna:7 G:36 H:8
+PUSH OPENLIST CD--> fila:5 columna:9 G:37 H:7 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:5 columna:8 G:36 H:8
+PUSH OPENLIST CD--> fila:6 columna:10 G:37 H:7 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:6 columna:9 G:36 H:8
+PUSH OPENLIST CD--> fila:7 columna:11 G:37 H:7 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:7 columna:10 G:36 H:8
+PUSH OPENLIST CD--> fila:8 columna:12 G:37 H:7 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:8 columna:11 G:36 H:8
+PUSH OPENLIST CD--> fila:9 columna:13 G:37 H:7 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:9 columna:12 G:36 H:8
+PUSH OPENLIST CD--> fila:10 columna:14 G:37 H:7 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:10 columna:13 G:36 H:8
+PUSH OPENLIST CD--> fila:11 columna:15 G:37 H:9 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:11 columna:14 G:36 H:8
+PUSH OPENLIST CD--> fila:3 columna:8 G:38 H:6 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:3 columna:7 G:37 H:7
+PUSH OPENLIST CD--> fila:4 columna:9 G:38 H:6 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:4 columna:8 G:37 H:7
+PUSH OPENLIST CD--> fila:5 columna:10 G:38 H:6 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:5 columna:9 G:37 H:7
+PUSH OPENLIST CD--> fila:6 columna:11 G:38 H:6 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:6 columna:10 G:37 H:7
+PUSH OPENLIST CD--> fila:7 columna:12 G:38 H:6 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:7 columna:11 G:37 H:7
+PUSH OPENLIST CD--> fila:8 columna:13 G:38 H:6 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:8 columna:12 G:37 H:7
+PUSH OPENLIST CD--> fila:9 columna:14 G:38 H:6 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:9 columna:13 G:37 H:7
+PUSH OPENLIST CD--> fila:10 columna:15 G:38 H:8 sizeOPENLIST:10
+PUSH CLOSELIST --> fila:10 columna:14 G:37 H:7
+PUSH CLOSELIST --> fila:3 columna:8 G:38 H:6
+PUSH CLOSELIST --> fila:4 columna:9 G:38 H:6
+PUSH CLOSELIST --> fila:5 columna:10 G:38 H:6
+PUSH CLOSELIST --> fila:6 columna:11 G:38 H:6
+PUSH CLOSELIST --> fila:7 columna:12 G:38 H:6
+PUSH CLOSELIST --> fila:8 columna:13 G:38 H:6
+PUSH CLOSELIST --> fila:9 columna:14 G:38 H:6
+PUSH CLOSELIST --> fila:11 columna:15 G:37 H:9
+PUSH OPENLIST CA--> fila:9 columna:15 G:39 H:7 sizeOPENLIST:2
+PUSH CLOSELIST --> fila:10 columna:15 G:38 H:8
+PUSH OPENLIST CA--> fila:8 columna:15 G:40 H:6 sizeOPENLIST:2
+PUSH CLOSELIST --> fila:9 columna:15 G:39 H:7
+PUSH OPENLIST CA--> fila:7 columna:15 G:41 H:5 sizeOPENLIST:2
+PUSH OPENLIST CC--> fila:8 columna:14 H:41 sizeOPENLIST:5
+PUSH CLOSELIST --> fila:8 columna:15 G:40 H:6
+PUSH OPENLIST CA--> fila:6 columna:15 G:42 H:4 sizeOPENLIST:3
+PUSH OPENLIST CC--> fila:7 columna:14 H:42 sizeOPENLIST:4
+PUSH CLOSELIST --> fila:7 columna:15 G:41 H:5
+PUSH CLOSELIST --> fila:8 columna:14 G:41 H:5
+PUSH OPENLIST CA--> fila:5 columna:15 G:43 H:3 sizeOPENLIST:3
+PUSH OPENLIST CC--> fila:6 columna:14 H:43 sizeOPENLIST:3
+PUSH CLOSELIST --> fila:6 columna:15 G:42 H:4
+PUSH OPENLIST CC--> fila:7 columna:13 H:43 sizeOPENLIST:5
+PUSH CLOSELIST --> fila:7 columna:14 G:42 H:4
+PUSH OPENLIST CA--> fila:4 columna:15 G:44 H:2 sizeOPENLIST:4
+PUSH OPENLIST CC--> fila:5 columna:14 H:44 sizeOPENLIST:2
+PUSH CLOSELIST --> fila:5 columna:15 G:43 H:3
+PUSH OPENLIST CC--> fila:6 columna:13 H:44 sizeOPENLIST:4
+PUSH CLOSELIST --> fila:6 columna:14 G:43 H:3
+PUSH CLOSELIST --> fila:4 columna:15 G:44 H:2
+PUSH CLOSELIST --> fila:5 columna:14 G:44 H:2
+PUSH CLOSELIST --> fila:7 columna:13 G:43 H:5
+PUSH OPENLIST CA--> fila:5 columna:13 G:45 H:3 sizeOPENLIST:2
+PUSH OPENLIST CC--> fila:6 columna:12 H:45 sizeOPENLIST:5
+PUSH CLOSELIST --> fila:6 columna:13 G:44 H:4
+PUSH OPENLIST CA--> fila:4 columna:13 G:46 H:2 sizeOPENLIST:3
+PUSH OPENLIST CC--> fila:5 columna:12 H:46 sizeOPENLIST:4
+PUSH CLOSELIST --> fila:5 columna:13 G:45 H:3
+PUSH CLOSELIST --> fila:4 columna:13 G:46 H:2
+PUSH CLOSELIST --> fila:6 columna:12 G:45 H:5
+PUSH OPENLIST CA--> fila:4 columna:12 G:47 H:3 sizeOPENLIST:2
+PUSH OPENLIST CC--> fila:5 columna:11 H:47 sizeOPENLIST:5
+PUSH CLOSELIST --> fila:5 columna:12 G:46 H:4
+PUSH OPENLIST CA--> fila:3 columna:12 G:48 H:2 sizeOPENLIST:3
+PUSH OPENLIST CC--> fila:4 columna:11 H:48 sizeOPENLIST:4
+PUSH CLOSELIST --> fila:4 columna:12 G:47 H:3
+PUSH CLOSELIST --> fila:3 columna:12 G:48 H:2
+PUSH CLOSELIST --> fila:5 columna:11 G:47 H:5
+PUSH OPENLIST CA--> fila:3 columna:11 G:49 H:3 sizeOPENLIST:2
+PUSH OPENLIST CC--> fila:4 columna:10 H:49 sizeOPENLIST:5
+PUSH CLOSELIST --> fila:4 columna:11 G:48 H:4
+PUSH OPENLIST CC--> PVRVFrameSetGlesLibraryPath: c:\workspaces\workCodeblocks\SSPROCEDURALMAP\bin\Debug\libGLES_CM.dll
+PVRVFrameSetGlesv2LibraryPath: c:\workspaces\workCodeblocks\SSPROCEDURALMAP\bin\Debug\libGLESv2.dll
+fila:3 columna:10 H:50 sizeOPENLIST:4
+PUSH CLOSELIST --> fila:3 columna:11 G:49 H:3
+PUSH CLOSELIST --> fila:4 columna:10 G:49 H:5
+PUSH OPENLIST CC--> fila:3 columna:9 H:51 sizeOPENLIST:5
+PUSH CLOSELIST --> fila:3 columna:10 G:50 H:4
+PUSH CLOSELIST --> fila:3 columna:9 G:51 H:5
+ALGORITMO INCAPAZ DE ENCONTRAR CAMINO!!! :( 
+ConectingUnconectedCaves --- END
