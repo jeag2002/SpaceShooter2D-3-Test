@@ -1,5 +1,12 @@
 # depslib dependency file v1.0
-1474067259 source:c:\workspaces\development\workcodeblocks\simpleudpserver\main.cpp
+1474225846 source:c:\workspaces\development\workcodeblocks\simpleudpserver\main.cpp
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	"SDL_net.h"
+	"SDL.h"
+	<iostream>
+	<sstream>
 	"SDL_net.h"
 	"SDL.h"
 	<stdio.h>
