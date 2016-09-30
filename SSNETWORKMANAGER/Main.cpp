@@ -67,7 +67,7 @@ int main (int argc, char *argv[])
 
    nClientUDP->initCommunicationUDP();
    nClientUDP->establishCommunicationUDP();
-
+   nClientUDP->getListActiveSessions();
 
    /*
    initSDLWindows();

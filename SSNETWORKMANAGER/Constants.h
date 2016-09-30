@@ -18,7 +18,6 @@
 12-OBTAIN DATA FROM SERVER
 13-LOGOUT FROM SERVER
 14-GET LOGOUT FROM SERVER
-99-NULL
 */
 #define TRAMA_SYNACK_CONECTION 0
 #define TRAMA_QRY_CONECTION 1
@@ -107,10 +106,9 @@
 #define TYPE_MSG_ANSWER_CONFIRMORDER 3
 #define TYPE_MSG_ANSWER_LOGOUT 4
 
-
 #define TYPE_LIST_SESSION_ID 1
 #define TYPE_PLAYER_INI_SESSION_ID 2
-
+#define TYPE_SERVER_DATA_ID 3
 
 //list active maps/sessions
 typedef struct{
@@ -235,7 +233,6 @@ typedef struct{
     int result;
 }answerType;
 
-
 //return session player
 typedef struct{
     int playerDataID;
@@ -249,6 +246,7 @@ typedef struct{
     int width;
     int heigth;
 }playerDataType;
+
 
 //active element (Enemies/RemotePlayers/ActiveElements)
 typedef struct{
@@ -277,9 +275,13 @@ typedef struct{
     int wpn_4;
     int ammo_wpn_4;
     int item_1;
+    int item_1_val;
     int item_2;
+    int item_2_val;
     int item_3;
+    int item_3_val;
     int item_4;
+    int item_4_val;
     int score;
     int die;
     int animIndex;

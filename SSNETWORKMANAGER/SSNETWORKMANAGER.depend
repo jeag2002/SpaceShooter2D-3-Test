@@ -539,7 +539,7 @@
 	<functional>
 	<semaphore.h>
 
-1470358004 c:\workspaces\workcodeblocks\ssnetworkmanager\constants.h
+1474795013 c:\workspaces\workcodeblocks\ssnetworkmanager\constants.h
 
 1470090785 c:\workspaces\workcodeblocks\ssnetworkmanager\dynamicplayer.h
 	"Observer.h"
@@ -550,7 +550,7 @@
 	"EventMsg.h"
 	<stdlib.h>
 
-1472293331 c:\workspaces\workcodeblocks\ssnetworkmanager\eventmsg.h
+1474639073 c:\workspaces\workcodeblocks\ssnetworkmanager\eventmsg.h
 	"Constants.h"
 	"UtilsProtocol.h"
 	<math.h>
@@ -570,7 +570,7 @@
 1470170559 source:c:\workspaces\workcodeblocks\ssnetworkmanager\dynamicplayer.cpp
 	"DynamicPlayer.h"
 
-1473110189 source:c:\workspaces\workcodeblocks\ssnetworkmanager\eventmsg.cpp
+1474640397 source:c:\workspaces\workcodeblocks\ssnetworkmanager\eventmsg.cpp
 	"EventMsg.h"
 
 1466942867 source:c:\workspaces\workcodeblocks\ssnetworkmanager\logengine.cpp
@@ -647,10 +647,10 @@
 	<cmath>
 	<stdint.h>
 
-1473112578 source:c:\workspaces\workcodeblocks\ssnetworkmanager\networkclientudp.cpp
+1475274910 source:c:\workspaces\workcodeblocks\ssnetworkmanager\networkclientudp.cpp
 	"NetworkClientUDP.h"
 
-1473112262 c:\workspaces\workcodeblocks\ssnetworkmanager\networkclientudp.h
+1475274970 c:\workspaces\workcodeblocks\ssnetworkmanager\networkclientudp.h
 	"Stdafx.h"
 	"LogEngine.h"
 	"EventMsg.h"

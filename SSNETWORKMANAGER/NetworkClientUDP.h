@@ -13,7 +13,7 @@
 #define REMOTE_PORT 8888
 #define LOCAL_PORT 10022
 
-#define REMOTE_HOST "localhost"
+#define REMOTE_HOST "127.0.0.1"
 
 
 class NetworkClientUDP{
@@ -22,8 +22,8 @@ public:
 
 NetworkClientUDP(LogEngine *_logger){
     logger = _logger;
-    indexTramaSend = 0;
-    indexTramaGet = 1;
+    indexTramaSend = 1;
+    indexTramaGet = 0;
     clearBuffer();
     cP = new CompressPacket(logger);
     enabledCompression = false;
@@ -33,9 +33,11 @@ NetworkClientUDP(LogEngine *_logger){
 
 ~NetworkClientUDP(){
     SDLNet_UDP_Close(clientSocket);
+    SDLNet_FreePacket(packet);
     SDLNet_Quit();
     exit(1);
 };
+
 
 void initCommunicationUDP();
 void establishCommunicationUDP();
@@ -46,10 +48,23 @@ void setIndexTramaSend(int _indexTramaSend){indexTramaSend = _indexTramaSend;}
 int getIndexTramaGet(){return indexTramaGet;}
 void setIndexTramaGet(int _indexTramaGet){indexTramaGet = _indexTramaGet;}
 
+
 void clearBuffer(){
-    for(int i=0; i<BUFFER_SIZE-1; i++){buffer[i] = '0';}
-    buffer[BUFFER_SIZE-1] = '\0';
+    for(int i=0; i<BUFFER_SIZE; i++){buffer[i] = '\0';}
 }
+
+void clearBufferPacket(){
+    for(int i=0; i<BUFFER_SIZE; i++){packet->data[i] = '\0';}
+}
+
+void clearBufferPacket(UDPpacket *packetUDP){
+    for(int i=0; i<BUFFER_SIZE; i++){packetUDP->data[i] = '\0';}
+}
+
+UDPpacket *getRemotePacket(){return packet;}
+
+void getListActiveSessions();
+
 
 void sendMsgToServer(EventMsg *msg);
 EventMsg *getMsgFromServer();

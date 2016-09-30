@@ -23,6 +23,8 @@ public:
 
         session_1 = new UDPDispatcherSession(logger, 1,1, cQ1, cQ2); //mapa 1 session 1
         session_2 = new UDPDispatcherSession(logger, 1,2, cQ1, cQ2); //mapa 1 session 1
+
+        clearInputClientsToServer();
         activeSessions();
     }
 
@@ -39,7 +41,11 @@ public:
     void clearInputClientsToServer(){
         for(int i=0;i<TOT_CLIENTS;i++){
             clientPackets[i] = new EventMsg();
-            freeSocket[i] = false;
+            UDPpacket *pack = SDLNet_AllocPacket(BUFFER_SIZE);
+            pack->address.host = 0;
+            pack->address.port = 0;
+            clientPackets[i]->setPacketUPD(pack);
+            freeSocket[i] = true;
         }
     }
 

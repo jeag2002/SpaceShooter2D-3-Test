@@ -273,9 +273,13 @@ typedef struct{
     int wpn_4;
     int ammo_wpn_4;
     int item_1;
+    int item_1_val;
     int item_2;
+    int item_2_val;
     int item_3;
+    int item_3_val;
     int item_4;
+    int item_4_val;
     int score;
     int die;
     int animIndex;

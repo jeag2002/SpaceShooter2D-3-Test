@@ -29,9 +29,9 @@ public:
         bool res = false;
         if (lzo_init() != LZO_E_OK){
             logger->warn("[CompressPacket::Init] Cannot initialize compression process");
-            res = true;
         }else{
             logger->info("[CompressPacket::Init] LZO CONF SUCCESSFUL version [%s], version_date [%s]", lzo_version_string(), lzo_version_date());
+            res = true;
         }
         return res;
     }

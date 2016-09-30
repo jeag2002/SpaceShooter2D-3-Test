@@ -1,7 +1,9 @@
 #include "EventMsg.h"
 
 
-//HEAD OF TRAMA (CLIENT/SERVER)
+//HEAD OF TRAMA (CLIENT/SERVER) //--> CABECERA 33
+//ESPACIO PARA SUBTRAMA CLIENTE //--> 128-33 = 95
+
 char *EventMsg::marshallMsg(){
     clearBuffer();
     std::string dataSubMsg = serializeMsg();
@@ -103,13 +105,17 @@ remotePlayerType EventMsg::processSubMsgrRType(const char *subbuffer){
     std::string Wpn4AmmoStr = buffer_to_string.substr(71,3);   //57+3
 
     std::string Item1Str = buffer_to_string.substr(74,1);      //60+1
-    std::string Item2Str = buffer_to_string.substr(75,1);      //61+1
-    std::string Item3Str = buffer_to_string.substr(76,1);      //62+1
-    std::string Item4Str = buffer_to_string.substr(77,1);      //63+1
+    std::string Item1ValStr = buffer_to_string.substr(75,2);      //60+1
+    std::string Item2Str = buffer_to_string.substr(77,1);      //61+1
+    std::string Item2ValStr = buffer_to_string.substr(78,2);      //60+1
+    std::string Item3Str = buffer_to_string.substr(80,1);      //62+1
+    std::string Item3ValStr = buffer_to_string.substr(81,2);      //60+1
+    std::string Item4Str = buffer_to_string.substr(83,1);      //63+1
+    std::string Item4ValStr = buffer_to_string.substr(84,2);      //60+1
 
-    std::string ScoreStr = buffer_to_string.substr(78,5);      //64+5
-    std::string DieStr = buffer_to_string.substr(82,1);        //69+1
-    std::string AnimIndexStr = buffer_to_string.substr(83,3);  //70+3
+    std::string ScoreStr = buffer_to_string.substr(86,5);      //64+5
+    std::string DieStr = buffer_to_string.substr(91,1);        //69+1
+    std::string AnimIndexStr = buffer_to_string.substr(92,3);  //70+3
 
 
     int typeTramaIDInt = atoi(typeTramaIDStr.c_str());
@@ -137,9 +143,13 @@ remotePlayerType EventMsg::processSubMsgrRType(const char *subbuffer){
     int Wpn4Int = atoi(Wpn4Str.c_str());
     int Wpn4AmmoInt = atoi(Wpn4AmmoStr.c_str());
     int Item1Int = atoi(Item1Str.c_str());
+    int Item1ValInt = atoi(Item1ValStr.c_str());
     int Item2Int = atoi(Item2Str.c_str());
+    int Item2ValInt = atoi(Item2ValStr.c_str());
     int Item3Int = atoi(Item3Str.c_str());
+    int Item3ValInt = atoi(Item3ValStr.c_str());
     int Item4Int = atoi(Item4Str.c_str());
+    int Item4ValInt = atoi(Item4ValStr.c_str());
     int ScoreInt = atoi(ScoreStr.c_str());
     int DieInt = atoi(DieStr.c_str());
     int AnimIndexInt = atoi(AnimIndexStr.c_str());
@@ -171,9 +181,13 @@ remotePlayerType EventMsg::processSubMsgrRType(const char *subbuffer){
     rPType.wpn_4 = Wpn4Int;
     rPType.ammo_wpn_4 = Wpn4AmmoInt;
     rPType.item_1 = Item1Int;
+    rPType.item_1_val = Item1ValInt;
     rPType.item_2 = Item2Int;
+    rPType.item_2_val = Item2ValInt;
     rPType.item_3 = Item3Int;
+    rPType.item_3_val = Item3ValInt;
     rPType.item_4 = Item4Int;
+    rPType.item_4_val = Item4ValInt;
     rPType.score = ScoreInt;
     rPType.die = DieInt;
     rPType.animIndex = AnimIndexInt;
@@ -753,7 +767,7 @@ std::string EventMsg::serializeMsg(){
 
         //REMOTE ACTOR (PRIMERA VERSION, TODOS LOS ELEMENTOS ACTIVOS SON ACTORES)
         if (rPType.typeTramaID!=0){ //Longitud 87
-            sprintf(subBuffer,"%03d%03d%03d%03d%03d%05d%05d%01d%06d%02d%06d%02d%03d%03d%01d%03d%03d%02d%01d%03d%01%03d%01d%03d%01d%03d%01d%01d%01d%01d%05d%01d%03d",
+            sprintf(subBuffer,"%03d%03d%03d%03d%03d%05d%05d%01d%06d%02d%06d%02d%03d%03d%01d%03d%03d%02d%01d%03d%01%03d%01d%03d%01d%03d%01d%02d%01d%02d%01d%02d%01d%02d%05d%01d%03d",
                  rPType.typeTramaID,
                  rPType.typeID,
                  rPType.entityID,
@@ -781,9 +795,13 @@ std::string EventMsg::serializeMsg(){
                  rPType.wpn_4,
                  rPType.ammo_wpn_4,
                  rPType.item_1,
+                 rPType.item_1_val,
                  rPType.item_2,
+                 rPType.item_2_val,
                  rPType.item_3,
+                 rPType.item_3_val,
                  rPType.item_4,
+                 rPType.item_4_val,
                  rPType.score,
                  rPType.die,
                  rPType.animIndex

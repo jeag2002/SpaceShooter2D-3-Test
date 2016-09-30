@@ -10,35 +10,27 @@ void UDPDispatcherSessionManager::activeSessions(){
     pthread_create(&hebra_1,NULL,execute_RunTaskUDPSession,session_1);
     pthread_create(&hebra_2,NULL,execute_RunTaskUDPSession,session_2);
 
-    pthread_join(hebra_1,0);
-    pthread_join(hebra_2,0);
+    //pthread_join(hebra_1,0);
+    //pthread_join(hebra_2,0);
 }
 
 void UDPDispatcherSessionManager::processingInputMsgsFromClients(){
 
-    int numActiveSockets = SDLNet_CheckSockets(nCUDP->getSocketSet(),0);
-    if (numActiveSockets != 0){
-    }
+    EventMsg *msgUDP = nCUDP->getMsgFromClientUDP();
+    if (msgUDP->getTypeMsg() != TRAMA_NULL){
 
-    int serverSocketActivity = SDLNet_SocketReady(nCUDP->getUDPSocket());
-    if (serverSocketActivity > 0){
-
-       EventMsg *msgUDP = nCUDP->getMsgFromClientUDP();
-       if (msgUDP->getTypeMsg() != TRAMA_NULL){
-
-           if (msgUDP->getTypeMsg() == TRAMA_QRY_CONECTION){
+        if (msgUDP->getTypeMsg() == TRAMA_QRY_CONECTION){
                processInputConnections(msgUDP);
-           }else if (msgUDP->getTypeMsg() == TRAMA_QRY_SESSION_LIST){
+        }else if (msgUDP->getTypeMsg() == TRAMA_QRY_SESSION_LIST){
                nCUDP->sendMsgToClientUDP(processQueryActiveSessions(msgUDP));
-           }else if (msgUDP->getTypeMsg() == TRAMA_SYNACK_SESSION){
+        }else if (msgUDP->getTypeMsg() == TRAMA_SYNACK_SESSION){
                 EventMsg *output = processActivateSession(msgUDP);
                 if (output->getTypeMsg() != TRAMA_NULL){
                     nCUDP->sendMsgToClientUDP(output);
                 }
-           }else{
+        }else{
 
-           }
-       }
+        }
     }
 };
 
@@ -152,7 +144,10 @@ void UDPDispatcherSessionManager::processInputConnections(EventMsg *ackTrama){
                 //new client!
                 for(int loop_1=0; ((loop_1<MAX_CLIENT) && (!found_it)); loop_1++){
                     if (clientPackets[loop_1]!=NULL){
-                        found_it = (clientPackets[loop_1]->getPacketUPD()->address.host == ackTrama->getPacketUPD()->address.host);
+                        UDPpacket *pack_1 = clientPackets[loop_1]->getPacketUPD();
+                        UDPpacket *pack_2 = ackTrama->getPacketUPD();
+                        logger->debug("free Packet [%d:%d] - Input Packet [%d:%d]",pack_1->address.host,pack_1->address.port,pack_2->address.host,pack_2->address.port);
+                        found_it = ((pack_1->address.host == pack_2->address.host) && (pack_1->address.port == pack_2->address.port));
                     }
                 }
 
@@ -162,6 +157,8 @@ void UDPDispatcherSessionManager::processInputConnections(EventMsg *ackTrama){
                     //RESPUESTA AFIRMATIVA (RESPUESTA ACK SI!)
                     EventMsg *answerACK = generatingACKPackets(1, 1, OK, ackTrama->getPacketUPD());
                     nCUDP->sendMsgToClientUDP(answerACK);
+                    logger->debug("[SSNETWORKMANAGERSERVER::establishCommunication] ACK PACKET ACCEPTED [%d]:[%d]",ackTrama->getPacketUPD()->address.host, ackTrama->getPacketUPD()->address.port);
+                    delete answerACK;
 
                 }else{
                     //SOLICITUD DE CONEXION DE PAQUETE CONECTADO Y DADO DE ALTA PREVIAMENTE (SE DESCARTA)
@@ -172,6 +169,8 @@ void UDPDispatcherSessionManager::processInputConnections(EventMsg *ackTrama){
             }else{
                 EventMsg *answerACK = generatingACKPackets(1, 1, NOK, ackTrama->getPacketUPD());
                 nCUDP->sendMsgToClientUDP(answerACK);
+                logger->debug("[SSNETWORKMANAGERSERVER::establishCommunication] ACK PACKET REJECTED [%d]:[%d]",ackTrama->getPacketUPD()->address.host, ackTrama->getPacketUPD()->address.port);
+                delete answerACK;
             }
         }
 }; //--> QRY_CONECTION; CONECTION

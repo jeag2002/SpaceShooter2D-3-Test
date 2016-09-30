@@ -1,46 +1,18 @@
 #include "Stdafx.h"
 #include "LogEngine.h"
-#include "MemManager.h"
-#include "QueueManager.h"
-
-#include "NetworkClient.h"
 #include "NetworkClientUDP.h"
-
-#include "PredictionEngine.h"
-#include "ClockEngine.h"
-#include "Concurrent_queue.h"
-#include "TCPSession.h"
-
 #include "UDPDispatcherSessionManager.h"
 
 LogEngine *logger;
-MemManager *mem;
-QueueManager *qMem;
-
-NetworkClient *nClient;
 NetworkClientUDP *nClientUDP;
-
 UDPDispatcherSessionManager *uDSM;
-
-PredictionEngine *pEngine;
-ClockEngine *nClock;
-Concurrent_queue *cQ;
-TCPSession *tcpSession;
-
-CollisionEntities *coll;
-AnimationEntities *aEnt;
-IAEntities *iAEnt;
 
 int maxPlayers;
 int numPlayers;
 
-void processServerLogicNew();
 void createEnvirontmentNew();
 void destroyAllNew();
 
-pthread_t hebra_1;
-pthread_t hebra_2;
-static void* execute_RunTaskTCPSession11(void* ctx);
 
 
 int main (int argc, char *argv[])
@@ -60,9 +32,6 @@ int main (int argc, char *argv[])
       logger->info("exception caught!");
    }
 
-   //EventMsg *dataUDP = nClientUDP->evaluatingIncomingPackets();
-   //processServerLogicNew();
-
    destroyAllNew();
    logger->info("================ [SSNETWORKMANAGER-SERVER - END] ================");
    return 0;
@@ -77,8 +46,24 @@ void createEnvirontmentNew(){
 }
 
 
+void destroyAllNew(){
+   delete uDSM;
+   delete nClientUDP;
+   delete logger;
+
+};
+
 //UTIL FOR TCPConn.
 /*
+void processServerLogicNew();
+
+EventMsg *dataUDP = nClientUDP->evaluatingIncomingPackets();
+processServerLogicNew();
+
+pthread_t hebra_1;
+pthread_t hebra_2;
+static void* execute_RunTaskTCPSession11(void* ctx);
+
 void createEnvirontmentNew(){
 
     mem = new MemManager();
@@ -209,7 +194,7 @@ void createEnvirontmentNew(){
     ///////////////////////////////
     logger->debug("[SSNETWORKMANAGERSERVER::createEnvirontment] -- SET UP PARAMETERS ON");
 };
-*/
+
 
 
 static void* execute_RunTaskTCPSession11(void* ctx){
@@ -243,18 +228,4 @@ void processServerLogicNew(){
     nClock->stop();
 };
 
-
-
-
-void destroyAllNew(){
-
-   delete coll;
-   delete aEnt;
-   delete iAEnt;
-   delete mem;
-   delete nClient;
-   delete nClientUDP;
-   delete qMem;
-   delete logger;
-
-};
+*/

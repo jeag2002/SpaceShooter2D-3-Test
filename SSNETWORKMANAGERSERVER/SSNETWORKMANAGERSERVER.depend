@@ -355,17 +355,10 @@
 	"begin_code.h"
 	"close_code.h"
 
-1472940443 source:c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\main.cpp
+1475264942 source:c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\main.cpp
 	"Stdafx.h"
 	"LogEngine.h"
-	"MemManager.h"
-	"QueueManager.h"
-	"NetworkClient.h"
 	"NetworkClientUDP.h"
-	"PredictionEngine.h"
-	"ClockEngine.h"
-	"Concurrent_queue.h"
-	"TCPSession.h"
 	"UDPDispatcherSessionManager.h"
 
 1338124690 c:\workspaces\libs\pthreads-w32-2-9-1-release\pre-built.2\include\pthread.h
@@ -418,7 +411,7 @@
 	"PredictionEngine.h"
 	"ClockEngine.h"
 
-1472293331 c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\eventmsg.h
+1475269963 c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\eventmsg.h
 	"Constants.h"
 	"UtilsProtocol.h"
 	<math.h>
@@ -461,14 +454,14 @@
 	"MemManager.h"
 	"LogEngine.h"
 
-1472157314 c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\constants.h
+1474638937 c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\constants.h
 
 1470477641 c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\networkclient.h
 	"Stdafx.h"
 	"LogEngine.h"
 	"EventMsg.h"
 
-1473110189 source:c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\eventmsg.cpp
+1474640397 source:c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\eventmsg.cpp
 	"EventMsg.h"
 
 1467539205 c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\predictionengine.h
@@ -520,16 +513,16 @@
 	<cmath>
 	<stdint.h>
 
-1473026262 source:c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\networkclientudp.cpp
+1475269408 source:c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\networkclientudp.cpp
 	"NetworkClientUDP.h"
 
-1472602456 c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\networkclientudp.h
+1475268610 c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\networkclientudp.h
 	"Stdafx.h"
 	"LogEngine.h"
 	"EventMsg.h"
 	"CompressPacket.h"
 
-1472084138 c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\compresspacket.h
+1475272261 c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\compresspacket.h
 	"lzo/minilzo.h"
 	"LogEngine.h"
 
@@ -567,7 +560,7 @@
 
 1472498538 source:c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\udpsession.cpp
 
-1472930853 c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\udpdispatchersessionmanager.h
+1475268263 c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\udpdispatchersessionmanager.h
 	"Stdafx.h"
 	"UDPDispatcherSession.h"
 
@@ -588,10 +581,10 @@
 	<pthread.h>
 	"EventMsg.h"
 
-1472930996 source:c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\udpdispatchersessionmanager.cpp
+1475270933 source:c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\udpdispatchersessionmanager.cpp
 	"UDPDispatcherSessionManager.h"
 
-1472939194 source:c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\udpdispatchersession.cpp
+1473972351 source:c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\udpdispatchersession.cpp
 	"UDPDispatcherSession.h"
 
 1469275247 source:c:\workspaces\workcodeblocks\ssnetworkmanagerserver\collisionentities.cpp

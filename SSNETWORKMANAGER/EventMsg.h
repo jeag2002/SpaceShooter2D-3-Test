@@ -656,9 +656,13 @@ class EventMsg{
         rPType.wpn_4 = _rPType.wpn_4;
         rPType.ammo_wpn_4 = _rPType.ammo_wpn_4;
         rPType.item_1 = _rPType.item_1;
+        rPType.item_1_val = _rPType.item_1_val;
         rPType.item_2 = _rPType.item_2;
+        rPType.item_2_val = _rPType.item_2_val;
         rPType.item_3 = _rPType.item_3;
+        rPType.item_3_val = _rPType.item_3_val;
         rPType.item_4 = _rPType.item_4;
+        rPType.item_4_val = _rPType.item_4_val;
         rPType.score = _rPType.score;
         rPType.die = _rPType.die;
     }
@@ -688,9 +692,13 @@ class EventMsg{
         rPType.wpn_4 = 0;
         rPType.ammo_wpn_4 = 0;
         rPType.item_1 = 0;
+        rPType.item_1_val = 0;
         rPType.item_2 = 0;
+        rPType.item_2_val = 0;
         rPType.item_3 = 0;
+        rPType.item_3_val = 0;
         rPType.item_4 = 0;
+        rPType.item_4_val = 0;
         rPType.score = 0;
         rPType.die = 0;
     }
