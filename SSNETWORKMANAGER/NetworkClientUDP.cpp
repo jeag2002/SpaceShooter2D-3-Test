@@ -84,7 +84,9 @@ void NetworkClientUDP::establishCommunicationUDP(){
 
         }else if(responseACK->getTypeMsg() == TRAMA_NULL){
             logger->warn("[SSNETWORKMANAGER::establishCommunicationUDP] --> ACK SERVER FAILED (CONNECTION FAILED)");
+
             SDLNet_UDP_Close(clientSocket);
+            SDLNet_FreePacket(packet);
             SDLNet_Quit();
             exit(1);
         }
@@ -101,6 +103,11 @@ void NetworkClientUDP::getListActiveSessions(){
 
     EventMsg *response = getMsgFromServer();
     if (response->getTypeMsg() == TRAMA_GET_SESSION_LIST){
+
+        uint16_t CRC16FromServer = response->getCRC16();
+        uint16_t CRC16Calculated = UtilsProtocol::calculateCRC16_CCITT((const unsigned char *)response->serializeMsg().c_str(),response->serializeMsg().size());
+        logger->debug("[SSNETWORKMANAGER::LISTACTIVESESSION] CRC GET ACTIVE SESSION COMM FROM SERVER [%X] COMM FROM CLIENT [%X]",CRC16FromServer,CRC16Calculated);
+
         listSessionAvailableType lSAType = response->getListSessionAvailableType();
         logger->info("[SSNETWORKMANAGER::LISTACTIVESESSION] *** LIST ACTIVE MAPS - ACTIVE SESSION FROM SERVER *** -INI- *** ");
         logger->info("[SSNETWORKMANAGER::LISTACTIVESESSION] mapa_ID [%d] session [%d] max_Players [%d] act_Players[%d]",lSAType.map_1_id,lSAType.session_1_1,lSAType.num_player_max_1_1,lSAType.num_player_ava_1_1);
@@ -110,12 +117,39 @@ void NetworkClientUDP::getListActiveSessions(){
         logger->info("[SSNETWORKMANAGER::LISTACTIVESESSION] *** LIST ACTIVE MAPS - ACTIVE SESSION FROM SERVER *** -END- *** ");
     }else if (response->getTypeMsg() == TRAMA_NULL){
         logger->warn("[SSNETWORKMANAGER::LISTACTIVESESSION] --> CANNOT GET LIST. CLOSE SOCKET");
+        SDLNet_UDP_Close(clientSocket);
+        SDLNet_FreePacket(packet);
+        SDLNet_Quit();
+        exit(1);
     }
     delete response;
 
 };
 
+EventMsg *NetworkClientUDP::registerToActiveSession(){
 
+    indexTramaSend++;
+
+    playerDataType pDT;
+    pDT.actMap = 1;
+    pDT.session = 1;
+    pDT.idPlayer = 0;
+    pDT.lvl = 0;
+    pDT.playerDataID = 0;
+    pDT.typeID = 0;
+    pDT.heigth = 0;
+    pDT.width = 0;
+    pDT.x_pos = 0.0f;
+    pDT.y_pos = 0.0f;
+
+
+    EventMsg *TRSYNACKSESSION = new EventMsg(TRAMA_SYNACK_SESSION,indexTramaSend,indexTramaGet,0,1,(uint16_t)0,packet,pDT);
+    sendMsgToServer(TRSYNACKSESSION);
+    delete TRSYNACKSESSION;
+
+    EventMsg *response = getMsgFromServer();
+    return response;
+}
 
 
 //send one message to REMOTE
@@ -158,6 +192,7 @@ EventMsg *NetworkClientUDP::getMsgFromServer(){
     while(!DONE){
 
           //if (SDLNet_UDP_Recv(clientSocket, packet)){
+          for(int i=0; i<BUFFER_SIZE; i++){packet->data[i] = '\0';}
           if (SDLNet_UDP_Recv(clientSocket, packet)){
 
             logger->warn("[SSNETWORKMANAGER::getMsgFromServerUDP] --> PACKET RECEIVED [%s]", packet->data);

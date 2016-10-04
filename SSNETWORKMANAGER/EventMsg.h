@@ -3,7 +3,7 @@
 
 #define BUFFER_SIZE 511
 #define BUFFER_TRAMA 128
-#define BUFFER_SUBTRAMA_INFO 103
+#define BUFFER_SUBTRAMA_INFO 95
 
 #include "Constants.h"
 #include "UtilsProtocol.h"

@@ -43,9 +43,9 @@ public:
 
         EventMsg *msg = NULL;
 
-        //pthread_mutex_lock(&front_mutex);
+        pthread_mutex_lock(&front_mutex);
         msg = _queue_.front();
-        //pthread_mutex_unlock(&front_mutex);
+        pthread_mutex_unlock(&front_mutex);
 
         return msg;
     }
@@ -54,9 +54,9 @@ public:
 
         bool res = false;
 
-        //pthread_mutex_lock(&empty_mutex);
+        pthread_mutex_lock(&empty_mutex);
         res = (_queue_.size() == 0);
-        //pthread_mutex_unlock(&empty_mutex);
+        pthread_mutex_unlock(&empty_mutex);
 
         return res;
     }

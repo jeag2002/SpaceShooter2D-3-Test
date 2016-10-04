@@ -5,21 +5,25 @@
 #include "UDPDispatcherSession.h"
 #define TOT_CLIENTS 8
 
+
 static void* execute_RunTaskUDPSession(void* ctx){
     UDPDispatcherSession *uDPDSes = (UDPDispatcherSession *)ctx;
     uDPDSes->Run();
 };
 
+
 class UDPDispatcherSessionManager{
 
 public:
 
-    UDPDispatcherSessionManager(LogEngine *_logger, NetworkClientUDP *_nCUDP){
+    UDPDispatcherSessionManager(LogEngine *_logger, NetworkClientUDP *_nCUDP, Concurrent_queue_UDP *cQ11, Concurrent_queue_UDP *cQ22){
         logger = _logger;
         nCUDP = _nCUDP;
 
+
         cQ1 = new Concurrent_queue_UDP();
         cQ2 = new Concurrent_queue_UDP();
+
 
         session_1 = new UDPDispatcherSession(logger, 1,1, cQ1, cQ2); //mapa 1 session 1
         session_2 = new UDPDispatcherSession(logger, 1,2, cQ1, cQ2); //mapa 1 session 1

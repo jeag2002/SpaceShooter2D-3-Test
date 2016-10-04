@@ -672,8 +672,7 @@ void EventMsg::unmarshallMsg(const char *buffer){
 std::string EventMsg::serializeMsg(){
     char subBuffer[BUFFER_SUBTRAMA_INFO];
 
-    for(int i=0; i<BUFFER_SUBTRAMA_INFO-1; i++){subBuffer[i]='0';}
-    subBuffer[BUFFER_SUBTRAMA_INFO-1] = '\0';
+    for(int i=0; i<BUFFER_SUBTRAMA_INFO; i++){subBuffer[i]='\0';}
 
     //QUERY SYNACK CONECTION = TRAMA_SYNACK_CONECTION (SERVER) --> el servidor esta preparado para recibir señales.
     //QUERY CONECTION = TRAMA_QRY_CONECTION (CLIENT)

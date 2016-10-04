@@ -64,7 +64,7 @@ void NetworkClientUDP::sendMsgToClientUDP(EventMsg *msg){
         exit(-1);
     }
 
-    logger->debug("[SSNETWORKMANAGERSERVER::sendMsgToClientUDP] SERVER MSG TO CLIENT [%s] size [%d]",packetUDP->data,packetUDP->len);
+    logger->debug("[SSNETWORKMANAGERSERVER::sendMsgToClientUDP] SERVER MSG TO CLIENT [%s] size [%d] CRC16 [%d]",packetUDP->data,packetUDP->len,msg->getCRC16());
 
 };
 

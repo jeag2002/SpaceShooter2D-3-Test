@@ -38,10 +38,6 @@ NetworkClientUDP(LogEngine *_logger){
     exit(1);
 };
 
-
-void initCommunicationUDP();
-void establishCommunicationUDP();
-
 int getIndexTramaSend(){return indexTramaSend;}
 void setIndexTramaSend(int _indexTramaSend){indexTramaSend = _indexTramaSend;}
 
@@ -63,11 +59,16 @@ void clearBufferPacket(UDPpacket *packetUDP){
 
 UDPpacket *getRemotePacket(){return packet;}
 
-void getListActiveSessions();
-
-
 void sendMsgToServer(EventMsg *msg);
 EventMsg *getMsgFromServer();
+
+void initCommunicationUDP();
+void establishCommunicationUDP();
+void getListActiveSessions();
+EventMsg *registerToActiveSession();
+
+
+
 
 
 private:

@@ -3,7 +3,7 @@
 
 #define BUFFER_SIZE 511
 #define BUFFER_TRAMA 128
-#define BUFFER_SUBTRAMA_INFO 103
+#define BUFFER_SUBTRAMA_INFO 95
 
 #include "Constants.h"
 #include "UtilsProtocol.h"
@@ -476,8 +476,6 @@ class EventMsg{
         setOrderType(_OType);
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
     EventMsg(EventMsg *_msg){
         setMsg(_msg);
@@ -971,6 +969,30 @@ class EventMsg{
         clearPlayerDataType();
         //////////////////////////
     }
+
+   /*
+    typeMsg = _typeMsg;
+    tramaSend = _tramaSend;
+    tramaGet = _tramaGet;
+    more = _more;
+    numtrazas = _numtrazas;
+    CRC16 = _CRC16;
+   */
+
+
+  char *toString(){
+      char bufferEvent[128];
+
+      for(int i=0; i<128; i++){bufferEvent[i]='\0';}
+      sprintf(bufferEvent,"typeMsg:=[%d] indexSend:=[%d] indexGet:=[%d] more:=[%d] numtrazas:=[%d] CRC16:=[%d]",
+              this->getTypeMsg(),
+              this->getTramaSend(),
+              this->getTramaGet(),
+              this->getMore(),
+              this->getNumTrazas(),
+              this->getCRC16());
+      return bufferEvent;
+  }
 
 
   private:

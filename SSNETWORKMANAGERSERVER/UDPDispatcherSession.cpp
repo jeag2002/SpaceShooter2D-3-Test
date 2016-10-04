@@ -130,6 +130,7 @@ EventMsg *UDPDispatcherSession::sendAckMsg(DynamicEntity *dEntity, EventMsg *msg
         msg->setTypeMsg(TRAMA_ACK_SESSION);
 
         playerDataType pDT;
+        pDT.playerDataID = 0;
         pDT.actMap = this->mapId;
         pDT.session = this->sessionId;
         pDT.idPlayer =  dEntity->getIDDE();
@@ -139,6 +140,17 @@ EventMsg *UDPDispatcherSession::sendAckMsg(DynamicEntity *dEntity, EventMsg *msg
         pDT.y_pos = dEntity->getY();
         pDT.width = dEntity->getWidth();
         pDT.heigth = dEntity->getHeight();
+
+        logger->debug("[UDPDispatcherSession::sendAckMsg] SERVER SESSION PLAYER Map:%d Session:%d IdPlayer:%d lvl:%d pos:(%f,%f) width:%d, height:%d",
+                      pDT.actMap,
+                      pDT.session,
+                      pDT.idPlayer,
+                      pDT.lvl,
+                      pDT.x_pos,
+                      pDT.y_pos,
+                      pDT.width,
+                      pDT.heigth);
+
 
         msg->setPlayerDataType(pDT);
         msg->setMore(NOK);
@@ -183,7 +195,7 @@ EventMsg *UDPDispatcherSession::setClientForSession(EventMsg *msg){
     msgOutput->setPacketUPD(msg->getPacketUPD());
     msgOutput->setTypeMsg(TRAMA_NULL);
 
-    if (clientes.size()){
+    if (clientes.size()==0){
         DynamicEntity *dEntity = getRemotePlayer();
         if (dEntity != NULL){
             UDPSession *sessionUDP = new UDPSession(dEntity->getIDDE(),logger,mem,msg->getPacketUPD());
@@ -243,15 +255,18 @@ void UDPDispatcherSession::processInputMsg(){
     try{
         if (!cQInput->isEmpty()){
             EventMsg *msg = cQInput->front();
-            if (msg->getTypeMsg() == TRAMA_ACK_SESSION){
-                playerDataType pDT = msg->getPlayerDataType();
-                if ((pDT.actMap == this->mapId) && (pDT.session == this->sessionId)){
-                    EventMsg *response = setClientForSession(msg);
-                    cQOutput->push(response);
-                    cQInput->pop();
+            if (msg != NULL){
+                if (msg->getTypeMsg() == TRAMA_SYNACK_SESSION){
+                    playerDataType pDT = msg->getPlayerDataType();
+                    logger->debug("[UDPDispatcherSession::processInputMsg] MAP_PLAYER (%d,%d) MAP_SESSION (%d,%d)",pDT.actMap,pDT.session,this->mapId,this->sessionId);
+                    if ((pDT.actMap == this->mapId) && (pDT.session == this->sessionId)){
+                        EventMsg *response = setClientForSession(msg);
+                        cQOutput->push(response);
+                        cQInput->pop();
+                    }
+                }else if (msg->getTypeMsg() <= TRAMA_NULL) {
+                    processSessions(msg);
                 }
-            }else{
-                processSessions(msg);
             }
         }
     }catch(...){
@@ -264,8 +279,8 @@ void UDPDispatcherSession::processInputMsg(){
     while(true){
         pthread_t iThread = pthread_self();
         logger->debug("[UDPDispatcherSession::Run] [%08x] **** INI",iThread);
-        processInputMsg();
         pEngine->processPrediction();
+        processInputMsg();
         SDL_Delay(100);
         logger->debug("[UDPDispatcherSession::Run] [%08x] **** END",iThread);
     }

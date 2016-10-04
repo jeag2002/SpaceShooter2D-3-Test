@@ -68,6 +68,40 @@ int main (int argc, char *argv[])
    nClientUDP->initCommunicationUDP();
    nClientUDP->establishCommunicationUDP();
    nClientUDP->getListActiveSessions();
+   EventMsg *responseMsg =  nClientUDP->registerToActiveSession();
+
+   if (responseMsg->getTypeMsg() == TRAMA_ACK_SESSION){
+        uint16_t CRC16FromServer = responseMsg->getCRC16();
+        uint16_t CRC16Calculated = UtilsProtocol::calculateCRC16_CCITT((const unsigned char *)responseMsg->serializeMsg().c_str(),responseMsg->serializeMsg().size());
+        logger->debug("[SSNETWORKMANAGER::MAIN] CRC TRAMA_ACK_SESSION COMM FROM SERVER [%d] COMM FROM CLIENT [%d]",CRC16FromServer,CRC16Calculated);
+        playerDataType pDT = responseMsg->getPlayerDataType();
+        logger->debug("[SSNETWORKMANAGER::MAIN] SESSION PLAYER Map:%d Session:%d IdPlayer:%d lvl:%d pos:(%f,%f) width:%d, height:%d",
+                      pDT.actMap,
+                      pDT.session,
+                      pDT.idPlayer,
+                      pDT.lvl,
+                      pDT.x_pos,
+                      pDT.y_pos,
+                      pDT.width,
+                      pDT.heigth);
+
+
+   }else if (responseMsg->getTypeMsg() == TRAMA_NACK_SESSION){
+       uint16_t CRC16FromServer = responseMsg->getCRC16();
+       uint16_t CRC16Calculated = UtilsProtocol::calculateCRC16_CCITT((const unsigned char *)responseMsg->serializeMsg().c_str(),responseMsg->serializeMsg().size());
+       logger->debug("[SSNETWORKMANAGER::MAIN] CRC TRAMA_NACK_SESSION COMM FROM SERVER [%d] COMM FROM CLIENT [%d]",CRC16FromServer,CRC16Calculated);
+       answerType aType = responseMsg->getAnswerType();
+       logger->warn("[SSNETWORKMANAGER::MAIN] NACK::RESULT [%d]",aType.result);
+       delete nClientUDP;
+       exit(-1);
+
+   }else if (responseMsg->getTypeMsg() == TRAMA_NULL){
+        logger->warn("[SSNETWORKMANAGER::MAIN] RESULT NULL");
+        delete nClientUDP;
+        exit(-1);
+   }else{
+        logger->warn("[SSNETWORKMANAGER::MAIN] PACKET NOT RECOGNIZED");
+   }
 
    /*
    initSDLWindows();
