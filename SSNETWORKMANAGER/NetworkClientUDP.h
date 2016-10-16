@@ -8,7 +8,7 @@
 
 #define BUFFER_SIZE 512
 #define SIZE_TRAMA 128
-#define MAX_DELAY 500
+#define MAX_DELAY 2000
 
 #define REMOTE_PORT 8888
 #define LOCAL_PORT 10022
@@ -62,10 +62,10 @@ UDPpacket *getRemotePacket(){return packet;}
 void sendMsgToServer(EventMsg *msg);
 EventMsg *getMsgFromServer();
 
-void initCommunicationUDP();
+void initCommunicationUDP(int localPort);
 void establishCommunicationUDP();
 void getListActiveSessions();
-EventMsg *registerToActiveSession();
+EventMsg *registerToActiveSession(int mapClient, int sessionClient);
 
 
 

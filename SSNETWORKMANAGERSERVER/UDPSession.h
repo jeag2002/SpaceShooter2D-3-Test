@@ -28,6 +28,13 @@ public:
 
     };
 
+    void setUDPSession(UDPSession *session){
+        this->indexDataGet = session->getIndexDataGet();
+        this->indexDataSend = session->getIndexDataSend();
+        this->playerID = session->getPlayerId();
+    }
+
+
     UDPpacket *getPacket(){return packet;}
     void setPacket(UDPpacket *_packet){packet = _packet;}
 
@@ -37,8 +44,10 @@ public:
     int getIndexDataSend(){return indexDataSend;}
     void setIndexDataSend(int _indexDataSend){indexDataSend = _indexDataSend;}
 
+    void setPlayerId(int _playerID){playerID = _playerID;}
+    int getPlayerId(){return playerID;}
 
-    EventMsg *Run(EventMsg *msg){return msg;};
+    void Run(EventMsg *msg);
 
     ~UDPSession(){};
 

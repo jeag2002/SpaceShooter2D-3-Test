@@ -1,7 +1,7 @@
 #include "NetworkClientUDP.h"
 
 //https://www.libsdl.org/projects/SDL_net/docs/demos/udptftpserver.c
-void NetworkClientUDP::initCommunicationUDP(){
+void NetworkClientUDP::initCommunicationUDP(int localPort){
 
 
     if ( SDLNet_Init() == -1 ){
@@ -9,7 +9,7 @@ void NetworkClientUDP::initCommunicationUDP(){
         exit(-1);
     }
 
-    clientSocket = SDLNet_UDP_Open(LOCAL_PORT);
+    clientSocket = SDLNet_UDP_Open(localPort);
     if ( clientSocket == nullptr ){
         logger->warn("[SSNETWORKMANAGER::initConnectionUDP] -->  SDLNet_UDP_Open: %s\n",SDLNet_GetError());
         exit(-1);
@@ -59,6 +59,9 @@ void NetworkClientUDP::establishCommunicationUDP(){
 
        //indexTramaSend++;
        //-->QRY ACK PACKET (SEND TO SERVER) indexTramaSend:1; indexTramaGet:0
+
+       logger->info("[SSNETWORKMANAGER::establishCommunicationUDP] --> QRY_CONECTION TRAMASEND[%d] TRAMAGET[%d]",indexTramaSend,indexTramaGet);
+
        EventMsg *qryACK = new EventMsg(TRAMA_QRY_CONECTION,indexTramaSend,indexTramaGet,0,1,(uint16_t)0,packet);
        sendMsgToServer(qryACK);
        indexTramaGet++;
@@ -77,9 +80,9 @@ void NetworkClientUDP::establishCommunicationUDP(){
 
            answerType aType = responseACK->getAnswerType();
            if (aType.result == OK){
-               logger->info("[SSNETWORKMANAGER::establishCommunicationUDP] --> ACK SERVER ESTABLISHED");
+               logger->info("[SSNETWORKMANAGER::establishCommunicationUDP] --> ACK SERVER ESTABLISHED TRAMASEND[%d] TRAMAGET[%d]",indexTramaSend,indexTramaGet);
            }else{
-               logger->info("[SSNETWORKMANAGER::establishCommunicationUDP] --> ACK SERVER FAILED (CANNOT ACCEPT MORE CLIENTS)");
+               logger->info("[SSNETWORKMANAGER::establishCommunicationUDP] --> ACK SERVER FAILED (CANNOT ACCEPT MORE CLIENTS) TRAMASEND[%d] TRAMAGET[%d]",indexTramaSend,indexTramaGet);
            }
 
         }else if(responseACK->getTypeMsg() == TRAMA_NULL){
@@ -97,6 +100,8 @@ void NetworkClientUDP::establishCommunicationUDP(){
 
 void NetworkClientUDP::getListActiveSessions(){
 
+
+    logger->info("[SSNETWORKMANAGER::getListActiveSessions] --> QRY_LIST_ACTIVE_SESSION TRAMASEND[%d] TRAMAGET[%d]",indexTramaSend,indexTramaGet);
     EventMsg *TRQRYSESSIONLIST = new EventMsg(TRAMA_QRY_SESSION_LIST,indexTramaSend,indexTramaGet,0,1,(uint16_t)0,packet);
     sendMsgToServer(TRQRYSESSIONLIST);
     delete TRQRYSESSIONLIST;
@@ -106,7 +111,7 @@ void NetworkClientUDP::getListActiveSessions(){
 
         uint16_t CRC16FromServer = response->getCRC16();
         uint16_t CRC16Calculated = UtilsProtocol::calculateCRC16_CCITT((const unsigned char *)response->serializeMsg().c_str(),response->serializeMsg().size());
-        logger->debug("[SSNETWORKMANAGER::LISTACTIVESESSION] CRC GET ACTIVE SESSION COMM FROM SERVER [%X] COMM FROM CLIENT [%X]",CRC16FromServer,CRC16Calculated);
+        logger->debug("[SSNETWORKMANAGER::LISTACTIVESESSION] CRC GET ACTIVE SESSION LIST TRAMASEND[%d] TRAMAGET[%d] COMM FROM SERVER [%X] COMM FROM CLIENT [%X]",indexTramaSend,indexTramaGet,CRC16FromServer,CRC16Calculated);
 
         listSessionAvailableType lSAType = response->getListSessionAvailableType();
         logger->info("[SSNETWORKMANAGER::LISTACTIVESESSION] *** LIST ACTIVE MAPS - ACTIVE SESSION FROM SERVER *** -INI- *** ");
@@ -126,13 +131,13 @@ void NetworkClientUDP::getListActiveSessions(){
 
 };
 
-EventMsg *NetworkClientUDP::registerToActiveSession(){
+EventMsg *NetworkClientUDP::registerToActiveSession(int mapClient, int sessionClient){
 
     indexTramaSend++;
 
     playerDataType pDT;
-    pDT.actMap = 1;
-    pDT.session = 1;
+    pDT.actMap = mapClient;
+    pDT.session = sessionClient;
     pDT.idPlayer = 0;
     pDT.lvl = 0;
     pDT.playerDataID = 0;
@@ -142,6 +147,8 @@ EventMsg *NetworkClientUDP::registerToActiveSession(){
     pDT.x_pos = 0.0f;
     pDT.y_pos = 0.0f;
 
+
+    logger->info("[SSNETWORKMANAGER::registerToActiveSession] --> TRAMA_SYNACK_SESSION TRAMASEND[%d] TRAMAGET[%d]",indexTramaSend,indexTramaGet);
 
     EventMsg *TRSYNACKSESSION = new EventMsg(TRAMA_SYNACK_SESSION,indexTramaSend,indexTramaGet,0,1,(uint16_t)0,packet,pDT);
     sendMsgToServer(TRSYNACKSESSION);

@@ -213,9 +213,13 @@ public:
         rPType.wpn_4 = 0;
         rPType.ammo_wpn_4 = 0;
         rPType.item_1 = 0;
+        rPType.item_1_val = 0;
         rPType.item_2 = 0;
+        rPType.item_2_val = 0;
         rPType.item_3 = 0;
+        rPType.item_3_val = 0;
         rPType.item_4 = 0;
+        rPType.item_4_val = 0;
         rPType.score = 20;
         rPType.die = 0;
         rPType.animIndex = 1;

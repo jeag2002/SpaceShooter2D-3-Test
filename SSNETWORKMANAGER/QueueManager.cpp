@@ -8,24 +8,19 @@ void QueueManager::runRemoteData(){
 
     log->debug("[QueueManager::RemoteData] processRemoteData");
 
-    //const Uint32 timeout = 10;
+        int tramaIndexGet = nClientUDP->getIndexTramaGet();
+        int tramaIndexSend = nClientUDP->getIndexTramaSend()+1;
 
-    //while(!DONE){
+        nClientUDP->setIndexTramaGet(tramaIndexGet);
+        nClientUDP->setIndexTramaSend(tramaIndexSend);
 
-        //SDL_LockMutex(blockSock);
-        //SDL_CondWait(prodSock, blockSock);
-        //SDL_CondWaitTimeout(prodSock,blockSock,timeout);
-
-        //nClock->start();
-        int tramaIndex = nClient->getActTrama();
-        nClient->sendMsgToServer(new EventMsg(TRAMA_QRY_DATASERVER,tramaIndex,tramaIndex,0,1,(uint16_t)0));
+        nClientUDP->sendMsgToServer(new EventMsg(TRAMA_QRY_DATASERVER,nClientUDP->getIndexTramaSend(),nClientUDP->getIndexTramaGet(),0,1,(uint16_t)0,nClientUDP->getRemotePacket()));
         processRemote = false;
 
         int mark_initial = SDL_GetTicks();
 
-        //while ((nClock->get_ticks() < 1000 / 100)){
         while((SDL_GetTicks()-mark_initial) <= 2000){
-            EventMsg *msg = nClient->getMsgFromServer();
+            EventMsg *msg = nClientUDP->getMsgFromServer();
             if (msg->getTypeMsg() == TRAMA_GET_DATASERVER){
                 if (msg->getRemotePlayerType().typeTramaID != 0){
 
@@ -47,15 +42,6 @@ void QueueManager::runRemoteData(){
                 }
             }
         }
-        //}
-        //nClock->stop();
-
-        //SDL_UnlockMutex(blockSock);
-        //SDL_CondSignal(consSock);
-
-
-        //SDL_LockMutex(blockMem);
-        //SDL_CondWait(prodMem, blockMem);
 
 
         if (!processRemote){
@@ -63,7 +49,7 @@ void QueueManager::runRemoteData(){
             log->warn("[QueueManager::RemoteData] NO RECOVE ALL THE INFORMATION. ACTIVE PREDICTION CLIENTSIDE ENGINE");
 
             while (!processRemote){
-                 EventMsg *msg = nClient->getMsgFromServer();
+                 EventMsg *msg = nClientUDP->getMsgFromServer();
                  if (msg->getMsgType().msgTypeID!=0){
                     msgFromServer.push(msg);
                  }else if (msg->getRemotePlayerType().typeTramaID != 0){
@@ -76,9 +62,8 @@ void QueueManager::runRemoteData(){
                  }
                  if (msg->getMore()!=OK){processRemote = true;}
             }
-            //nClock->pause();
             pEngine->processPrediction();
-            //nClock->unpause();
+
         }else{
 
             log->info("[QueueManager::RemoteData] RECOVERING ALL THE INFORMATION DONE. ACTIVE INTERPOLATION CLIENT-SERVER ENGINE");
@@ -127,25 +112,12 @@ void QueueManager::runRemoteData(){
 
                 dataFromServer.pop();
             }
-
-
-            //do stuff with dataFromServer.push
-            //borra dataFromServer
-            //do stuff with msgFromServer.push
-            //borra msgFromServer
         }
+
 
         //EMPTY BUFFER DATA
         while (!dataFromServer.empty()){dataFromServer.pop();}
         while (!msgFromServer.empty()){msgFromServer.pop();}
-
-
-        //SDL_UnlockMutex(blockMem);
-        //SDL_CondSignal(consMem);
-
-        //nClock->evaluateFramerrate();
-    //}
-
 
 };
 

@@ -13,6 +13,8 @@
 #define REMOTE_PORT 10022
 #define LOCAL_PORT 8888
 
+#define SIZE_REMOTE_ELEMS 21
+
 #define REMOTE_HOST "127.0.0.1"
 
 
@@ -26,12 +28,14 @@ NetworkClientUDP(LogEngine *_logger){
     cP = new CompressPacket(logger);
     enabledCompression = false;
     enabledCompression = cP->Init();
+    pthread_mutex_init(&pushData, NULL);
 
 }
 
 ~NetworkClientUDP(){
     SDLNet_UDP_Close(serverSocket);
     SDLNet_FreePacket(packet);
+    SDLNet_FreePacketV(out);
     SDLNet_Quit();
 };
 
@@ -56,6 +60,7 @@ void clearBufferPacket(UDPpacket *packetUDP){
 }
 
 
+void sendMsgVectorToClientUDP(EventMsg **msgs);
 void sendMsgToClientUDP(EventMsg *msg);
 void sendBuffMsgToClientUDP(EventMsg *msg[]){}
 EventMsg *getMsgFromClientUDP();
@@ -71,6 +76,7 @@ LogEngine *logger;
 IPaddress serverIP;
 UDPpacket *packet;
 UDPsocket serverSocket;
+UDPpacket **out;
 
 std::string host;
 char buffer[BUFFER_SIZE];
@@ -78,6 +84,8 @@ char buffer[BUFFER_SIZE];
 
 CompressPacket *cP;
 bool enabledCompression;
+
+pthread_mutex_t pushData;
 
 
 };

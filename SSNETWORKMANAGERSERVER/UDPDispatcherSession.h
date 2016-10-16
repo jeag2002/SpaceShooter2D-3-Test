@@ -19,7 +19,7 @@ class UDPDispatcherSession{
 
 public:
 
-    UDPDispatcherSession(LogEngine *_logger, int _mapId, int _sessionId, Concurrent_queue_UDP *_cq_input, Concurrent_queue_UDP *_cq_output){
+    UDPDispatcherSession(LogEngine *_logger, int _mapId, int _sessionId, NetworkClientUDP *_nCUDP, Concurrent_queue_UDP *_cq_input, Concurrent_queue_UDP *_cq_output){
         logger = _logger;
 
         mem = new MemManager();
@@ -37,6 +37,8 @@ public:
 
         cQInput = _cq_input;
         cQOutput = _cq_output;
+
+        nCUDP = _nCUDP;
 
         createEnvirontmentNew();
 
@@ -67,6 +69,10 @@ public:
 
     //PROCESS MSGS
     void processSessions(EventMsg *msg);
+
+    //SEND INFO DATA FROM MEMORY
+    void sendInfoDataSession(int playerID, EventMsg *msg);
+    EventMsg *sendWorldStateToClient(EventMsg *msg, int more, int indexServData, DynamicEntity *dEntity);
 
     void Run();
 

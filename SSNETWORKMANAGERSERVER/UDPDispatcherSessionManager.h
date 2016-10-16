@@ -25,8 +25,8 @@ public:
         cQ2 = new Concurrent_queue_UDP();
 
 
-        session_1 = new UDPDispatcherSession(logger, 1,1, cQ1, cQ2); //mapa 1 session 1
-        session_2 = new UDPDispatcherSession(logger, 1,2, cQ1, cQ2); //mapa 1 session 1
+        session_1 = new UDPDispatcherSession(logger, 1,1, nCUDP, cQ1, cQ2); //mapa 1 session 1
+        session_2 = new UDPDispatcherSession(logger, 1,2, nCUDP, cQ1, cQ2); //mapa 1 session 1
 
         clearInputClientsToServer();
         activeSessions();

@@ -766,7 +766,7 @@ std::string EventMsg::serializeMsg(){
 
         //REMOTE ACTOR (PRIMERA VERSION, TODOS LOS ELEMENTOS ACTIVOS SON ACTORES)
         if (rPType.typeTramaID!=0){ //Longitud 87
-            sprintf(subBuffer,"%03d%03d%03d%03d%03d%05d%05d%01d%06d%02d%06d%02d%03d%03d%01d%03d%03d%02d%01d%03d%01%03d%01d%03d%01d%03d%01d%02d%01d%02d%01d%02d%01d%02d%05d%01d%03d",
+            sprintf(subBuffer,"%03d%03d%03d%03d%03d%05d%05d%01d%06d%02d%06d%02d%03d%03d%01d%03d%03d%02d%01d%03d%01d%03d%01d%03d%01d%03d%01d%02d%01d%02d%01d%02d%01d%02d%05d%01d%03d",
                  rPType.typeTramaID,
                  rPType.typeID,
                  rPType.entityID,

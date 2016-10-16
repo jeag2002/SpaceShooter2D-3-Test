@@ -36,6 +36,14 @@ void NetworkClientUDP::initCommunicationUDP(){
     packet->address.host = serverIP.host;
     packet->address.port = serverIP.port;
 
+    out = SDLNet_AllocPacketV(SIZE_REMOTE_ELEMS, BUFFER_SIZE);
+
+    if (out == NULL){
+        logger->error("[SSNETWORKMANAGERSERVER::initCommunicationUDP] cannot allocate vector size [%s] buffer size [%s]",SIZE_REMOTE_ELEMS,BUFFER_SIZE);
+        //exit(-1);
+    }
+
+
     logger->info("[SSNETWORKMANAGERSERVER::initCommunicationUDP] UDP CONFIGURATION DONE!");
 };
 
@@ -68,6 +76,44 @@ void NetworkClientUDP::sendMsgToClientUDP(EventMsg *msg){
 
 };
 
+
+void NetworkClientUDP::sendMsgVectorToClientUDP(EventMsg **msgs){
+
+    pthread_mutex_lock(&pushData);
+
+    for(int index_packet = 0; index_packet < SIZE_REMOTE_ELEMS; index_packet++){
+
+             UDPpacket *packet_data = SDLNet_AllocPacket(BUFFER_SIZE);
+             for(int i=0; i<100; i++){packet_data->data[i]='\0';}
+
+             EventMsg *eventMsg = msgs[index_packet];
+             std::string msgAsString(eventMsg->marshallMsg());
+             memcpy(packet_data->data, msgAsString.c_str(), msgAsString.length() );
+
+             packet_data->len = msgAsString.length();
+             packet_data->channel = eventMsg->getPacketUPD()->channel;
+             packet_data->status = eventMsg->getPacketUPD()->status;
+             packet_data->address.host = eventMsg->getPacketUPD()->address.host;
+             packet_data->address.port = eventMsg->getPacketUPD()->address.port;
+
+             logger->debug("[SSNETWORKMANAGERSERVER::sendMsgVectorToClientUDP] tramaSend[%d] tramaGet[%d] data_to_client[%d]:=[%s]",eventMsg->getTramaSend(),eventMsg->getTramaGet(),index_packet,packet_data->data);
+
+             out[index_packet] = packet_data;
+    }
+
+    /*
+    int data = SDLNet_UDP_SendV(serverSocket,out,SIZE_REMOTE_ELEMS);
+    if(data <SIZE_REMOTE_ELEMS){
+       logger->debug("[SSNETWORKMANAGERSERVER::sendMsgVectorToClientUDP] ERROR IN THE PROCESS OF SENDING [%d] MSG, SENT DATA [%d]",SIZE_REMOTE_ELEMS,data);
+       exit(-1);
+    }
+    */
+
+    pthread_mutex_unlock(&pushData);
+
+
+}
+
 //-->RECEIVE ONE MSG FROM CLIENT(S)
 EventMsg *NetworkClientUDP::getMsgFromClientUDP(){
 
@@ -98,7 +144,7 @@ EventMsg *NetworkClientUDP::getMsgFromClientUDP(){
 
             if(SDLNet_UDP_Bind(serverSocket, 0, &ipAdd)==-1)
             {
-                std::cout << "SDLNet_UDP_Bind: " << SDLNet_GetError() << "\n";
+                logger->debug("[SSNETWORKMANAGERSERVER::getMsgFromClientUDP] SDLNet_UDP_Bind: %s",SDLNet_GetError());
                 exit(-1);
             }
 

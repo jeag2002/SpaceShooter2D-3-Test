@@ -4,7 +4,7 @@
 #include "MemManager.h"
 #include "EventMsg.h"
 #include <queue>
-#include "NetworkClient.h"
+#include "NetworkClientUDP.h"
 #include "LogEngine.h"
 #include "PredictionEngine.h"
 #include "ClockEngine.h"
@@ -13,10 +13,10 @@ class QueueManager{
 
 public:
 
-QueueManager(LogEngine *_log, MemManager *_mem, NetworkClient *_nClient, PredictionEngine *_pEngine, SDL_mutex *_blockMem, SDL_mutex *_blockSock, SDL_cond *_prodMem, SDL_cond *_consMem, SDL_cond *_prodSock, SDL_cond *_consSock){
+QueueManager(LogEngine *_log, MemManager *_mem, NetworkClientUDP *_nClientUDP, PredictionEngine *_pEngine, SDL_mutex *_blockMem, SDL_mutex *_blockSock, SDL_cond *_prodMem, SDL_cond *_consMem, SDL_cond *_prodSock, SDL_cond *_consSock){
     log = _log;
     mem = _mem;
-    nClient = _nClient;
+    nClientUDP = _nClientUDP;
     pEngine = _pEngine;
     nClock = new ClockEngine(100);
     runAsLocal = true;
@@ -73,7 +73,7 @@ void setMessageOutput(EventMsg *msg){
 private:
     LogEngine *log;
     MemManager *mem;
-    NetworkClient *nClient;
+    NetworkClientUDP *nClientUDP;
     ClockEngine *nClock;
     std::queue<EventMsg *> dataFromServer; //
     std::queue<EventMsg *> msgFromServer;  //

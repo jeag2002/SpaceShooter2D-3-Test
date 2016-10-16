@@ -54,6 +54,13 @@ void destroySDLWindows();
 void processPlayerSession(EventMsg *msg);
 void renderScenario();
 
+pthread_t hebra_1;
+
+static void* execute_QueueManagerSession(void* ctx){
+    QueueManager *qM = (QueueManager*)ctx;
+    qM->runRemoteData();
+};
+
 
 int main (int argc, char *argv[])
 {
@@ -63,18 +70,44 @@ int main (int argc, char *argv[])
    logger->printLogFlag();
    logger->info("================ [SSNETWORKMANAGER-CLIENT - INI] ================");
 
-   createEnvirontment();
+   Uint16 port = LOCAL_PORT;
+   Uint16 mapClient = 0;
+   Uint16 sessionClient = 0;
 
-   nClientUDP->initCommunicationUDP();
+   std::cout << "\r\nEnter local port SSNETWORKMANAGER-CLIENT: ";
+   std::cin >> port;
+
+   logger->info("[SSNETWORKMANAGER::Main] OPEN PORT (%d)",port);
+
+
+   std::cout << "\r\nEnter local map SSNETWORKMANAGER-CLIENT[1-2]: ";
+   std::cin >> mapClient;
+
+   logger->info("[SSNETWORKMANAGER::Main] OPEN MAP (%d)",mapClient);
+
+   std::cout << "\r\nEnter local session SSNETWORKMANAGER-CLIENT[1-2]: ";
+   std::cin >> sessionClient;
+
+   logger->info("[SSNETWORKMANAGER::Main] OPEN SESSION (%d)",sessionClient);
+
+
+
+   createEnvirontment();
+   initSDLWindows();
+
+   nClientUDP->initCommunicationUDP(port);
+
    nClientUDP->establishCommunicationUDP();
    nClientUDP->getListActiveSessions();
-   EventMsg *responseMsg =  nClientUDP->registerToActiveSession();
+
+   EventMsg *responseMsg =  nClientUDP->registerToActiveSession(mapClient, sessionClient);
+   playerDataType pDT;
 
    if (responseMsg->getTypeMsg() == TRAMA_ACK_SESSION){
         uint16_t CRC16FromServer = responseMsg->getCRC16();
         uint16_t CRC16Calculated = UtilsProtocol::calculateCRC16_CCITT((const unsigned char *)responseMsg->serializeMsg().c_str(),responseMsg->serializeMsg().size());
-        logger->debug("[SSNETWORKMANAGER::MAIN] CRC TRAMA_ACK_SESSION COMM FROM SERVER [%d] COMM FROM CLIENT [%d]",CRC16FromServer,CRC16Calculated);
-        playerDataType pDT = responseMsg->getPlayerDataType();
+        logger->debug("[SSNETWORKMANAGER::MAIN] CRC TRAMA_ACK_SESSION SENDTRAMA[%d] GETTRAMA[%d] COMM FROM SERVER [%d] COMM FROM CLIENT [%d]",responseMsg->getTramaSend(),responseMsg->getTramaGet(),CRC16FromServer,CRC16Calculated);
+        pDT = responseMsg->getPlayerDataType();
         logger->debug("[SSNETWORKMANAGER::MAIN] SESSION PLAYER Map:%d Session:%d IdPlayer:%d lvl:%d pos:(%f,%f) width:%d, height:%d",
                       pDT.actMap,
                       pDT.session,
@@ -85,11 +118,26 @@ int main (int argc, char *argv[])
                       pDT.width,
                       pDT.heigth);
 
+        if ((pDT.actMap == 0) || (pDT.session == 0) || (pDT.idPlayer == 0)){
+            logger->error("[SSNETWORKMANAGER::MAIN] error al generar el idSession");
+            delete nClientUDP;
+            exit(-1);
+        }else{
+            DynamicPlayer *player = mem->getActPlayer(mem->getPlayerIndex());
+            player->setDynamicPlayer(pDT);
+            mem->setActPlayer(mem->getPlayerIndex(),player);
+
+            player = ((DynamicPlayer *)sub->getObserver(mem->getPlayerIndex()-1));
+            player->setDynamicPlayer(pDT);
+            sub->setObserver(mem->getPlayerIndex()-1,player);
+
+            getEventSDL();
+        }
 
    }else if (responseMsg->getTypeMsg() == TRAMA_NACK_SESSION){
        uint16_t CRC16FromServer = responseMsg->getCRC16();
        uint16_t CRC16Calculated = UtilsProtocol::calculateCRC16_CCITT((const unsigned char *)responseMsg->serializeMsg().c_str(),responseMsg->serializeMsg().size());
-       logger->debug("[SSNETWORKMANAGER::MAIN] CRC TRAMA_NACK_SESSION COMM FROM SERVER [%d] COMM FROM CLIENT [%d]",CRC16FromServer,CRC16Calculated);
+       logger->debug("[SSNETWORKMANAGER::MAIN] CRC TRAMA_NACK_SESSION SENDTRAMA[%d] GETTRAMA[%d] COMM FROM SERVER [%d] COMM FROM CLIENT [%d]",responseMsg->getTramaSend(),responseMsg->getTramaGet(),CRC16FromServer,CRC16Calculated);
        answerType aType = responseMsg->getAnswerType();
        logger->warn("[SSNETWORKMANAGER::MAIN] NACK::RESULT [%d]",aType.result);
        delete nClientUDP;
@@ -102,30 +150,7 @@ int main (int argc, char *argv[])
    }else{
         logger->warn("[SSNETWORKMANAGER::MAIN] PACKET NOT RECOGNIZED");
    }
-
-   /*
-   initSDLWindows();
-
-   nClient->initCommunication();
-   nClient->establishCommunication();
-
-   //establecer session actual jugador
-   nClient->getListActiveSessions();
-   EventMsg *responseMsg = nClient->getRemoteIdPlayer();
-
-   if (responseMsg->getTypeMsg() != TRAMA_NACK_SESSION){
-        processPlayerSession(responseMsg);
-        getEventSDL();
-   }else if (responseMsg->getTypeMsg() == TRAMA_NULL){
-        logger->warn("[SSNETWORKMANAGER::MAIN] NO FREE SPACE FOR MORE PLAYERS IN MAP [1] SESSION [1]. LOGOUT OF SYSTEM");
-        nClient->closeClientSocket();
-   }
-
-   nClient->endCommunication();
-
    destroySDLWindows();
-   */
-
    destroyAll();
    logger->info("================ [SSNETWORKMANAGER-CLIENT - END] ================");
    return 0;
@@ -223,9 +248,9 @@ void createEnvirontment(){
     gCanConsumeSock = SDL_CreateCond();
 
 
-    qMem = new QueueManager(logger,mem,nClient,pEngine,gBufferLock,gSocketLock,gCanProduceMem,gCanConsumeMem,gCanProduceSock,gCanConsumeSock);
+    qMem = new QueueManager(logger,mem,nClientUDP,pEngine,gBufferLock,gSocketLock,gCanProduceMem,gCanConsumeMem,gCanProduceSock,gCanConsumeSock);
 
-    DynamicPlayer *player_1 = new DynamicPlayer(logger,1, nClient);
+    DynamicPlayer *player_1 = new DynamicPlayer(logger,1, nClientUDP);
     player_1->setActLevel(1);
     player_1->setX(0);
     player_1->setY(0);
@@ -346,11 +371,10 @@ void getEventSDL(){
     bool DONE = false;
     bool PRESS = false;
 
-    //nClock->start();
-
-    //SDL_Thread* threadID = SDL_CreateThread( threadFunction, "threadFunction", (void*)NULL );
-
     localActionType lATPlayer;
+
+    logger->info("MAIN -  EVENT_MSG] ACTIVATING MEM PROCESS");
+    pthread_create(&hebra_1,NULL,execute_QueueManagerSession,qMem);
 
     while (!DONE){
         while (SDL_PollEvent(&event)){
@@ -391,8 +415,6 @@ void getEventSDL(){
                     }
 
                     else if (keysym->sym == SDLK_UP){       //-> mover jugador actual arriba
-                        //sub->setMsg(new EventMsg(3,1.0f,mem->getPlayerIndex()));
-
                         lATPlayer.idPlayer = mem->getActPlayer(mem->getPlayerIndex())->getIndexPlayer();
                         lATPlayer.typeMovement = UP;
                         lATPlayer._inc = 1.0;
@@ -407,8 +429,6 @@ void getEventSDL(){
                     }
 
                     else if (keysym->sym == SDLK_DOWN){     //-> mover jugador actual abajo
-                        //sub->setMsg(new EventMsg(4,1.0f,mem->getPlayerIndex()));
-
                         lATPlayer.idPlayer = mem->getActPlayer(mem->getPlayerIndex())->getIndexPlayer();
                         lATPlayer.typeMovement = DOWN;
                         lATPlayer._inc = 1.0;
@@ -424,7 +444,6 @@ void getEventSDL(){
                     }
 
                     else if (keysym->sym == SDLK_w){
-
                         lATPlayer.idPlayer = mem->getActPlayer(mem->getPlayerIndex())->getIndexPlayer();
                         lATPlayer.typeMovement = LVLUP;
                         lATPlayer._inc = 1.0;
@@ -440,7 +459,6 @@ void getEventSDL(){
                     }
 
                     else if (keysym->sym == SDLK_s){
-
                         lATPlayer.idPlayer = mem->getActPlayer(mem->getPlayerIndex())->getIndexPlayer();
                         lATPlayer.typeMovement = LVLDOWN;
                         lATPlayer._inc = 1.0;
@@ -457,7 +475,7 @@ void getEventSDL(){
 
 
                     else if (keysym->sym == SDLK_ESCAPE){   //-> salir de la aplicacion
-                        logger->debug("[MAIN -  EVENT_MSG] LOGOUT SSNETWORKMANAGER!!!");
+                        logger->debug("[MAIN -  EVENT_MSG] ESCAPE KEY PRESSED");
                         DONE = true;
                         PRESS = true;
                     }
@@ -466,45 +484,25 @@ void getEventSDL(){
                         EventMsg *msg = new EventMsg(lATPlayer);
                         sub->setMsg(msg);
 
-                        //const Uint32 timeout = 10;
-
-                        //SDL_LockMutex(gSocketLock);
-                        //SDL_CondWaitTimeout(gCanConsumeSock, gSocketLock,timeout);
-
                         sub->notify();
-                        if (DONE){}
-
-                        //SDL_UnlockMutex(gSocketLock);
-                        //SDL_CondSignal(gCanProduceSock);
+                        if (DONE){
+                            logger->warn("[MAIN -  EVENT_MSG] EXIT!!!! SSNETWORKMANAGER");
+                        }
 
                     }
                     break;
             }
         }
 
-        qMem->runRemoteData();
         processLocalPlayer();
-        //SDL_Delay(16);
+        SDL_Delay(16);
     }
-
-    //SDL_WaitThread( threadID, NULL );
-    //nClock->stop();
 }
 
 void processLocalPlayer(){
     const Uint32 timeout = 10;
-
-    //SDL_LockMutex(gBufferLock);
-    //SDL_CondWaitTimeout( gCanConsumeMem, gBufferLock,timeout);
-
-    //nClock->pause();
     evalLocalPlayerAgainstEnv(mem->getPlayer_1());
     renderScenario();
-
-    //nClock->unpause();
-
-    //SDL_UnlockMutex(gBufferLock);
-    //SDL_CondSignal( gCanProduceMem );
 }
 
 void evalLocalPlayerAgainstEnv(DynamicPlayer *dPlayer){
@@ -643,10 +641,7 @@ void renderScenario(){
         SDL_DestroyTexture(textTexture);
 
         //////////////////////////////////////////
-
-
     }
-
 
     //-->REMOTEPLAYERS (YELLOW)
     std::map<int, DynamicEntity *>remPlayerMap = mem->getRemPlayerMap();
@@ -698,13 +693,5 @@ void renderScenario(){
     logger->info("[SSNETWORKMANAGER::renderScenario]  Render Scenario -END");
 
 };
-
-
-
-
-int threadFunction( void* data ){
-    qMem->runRemoteData();
-    return 0;
-}
 
 

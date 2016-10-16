@@ -26,10 +26,23 @@ void UDPDispatcherSessionManager::processingInputMsgsFromClients(){
                     nCUDP->sendMsgToClientUDP(output);
                 }
         }else{
-
+            //->MENSAJE DE LOG INPUT COMMAND
+            if (msgUDP->getTypeMsg() == TRAMA_COMMAND){
+                logger->debug("[UDPDispatcherSessionManager::activeSession] set TRAMA_COMMAND INPUT_PACKET_[%02d] TRAMA_SEND [%d] TRAMA_GET [%d] TO QUEUE Q1",msgUDP->getTypeMsg(),msgUDP->getTramaSend(),msgUDP->getTramaGet());
+            }else if (msgUDP->getTypeMsg() == TRAMA_GET_DATASERVER){
+                logger->debug("[UDPDispatcherSessionManager::activeSession] set TRAMA_GETDATASERVER INPUT_PACKET_[%02d] TRAMA_SEND [%d] TRAMA_GET [%d] TO QUEUE Q1",msgUDP->getTypeMsg(),msgUDP->getTramaSend(),msgUDP->getTramaGet());
+            }
+            cQ1->push(msgUDP);
         }
     }
 };
+
+
+
+
+
+
+
 
 EventMsg *UDPDispatcherSessionManager::processActivateSession(EventMsg *ackSession){
 

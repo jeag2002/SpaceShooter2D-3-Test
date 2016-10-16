@@ -541,10 +541,10 @@
 
 1474795013 c:\workspaces\workcodeblocks\ssnetworkmanager\constants.h
 
-1470090785 c:\workspaces\workcodeblocks\ssnetworkmanager\dynamicplayer.h
+1475796932 c:\workspaces\workcodeblocks\ssnetworkmanager\dynamicplayer.h
 	"Observer.h"
 	"LogEngine.h"
-	"NetworkClient.h"
+	"NetworkClientUDP.h"
 
 1464295926 c:\workspaces\workcodeblocks\ssnetworkmanager\observer.h
 	"EventMsg.h"
@@ -567,10 +567,10 @@
 1470267837 source:c:\workspaces\workcodeblocks\ssnetworkmanager\dynamicentity.cpp
 	"DynamicEntity.h"
 
-1470170559 source:c:\workspaces\workcodeblocks\ssnetworkmanager\dynamicplayer.cpp
+1475959838 source:c:\workspaces\workcodeblocks\ssnetworkmanager\dynamicplayer.cpp
 	"DynamicPlayer.h"
 
-1475621843 source:c:\workspaces\workcodeblocks\ssnetworkmanager\eventmsg.cpp
+1476127052 source:c:\workspaces\workcodeblocks\ssnetworkmanager\eventmsg.cpp
 	"EventMsg.h"
 
 1466942867 source:c:\workspaces\workcodeblocks\ssnetworkmanager\logengine.cpp
@@ -598,14 +598,14 @@
 	"MemManager.h"
 	"LogEngine.h"
 
-1472298030 source:c:\workspaces\workcodeblocks\ssnetworkmanager\queuemanager.cpp
+1476130252 source:c:\workspaces\workcodeblocks\ssnetworkmanager\queuemanager.cpp
 	"QueueManager.h"
 
-1469060731 c:\workspaces\workcodeblocks\ssnetworkmanager\queuemanager.h
+1475797840 c:\workspaces\workcodeblocks\ssnetworkmanager\queuemanager.h
 	"MemManager.h"
 	"EventMsg.h"
 	<queue>
-	"NetworkClient.h"
+	"NetworkClientUDP.h"
 	"LogEngine.h"
 	"PredictionEngine.h"
 	"ClockEngine.h"
@@ -619,7 +619,7 @@
 1470252262 source:c:\workspaces\workcodeblocks\ssnetworkmanager\taskmanager.cpp
 	"TaskManager.h"
 
-1475621080 source:c:\workspaces\workcodeblocks\ssnetworkmanager\main.cpp
+1475961750 source:c:\workspaces\workcodeblocks\ssnetworkmanager\main.cpp
 	"Stdafx.h"
 	"LogEngine.h"
 	"Subject.h"
@@ -630,7 +630,7 @@
 	"PredictionEngine.h"
 	"ClockEngine.h"
 
-1470010194 c:\workspaces\workcodeblocks\ssnetworkmanager\subject.h
+1475961696 c:\workspaces\workcodeblocks\ssnetworkmanager\subject.h
 	"EventMsg.h"
 	<vector>
 	"Observer.h"
@@ -647,10 +647,10 @@
 	<cmath>
 	<stdint.h>
 
-1475619002 source:c:\workspaces\workcodeblocks\ssnetworkmanager\networkclientudp.cpp
+1475883592 source:c:\workspaces\workcodeblocks\ssnetworkmanager\networkclientudp.cpp
 	"NetworkClientUDP.h"
 
-1475352336 c:\workspaces\workcodeblocks\ssnetworkmanager\networkclientudp.h
+1476134940 c:\workspaces\workcodeblocks\ssnetworkmanager\networkclientudp.h
 	"Stdafx.h"
 	"LogEngine.h"
 	"EventMsg.h"

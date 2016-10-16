@@ -3,7 +3,7 @@
 
 #include "Observer.h"
 #include "LogEngine.h"
-#include "NetworkClient.h"
+#include "NetworkClientUDP.h"
 
 
 
@@ -24,7 +24,7 @@ DynamicPlayer():Observer(){
     this->locked = false;
 }
 
-DynamicPlayer(LogEngine *_log, int _indexPlayer, NetworkClient *_nClient):Observer(){
+DynamicPlayer(LogEngine *_log, int _indexPlayer, NetworkClientUDP *_nClient):Observer(){
     this->x = 0.0f;
     this->y = 0.0f;
     this->width = 0.0f;
@@ -149,7 +149,7 @@ int indexPlayer;
 bool locked;
 
 LogEngine *log;
-NetworkClient *nClient;
+NetworkClientUDP *nClient;
 
 };
 

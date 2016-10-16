@@ -19,7 +19,6 @@ private:
 
     EventMsg *msg;
     std::vector<Observer *>views;
-    //std::vector<DynamicEntity *>views;
 
 public:
 
@@ -32,17 +31,12 @@ public:
         delete msg;
     }
 
-    /*
-    void attachObserver(DynamicEntity *_entity){
+    void attachObserver(Observer *_entity){
         views.push_back(_entity);
     }
 
-    DynamicEntity *getObserver(int i){return views[i];}
-    */
-
-
-    void attachObserver(Observer *_entity){
-        views.push_back(_entity);
+    void setObserver(int index, Observer *_entity){
+        views[index] = _entity;
     }
 
     Observer *getObserver(int i){return views[i];}
