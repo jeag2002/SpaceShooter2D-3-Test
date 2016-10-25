@@ -283,6 +283,7 @@ typedef struct{
     int score;
     int die;
     int animIndex;
+    int enabled;
 }remotePlayerType;
 
 #endif // CONSTANTS_H_INCLUDED

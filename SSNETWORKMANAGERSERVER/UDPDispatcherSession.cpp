@@ -243,6 +243,7 @@ EventMsg *UDPDispatcherSession::setClientForSession(EventMsg *msg){
 
 void UDPDispatcherSession::processSessions(EventMsg *msg){
 
+
     logger->info("[UDPDispatcherSession::processSessions Map[%d] Session[%d]] active client x MAP[%d]::SESSION[%d] session [%d]",
                  this->mapId,
                  this->sessionId,
@@ -250,10 +251,14 @@ void UDPDispatcherSession::processSessions(EventMsg *msg){
                  this->sessionId,
                  clientes.size());
 
-    for(int i=0; i<clientes.size(); i++){
+    bool find_it = false;
+    for(int i=0; ((i<clientes.size()) && (!find_it)); i++){
         UDPSession *session = clientes[i];
-        bool find_it = ((session->getPacket()->address.host == msg->getPacketUPD()->address.host) &&
+
+        find_it = ((session->getPacket()->address.host == msg->getPacketUPD()->address.host) &&
                        (session->getPacket()->address.port == msg->getPacketUPD()->address.port));
+
+        logger->debug("[UDPDispatcherSession::processSessions] eval find it [%i] client",i);
 
         logger->info("[UDPDispatcherSession::processSessions Map[%d] Session[%d]] dir active session [%d]:[%d] remote dir client [%d]:[%d]",
                      this->mapId,
@@ -264,6 +269,8 @@ void UDPDispatcherSession::processSessions(EventMsg *msg){
                      msg->getPacketUPD()->address.port);
 
         if (find_it){
+            logger->debug("[UDPDispatcherSession::processSessions] PROCESS_INFO_DATA client",i);
+
             logger->info("[UDPDispatcherSession::processSessions Map[%d] Session[%d]] PROCESSING PLAYER [%d] MAP[%d] SESSION[%d] INPUT_PACKET_[%02d] TRAMASEND [%d] TRAMAGET [%d]",
                          this->mapId,
                          this->sessionId,
@@ -281,6 +288,23 @@ void UDPDispatcherSession::processSessions(EventMsg *msg){
                 clientes[i]->setUDPSession(session);
             }
             cQInput->pop();
+
+        }
+
+        else{
+             /*
+             find_it = (
+                      (session->getPacket()->address.host == msg->getPacketUPD()->address.host) &&
+                      (session->getPacket()->address.port == SESSION_PORT) &&
+                      (msg->getTypeMsg() == TRAMA_QRY_DATASERVER) &&
+                      (msg->getPlayerDataType().actMap == this->mapId) &&
+                      (msg->getPlayerDataType().session == this->sessionId));
+
+             if (find_it){
+                 sendInfoDataSession(session->getPlayerId(), msg);
+                 cQInput->pop();
+             }
+             */
         }
     }
 }
@@ -364,6 +388,7 @@ void UDPDispatcherSession::sendInfoDataSession(int playerID, EventMsg *msg){
     for(auto iterator = DynOfLevel3.begin(); iterator != DynOfLevel3.end(); iterator++){
         int i = iterator->first;
         DynamicEntity *dEntity = iterator->second;
+        msgs[indexMsg]->setMsg(sendWorldStateToClient(msg, 1, (SIZE_REMOTE_ELEMS - indexMsg), dEntity));
         indexMsg++;
     }
 
@@ -372,11 +397,7 @@ void UDPDispatcherSession::sendInfoDataSession(int playerID, EventMsg *msg){
     for(auto iterator = RemPlayers.begin(); iterator != RemPlayers.end(); iterator++){
         int i = iterator->first;
         DynamicEntity *dEntity = iterator->second;
-
-        if ((dEntity->getIDDE() == playerID) && (dEntity->isEnabled())){
-            msgs[indexMsg]->setMsg(sendWorldStateToClient(msg, 1, (SIZE_REMOTE_ELEMS - indexMsg), dEntity));
-        }
-
+        msgs[indexMsg]->setMsg(sendWorldStateToClient(msg, 1, (SIZE_REMOTE_ELEMS - indexMsg), dEntity));
         indexMsg++;
     }
 

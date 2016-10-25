@@ -47,7 +47,7 @@ void LogEngine::shutDown(){
 void LogEngine::deleteLogFile(){
 
     int flag = 0;
-    flag = remove("SSNETWORKMANAGERSERVER.log");
+    flag = remove(ownFile);
 
 	if (flag!=0){
         printf("Error al borrar el fichero de log SSNETWORKMANAGERSERVER");
@@ -78,7 +78,7 @@ std::string LogEngine::getDateTime(void){
 void LogEngine::message(int type, const char *msg)
 {
     std::string dateTime = getDateTime();
-    FILE *f = fopen("SSNETWORKMANAGERSERVER.log", "a");
+    FILE *f = fopen(ownFile, "a");
 
     if (f) {
         fprintf(f, "\n%s%s - %s",tagLevel(type).c_str(), dateTime.c_str(),msg);
@@ -127,7 +127,8 @@ void LogEngine::message(int type, const char *msg)
 void LogEngine::debug(const std::string fmt, ...){
      if (this->level <= DEBUG_LOG){
 
-        pthread_mutex_lock(&push_log);
+        SDL_LockMutex(push_log);
+        //pthread_mutex_lock(&push_log);
 
         va_list ap;
         char msg[SIZE];
@@ -139,8 +140,8 @@ void LogEngine::debug(const std::string fmt, ...){
             message(DEBUG_LOG, msg);
         }
 
-        pthread_mutex_unlock(&push_log);
-
+        //pthread_mutex_unlock(&push_log);
+        SDL_UnlockMutex(push_log);
     }
 }
 
@@ -148,7 +149,8 @@ void LogEngine::debug(const std::string fmt, ...){
 void LogEngine::info(const std::string fmt, ...){
     if (this->level <= INFO_LOG){
 
-        pthread_mutex_lock(&push_log);
+        SDL_LockMutex(push_log);
+        //pthread_mutex_lock(&push_log);
 
         va_list ap;
         char msg[SIZE];
@@ -160,7 +162,8 @@ void LogEngine::info(const std::string fmt, ...){
             message(INFO_LOG, msg);
         }
 
-        pthread_mutex_unlock(&push_log);
+        //pthread_mutex_unlock(&push_log);
+        SDL_UnlockMutex(push_log);
     }
 }
 
@@ -168,7 +171,8 @@ void LogEngine::info(const std::string fmt, ...){
 void LogEngine::warn(const std::string fmt, ...){
     if (this->level <= WARN_LOG){
 
-        pthread_mutex_lock(&push_log);
+        SDL_LockMutex(push_log);
+        //pthread_mutex_lock(&push_log);
 
         va_list ap;
         char msg[SIZE];
@@ -180,7 +184,8 @@ void LogEngine::warn(const std::string fmt, ...){
             message(WARN_LOG, msg);
         }
 
-        pthread_mutex_unlock(&push_log);
+        //pthread_mutex_unlock(&push_log);
+        SDL_UnlockMutex(push_log);
 
     }
 }
@@ -189,7 +194,8 @@ void LogEngine::warn(const std::string fmt, ...){
 void LogEngine::error(const std::string fmt, ...){
     if (this->level <= ERROR_LOG){
 
-        pthread_mutex_lock(&push_log);
+        SDL_LockMutex(push_log);
+        //pthread_mutex_lock(&push_log);
 
         va_list ap;
         char msg[SIZE];
@@ -201,6 +207,7 @@ void LogEngine::error(const std::string fmt, ...){
             message(ERROR_LOG, msg);
         }
 
-        pthread_mutex_unlock(&push_log);
+        //pthread_mutex_unlock(&push_log);
+        SDL_UnlockMutex(push_log);
     }
 }

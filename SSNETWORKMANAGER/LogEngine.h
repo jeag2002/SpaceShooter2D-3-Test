@@ -22,12 +22,21 @@ LOGENGINE.H MOTOR DE LOGS DE LA APLICACION
 #define SIZE_BUFFER 3580
 #define SIZE_TIME 50
 
+#define DEFAULT_FILE "SSNETWORKMANAGER.log"
+
 class LogEngine{
 
     public:
 
        /*0=all, 1=debug, 2=info, 3=warn, 4=error, 5=fatal*/
-       LogEngine(){level = 0; typeLog = 0; pointer = 0; for(int i=0; i<SIZE_BUFFER; i++){buffer_logs[i]='\0';} };
+       LogEngine(){
+           level = 0;
+           typeLog = 0;
+           pointer = 0;
+           for(int i=0; i<SIZE_BUFFER; i++){buffer_logs[i]='\0';}
+           push_log = SDL_CreateMutex();
+           ownFile = DEFAULT_FILE;
+        };
        void deleteLogFile();
        void startUp(int level, int typeLog);
        void shutDown();
@@ -36,6 +45,7 @@ class LogEngine{
           this->info("LogEngine - INITIALIZED! to %s Channel %s",tagLevel(level).c_str(), toChannel(typeLog).c_str());
        };
 
+       void setOwnFile(char *_file){ownFile = _file;}
        void debug(const std::string fmt, ...);
        void info(const std::string fmt, ...);
        void warn(const std::string fmt, ...);
@@ -44,6 +54,7 @@ class LogEngine{
 
     private:
 
+       char *ownFile;
        int level;
        int typeLog;
        void message(int type, const char *msg);
@@ -53,6 +64,8 @@ class LogEngine{
        std::string getDateTime(void);
        std::string tagLevel(int level);
        std::string toChannel(int level);
+
+       SDL_mutex *push_log;
 };
 
 #endif // LOGMANAGER_H_INCLUDED

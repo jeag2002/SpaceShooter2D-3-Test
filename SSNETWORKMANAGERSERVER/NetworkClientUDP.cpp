@@ -51,6 +51,9 @@ void NetworkClientUDP::initCommunicationUDP(){
 //-->SEND ONE MSG TO CLIENT(S)
 void NetworkClientUDP::sendMsgToClientUDP(EventMsg *msg){
 
+    SDL_LockMutex(mutexSend);
+    SDL_CondWaitTimeout( condSendV, mutexSend, 100);
+
     clearBuffer();
     UDPpacket *packetUDP = msg->getPacketUPD();
     //clearBufferPacket(packetUDP);
@@ -67,6 +70,8 @@ void NetworkClientUDP::sendMsgToClientUDP(EventMsg *msg){
         logger->warn("[SSNETWORKMANAGERSERVER::sendMsgToClientUPD] --> size_data_before_compression [%d] size_data_after_compression [%d] ",packetUDP->len,size_after_dataCompression);
     }
 
+    logPackets->debug("[TRAMA SEND SERVER] --> RAW DATA[%s]",packetUDP->data);
+
     if ( SDLNet_UDP_Send(serverSocket, -1, packetUDP) == 0 ){
         logger->warn("[SSNETWORKMANAGERSERVER::sendMsgToClientUDP] --> UDP DATA NOT SEND! [%s]", SDLNet_GetError());
         exit(-1);
@@ -74,12 +79,18 @@ void NetworkClientUDP::sendMsgToClientUDP(EventMsg *msg){
 
     logger->debug("[SSNETWORKMANAGERSERVER::sendMsgToClientUDP] SERVER MSG TO CLIENT [%s] size [%d] CRC16 [%d]",packetUDP->data,packetUDP->len,msg->getCRC16());
 
+    SDL_CondSignal( condSend );
+    SDL_UnlockMutex(mutexSend);
+
 };
 
 
 void NetworkClientUDP::sendMsgVectorToClientUDP(EventMsg **msgs){
 
-    pthread_mutex_lock(&pushData);
+    SDL_LockMutex(mutexSendV);
+    SDL_CondWaitTimeout( condSend, mutexSendV, 100);
+
+    logger->debug("[SSNETWORKMANAGERSERVER::sendMsgVectorToClientUDP] --> SEND PACKETS TO CLIENT");
 
     for(int index_packet = 0; index_packet < SIZE_REMOTE_ELEMS; index_packet++){
 
@@ -96,20 +107,24 @@ void NetworkClientUDP::sendMsgVectorToClientUDP(EventMsg **msgs){
              packet_data->address.host = eventMsg->getPacketUPD()->address.host;
              packet_data->address.port = eventMsg->getPacketUPD()->address.port;
 
-             logger->debug("[SSNETWORKMANAGERSERVER::sendMsgVectorToClientUDP] tramaSend[%d] tramaGet[%d] data_to_client[%d]:=[%s]",eventMsg->getTramaSend(),eventMsg->getTramaGet(),index_packet,packet_data->data);
+             logPackets->debug("[TRAMA SEND SERVER VECTOR] --> RAW DATA[%s] [%d]:[%d]",packet_data->data,packet_data->address.host,packet_data->address.port);
+
+             int actMap = eventMsg->getRemotePlayerType().actMap;
+             int actSession = eventMsg->getRemotePlayerType().session;
+
+             logger->debug("[SSNETWORKMANAGERSERVER::sendMsgVectorToClientUDP MAP[%d] SESSION[%d]] tramaSend[%d] tramaGet[%d] data_to_client[%d]:=[%s]",actMap,actSession,eventMsg->getTramaSend(),eventMsg->getTramaGet(),index_packet,packet_data->data);
 
              out[index_packet] = packet_data;
     }
 
-    /*
+
     int data = SDLNet_UDP_SendV(serverSocket,out,SIZE_REMOTE_ELEMS);
     if(data <SIZE_REMOTE_ELEMS){
-       logger->debug("[SSNETWORKMANAGERSERVER::sendMsgVectorToClientUDP] ERROR IN THE PROCESS OF SENDING [%d] MSG, SENT DATA [%d]",SIZE_REMOTE_ELEMS,data);
-       exit(-1);
+       logger->debug("[SSNETWORKMANAGERSERVER::sendMsgVectorToClientUDP] ERROR IN THE PROCESS OF SENDING [%d] MSG, SENT DATA [%d] ERROR [%s]",SIZE_REMOTE_ELEMS,data, SDLNet_GetError());
     }
-    */
 
-    pthread_mutex_unlock(&pushData);
+    SDL_CondSignal( condSendV );
+    SDL_UnlockMutex(mutexSendV);
 
 
 }
@@ -121,6 +136,8 @@ EventMsg *NetworkClientUDP::getMsgFromClientUDP(){
 
     EventMsg *returnMsg = new EventMsg();
 
+    SDL_LockMutex(mutexGet);
+
     long initialMark = SDL_GetTicks();
     SDLNet_UDP_Unbind(serverSocket, 0);
     IPaddress ipAdd;
@@ -130,6 +147,8 @@ EventMsg *NetworkClientUDP::getMsgFromClientUDP(){
         if ( SDLNet_UDP_Recv(serverSocket, packet))
 		{
 		    logger->debug("[SSNETWORKMANAGERSERVER::getMsgFromClientUDP] CHANNEL [%d] RAW DATA [%s]",packet->channel, packet->data);
+		    logPackets->debug("[TRAMA GET SERVER] --> RAW DATA[%s]",packet->data);
+
 		    memcpy(&ipAdd,&packet->address,sizeof(IPaddress));
 
             const char *host=SDLNet_ResolveIP(&ipAdd);
@@ -168,6 +187,8 @@ EventMsg *NetworkClientUDP::getMsgFromClientUDP(){
             SDL_Delay(10);
 		}
     }
+
+    SDL_UnlockMutex(mutexGet);
 
     return returnMsg;
 

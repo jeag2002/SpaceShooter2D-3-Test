@@ -4,68 +4,59 @@
 void QueueManager::runRemoteData(){
 
     bool DONE = false;
+    bool DONE_INPUT_REMOTE_PACKETS = false;
     bool processRemote = false;
 
     log->debug("[QueueManager::RemoteData] processRemoteData");
 
-        int tramaIndexGet = nClientUDP->getIndexTramaGet();
-        int tramaIndexSend = nClientUDP->getIndexTramaSend()+1;
+    int refreshFromServer = 0;
 
-        nClientUDP->setIndexTramaGet(tramaIndexGet);
-        nClientUDP->setIndexTramaSend(tramaIndexSend);
+    while(!DONE){
 
-        nClientUDP->sendMsgToServer(new EventMsg(TRAMA_QRY_DATASERVER,nClientUDP->getIndexTramaSend(),nClientUDP->getIndexTramaGet(),0,1,(uint16_t)0,nClientUDP->getRemotePacket()));
-        processRemote = false;
 
-        int mark_initial = SDL_GetTicks();
+        refreshFromServer++;
 
-        while((SDL_GetTicks()-mark_initial) <= 2000){
-            EventMsg *msg = nClientUDP->getMsgFromServer();
-            if (msg->getTypeMsg() == TRAMA_GET_DATASERVER){
-                if (msg->getRemotePlayerType().typeTramaID != 0){
+        if (refreshFromServer == TIME_BETWEEN_ACT_SERVER){
 
-                    log->debug("[QueueManager::RemoteData] get RemoteInfo for IDActor [%d] IDType [%d] (lvl:%d,x:%f,y:%f)",
-                               msg->getRemotePlayerType().idPlayer,
-                               msg->getRemotePlayerType().typeID,
-                               msg->getRemotePlayerType().lvl,
-                               msg->getRemotePlayerType().x_pos,
-                               msg->getRemotePlayerType().y_pos);
+            refreshFromServer = 0;
 
-                    dataFromServer.push(msg);
-                }else if (msg->getMsgType().msgTypeID != 0){
-                    msgFromServer.push(msg);
-                }
+            //EMPTY BUFFER DATA
+            int tramaIndexGet = nClientUDP->getIndexTramaGet();
+            int tramaIndexSend = nClientUDP->getIndexTramaSend()+1;
 
-                if (msg->getMore()!=OK){
-                    break;
-                    processRemote = true;
+            nClientUDP->setIndexTramaGet(tramaIndexGet);
+            nClientUDP->setIndexTramaSend(tramaIndexSend);
+
+            log->debug("[QueueManager::RemoteData] QRY DATA FROM DATA SERVER SENDPACKET[%d] GETPACKET[%d]",nClientUDP->getIndexTramaSend(),nClientUDP->getIndexTramaGet());
+
+            nClientUDP->sendMsgToServer(new EventMsg(TRAMA_QRY_DATASERVER,nClientUDP->getIndexTramaSend(),nClientUDP->getIndexTramaGet(),0,1,(uint16_t)0,nClientUDP->getRemotePacket()));
+            EventMsg **data = nClientUDP->getMsgsFromServer();
+
+            //nClientQueue->sendMsgToServer(new EventMsg(TRAMA_QRY_DATASERVER,nClientUDP->getIndexTramaSend(),nClientUDP->getIndexTramaGet(),0,1,(uint16_t)0,nClientQueue->getRemotePacket(), pDT));
+            //EventMsg **data = nClientQueue->getMsgsFromServer();
+
+            for(int i=0; i<SIZE_REMOTE_ELEMS; i++){
+                EventMsg *msg = data[i];
+                if (msg->getTypeMsg() == TRAMA_GET_DATASERVER){
+                    if (msg->getRemotePlayerType().typeTramaID != 0){
+                        log->debug("[QueueManager::RemoteData] get RemoteInfo for IDActor [%d] IDType [%d] (lvl:%d,x:%f,y:%f)",
+                                    msg->getRemotePlayerType().idPlayer,
+                                    msg->getRemotePlayerType().typeID,
+                                    msg->getRemotePlayerType().lvl,
+                                    msg->getRemotePlayerType().x_pos,
+                                    msg->getRemotePlayerType().y_pos);
+                        dataFromServer.push(msg);
+                    }
                 }
             }
         }
 
+        if (dataFromServer.size()<=0){
 
-        if (!processRemote){
-            //CLEAN BUFFER OF SERVER AND IGNORE IT. ACTIVE PREDICTION CLIENTSIDE ENGINE
             log->warn("[QueueManager::RemoteData] NO RECOVE ALL THE INFORMATION. ACTIVE PREDICTION CLIENTSIDE ENGINE");
-
-            while (!processRemote){
-                 EventMsg *msg = nClientUDP->getMsgFromServer();
-                 if (msg->getMsgType().msgTypeID!=0){
-                    msgFromServer.push(msg);
-                 }else if (msg->getRemotePlayerType().typeTramaID != 0){
-                    log->debug("[QueueManager::RemoteData] (OUTOFDATA) get RemoteInfo for IDActor [%d] IDType [%d] (lvl:%d,x:%f,y:%f)",
-                               msg->getRemotePlayerType().idPlayer,
-                               msg->getRemotePlayerType().typeID,
-                               msg->getRemotePlayerType().lvl,
-                               msg->getRemotePlayerType().x_pos,
-                               msg->getRemotePlayerType().y_pos);
-                 }
-                 if (msg->getMore()!=OK){processRemote = true;}
-            }
             pEngine->processPrediction();
 
         }else{
-
             log->info("[QueueManager::RemoteData] RECOVERING ALL THE INFORMATION DONE. ACTIVE INTERPOLATION CLIENT-SERVER ENGINE");
 
             //PROCESS SERVER DATA. INTERPOLATE WITH LOCAL DATA.
@@ -114,16 +105,17 @@ void QueueManager::runRemoteData(){
             }
         }
 
-
         //EMPTY BUFFER DATA
         while (!dataFromServer.empty()){dataFromServer.pop();}
         while (!msgFromServer.empty()){msgFromServer.pop();}
 
+    }//FINAL PROCESO DONE
+
 };
 
 void QueueManager::runLocalData(){
-    nClock->pause();
+    //nClock->pause();
     pEngine->processPrediction();
-    nClock->unpause();
+    //nClock->unpause();
 }
 

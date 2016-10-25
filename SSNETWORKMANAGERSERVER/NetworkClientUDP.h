@@ -13,7 +13,7 @@
 #define REMOTE_PORT 10022
 #define LOCAL_PORT 8888
 
-#define SIZE_REMOTE_ELEMS 21
+#define SIZE_REMOTE_ELEMS 22
 
 #define REMOTE_HOST "127.0.0.1"
 
@@ -24,11 +24,24 @@ public:
 
 NetworkClientUDP(LogEngine *_logger){
     logger = _logger;
+
+    logPackets = new LogEngine();
+    logPackets->setOwnFile("TRAMASERVER.log");
+    logPackets->deleteLogFile();
+    logPackets->startUp(1,0);
+
     clearBuffer();
     cP = new CompressPacket(logger);
     enabledCompression = false;
     enabledCompression = cP->Init();
-    pthread_mutex_init(&pushData, NULL);
+
+    mutexSend = SDL_CreateMutex();
+    mutexGet = SDL_CreateMutex();
+    mutexSendV = SDL_CreateMutex();
+
+    condSend = SDL_CreateCond();
+    condSendV = SDL_CreateCond();
+
 
 }
 
@@ -72,7 +85,9 @@ UDPpacket *getUDPPacket(){return packet;}
 
 private:
 
+LogEngine *logPackets;
 LogEngine *logger;
+
 IPaddress serverIP;
 UDPpacket *packet;
 UDPsocket serverSocket;
@@ -85,8 +100,12 @@ char buffer[BUFFER_SIZE];
 CompressPacket *cP;
 bool enabledCompression;
 
-pthread_mutex_t pushData;
+SDL_mutex *mutexSend;
+SDL_mutex *mutexGet;
+SDL_mutex *mutexSendV;
 
+SDL_cond *condSend;
+SDL_cond *condSendV;
 
 };
 

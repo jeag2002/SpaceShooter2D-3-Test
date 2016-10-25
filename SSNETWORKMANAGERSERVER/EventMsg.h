@@ -168,7 +168,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        cpyPacket(_packet);
+        packet = _packet;
     };
 
     //Evento Command local Player - movimiento
@@ -180,7 +180,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        cpyPacket(_packet);
+        packet = _packet;
         setMovementType(_mMovement);
     };
 
@@ -193,7 +193,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        cpyPacket(_packet);
+        packet = _packet;
         setShotType(_sShot);
     };
 
@@ -206,7 +206,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        cpyPacket(_packet);
+        packet = _packet;
         setChangeWeaponType(_cWeapon);
     };
 
@@ -219,7 +219,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        cpyPacket(_packet);
+        packet = _packet;
         setExitType(_eType);
     };
 
@@ -232,7 +232,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        cpyPacket(_packet);
+        packet = _packet;
         setRemotePlayerType(_rPType);
     };
 
@@ -245,7 +245,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        cpyPacket(_packet);
+        packet = _packet;
         setMsgType(_mType);
     };
 
@@ -258,7 +258,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        cpyPacket(_packet);
+        packet = _packet;
         setAnswerType(_aType);
     };
 
@@ -271,7 +271,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        cpyPacket(_packet);
+        packet = _packet;
         setListOtherPlayerType(_lOPType);
     };
 
@@ -284,7 +284,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        cpyPacket(_packet);
+        packet = _packet;
         setListSessionAvaliableType(_lSAType);
     };
 
@@ -297,7 +297,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        cpyPacket(_packet);
+        packet = _packet;
         setPlayerDataType(_pDType);
     };
 
@@ -311,7 +311,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        cpyPacket(_packet);
+        packet = _packet;
         setOrderType(_OType);
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -329,7 +329,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = SDLNet_AllocPacket(BUFFER_SIZE);
+        packet = NULL;
     };
 
     //Evento Command local Player - movimiento
@@ -341,7 +341,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = SDLNet_AllocPacket(BUFFER_SIZE);
+        packet = NULL;
         setMovementType(_mMovement);
     };
 
@@ -354,7 +354,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = SDLNet_AllocPacket(BUFFER_SIZE);
+        packet = NULL;
         setShotType(_sShot);
     };
 
@@ -367,7 +367,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = SDLNet_AllocPacket(BUFFER_SIZE);
+        packet = NULL;
         setChangeWeaponType(_cWeapon);
     };
 
@@ -380,7 +380,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = SDLNet_AllocPacket(BUFFER_SIZE);
+        packet = NULL;
         setExitType(_eType);
     };
 
@@ -393,7 +393,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = SDLNet_AllocPacket(BUFFER_SIZE);
+        packet = NULL;
         setRemotePlayerType(_rPType);
     };
 
@@ -406,7 +406,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = SDLNet_AllocPacket(BUFFER_SIZE);
+        packet = NULL;
         setMsgType(_mType);
     };
 
@@ -419,7 +419,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = SDLNet_AllocPacket(BUFFER_SIZE);
+        packet = NULL;
         setAnswerType(_aType);
     };
 
@@ -432,7 +432,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = SDLNet_AllocPacket(BUFFER_SIZE);
+        packet = NULL;
         setListOtherPlayerType(_lOPType);
     };
 
@@ -445,7 +445,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = SDLNet_AllocPacket(BUFFER_SIZE);
+        packet = NULL;
         setListSessionAvaliableType(_lSAType);
     };
 
@@ -458,7 +458,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = SDLNet_AllocPacket(BUFFER_SIZE);
+        packet = NULL;
         setPlayerDataType(_pDType);
     };
 
@@ -472,10 +472,12 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = SDLNet_AllocPacket(BUFFER_SIZE);
+        packet = NULL;
         setOrderType(_OType);
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
     EventMsg(EventMsg *_msg){
         setMsg(_msg);
@@ -504,13 +506,8 @@ class EventMsg{
     uint16_t getCRC16(){return CRC16;}
     void setCRC16(uint16_t _CRC16){CRC16 = _CRC16;}
 
-    UDPpacket *getPacketUPD(){
-        return packet;
-    }
-
-    void setPacketUPD(UDPpacket *_packet){
-        cpyPacket(_packet);
-    }
+    UDPpacket *getPacketUPD(){return packet;}
+    void setPacketUPD(UDPpacket *_packet){packet = _packet;}
 
 
     std::string serializeMsg();
@@ -668,6 +665,8 @@ class EventMsg{
         rPType.item_4_val = _rPType.item_4_val;
         rPType.score = _rPType.score;
         rPType.die = _rPType.die;
+        rPType.animIndex = _rPType.animIndex;
+        rPType.enabled = _rPType.enabled;
     }
     void clearRemotePlayerType(){
         rPType.typeTramaID = 0;
@@ -704,6 +703,8 @@ class EventMsg{
         rPType.item_4_val = 0;
         rPType.score = 0;
         rPType.die = 0;
+        rPType.animIndex = 0;
+        rPType.enabled = 0;
     }
     //////////////////////////////////////////////////////
 
@@ -891,8 +892,7 @@ class EventMsg{
         more = _remoteMsg->getMore();
         numtrazas = _remoteMsg->getNumTrazas();
         CRC16 = _remoteMsg->getCRC16();
-        //packet = _remoteMsg->getPacketUPD();
-        cpyPacket(_remoteMsg->getPacketUPD());
+        packet = _remoteMsg->getPacketUPD();
 
         copyBuffer(_remoteMsg->getBuffer());
 
@@ -920,16 +920,6 @@ class EventMsg{
         for(int i=0; i<BUFFER_SIZE; i++){buffer[i] = '\0';}
     }
 
-    void cpyPacket(UDPpacket *packetCpy){
-        packet->address.host = packetCpy->address.host;
-        packet->address.port = packetCpy->address.port;
-        for(int i=0; i<BUFFER_SIZE; i++){packet->data[i]='\0';}
-        //packet->data = (Uint8 *)"";
-        packet->len = 0;
-        packet->maxlen = 0;
-        packet->status = packetCpy->status;
-    }
-
     void clearMsg(){
         tramaGet = 0;
         typeMsg = TRAMA_NULL;
@@ -937,7 +927,7 @@ class EventMsg{
         more = 0;
         numtrazas = 0;
         CRC16 = 0;
-        packet = SDLNet_AllocPacket(BUFFER_SIZE);
+        packet = NULL;
 
         clearBuffer();
 
@@ -969,30 +959,6 @@ class EventMsg{
         clearPlayerDataType();
         //////////////////////////
     }
-
-   /*
-    typeMsg = _typeMsg;
-    tramaSend = _tramaSend;
-    tramaGet = _tramaGet;
-    more = _more;
-    numtrazas = _numtrazas;
-    CRC16 = _CRC16;
-   */
-
-
-  char *toString(){
-      char bufferEvent[128];
-
-      for(int i=0; i<128; i++){bufferEvent[i]='\0';}
-      sprintf(bufferEvent,"typeMsg:=[%d] indexSend:=[%d] indexGet:=[%d] more:=[%d] numtrazas:=[%d] CRC16:=[%d]",
-              this->getTypeMsg(),
-              this->getTramaSend(),
-              this->getTramaGet(),
-              this->getMore(),
-              this->getNumTrazas(),
-              this->getCRC16());
-      return bufferEvent;
-  }
 
 
   private:

@@ -17,6 +17,17 @@ MemManager(){
     player_2 = new DynamicPlayer();
     player_3 = new DynamicPlayer();
 
+    setEnemyMap_lvl1M = SDL_CreateMutex();
+    setEnemyMap_lvl2M = SDL_CreateMutex();
+    setEnemyMap_lvl3M = SDL_CreateMutex();
+
+    setDynElemMap_lvl1M = SDL_CreateMutex();
+    setDynElemMap_lvl2M = SDL_CreateMutex();
+    setDynElemMap_lvl3M = SDL_CreateMutex();
+
+    setRemPlayerM = SDL_CreateMutex();
+
+
 };
 
 ~MemManager(){
@@ -144,11 +155,16 @@ DynamicEntity *getEnemiesMapElem_lvl_1(int key){
 };
 
 void setEnemiesMap_Lvl_1(int key, DynamicEntity *data){
+
+    SDL_LockMutex(setEnemyMap_lvl1M);
+
     DynamicEntityType::iterator it;
     it = EnemiesMap_lvl_1.find(key);
     if (it!=EnemiesMap_lvl_1.end()){
         ((DynamicEntity *)EnemiesMap_lvl_1[key])->setDynamicEntity(data);
     }
+
+    SDL_UnlockMutex(setEnemyMap_lvl1M);
 }
 
 std::map<int, DynamicEntity *>getEnemy_Lvl_1_Map(){return EnemiesMap_lvl_1;}
@@ -172,11 +188,16 @@ DynamicEntity *getEnemiesMapElem_lvl_2(int key){
 };
 
 void setEnemiesMap_Lvl_2(int key, DynamicEntity *data){
+
+    SDL_LockMutex(setEnemyMap_lvl2M);
+
     DynamicEntityType::iterator it;
     it = EnemiesMap_lvl_2.find(key);
     if (it!=EnemiesMap_lvl_2.end()){
         ((DynamicEntity *)EnemiesMap_lvl_2[key])->setDynamicEntity(data);
     }
+
+    SDL_UnlockMutex(setEnemyMap_lvl2M);
 }
 
 std::map<int, DynamicEntity *>getEnemy_Lvl_2_Map(){return EnemiesMap_lvl_2;}
@@ -200,11 +221,15 @@ DynamicEntity *getEnemiesMapElem_lvl_3(int key){
 };
 
 void setEnemiesMap_Lvl_3(int key, DynamicEntity *data){
+    SDL_LockMutex(setEnemyMap_lvl3M);
+
     DynamicEntityType::iterator it;
     it = EnemiesMap_lvl_3.find(key);
     if (it!=EnemiesMap_lvl_3.end()){
         ((DynamicEntity *)EnemiesMap_lvl_3[key])->setDynamicEntity(data);
     }
+
+    SDL_UnlockMutex(setEnemyMap_lvl3M);
 }
 
 std::map<int, DynamicEntity *>getEnemy_Lvl_3_Map(){return EnemiesMap_lvl_3;}
@@ -260,11 +285,13 @@ DynamicEntity *getDynElemMapElem_lvl_1(int key){
 };
 
 void setDynElemMap_lvl_1(int key, DynamicEntity *data){
+    SDL_LockMutex(setDynElemMap_lvl1M);
     DynamicEntityType::iterator it;
     it = DynElemMap_lvl_1.find(key);
     if (it!=DynElemMap_lvl_1.end()){
         ((DynamicEntity *)DynElemMap_lvl_1[key])->setDynamicEntity(data);
     }
+    SDL_UnlockMutex(setDynElemMap_lvl1M);
 }
 
 std::map<int, DynamicEntity *>getDynElem_Lvl_1_Map(){return DynElemMap_lvl_1;}
@@ -289,11 +316,13 @@ DynamicEntity *getDynElemMapElem_lvl_2(int key){
 };
 
 void setDynElemMap_lvl_2(int key, DynamicEntity *data){
+    SDL_LockMutex(setDynElemMap_lvl2M);
     DynamicEntityType::iterator it;
     it = DynElemMap_lvl_2.find(key);
     if (it!=DynElemMap_lvl_2.end()){
         ((DynamicEntity *)DynElemMap_lvl_2[key])->setDynamicEntity(data);
     }
+    SDL_UnlockMutex(setDynElemMap_lvl2M);
 }
 
 std::map<int, DynamicEntity *>getDynElem_Lvl_2_Map(){return DynElemMap_lvl_2;}
@@ -317,11 +346,13 @@ DynamicEntity *getDynElemMapElem_lvl_3(int key){
 };
 
 void setDynElemMap_lvl_3(int key, DynamicEntity *data){
+    SDL_LockMutex(setDynElemMap_lvl3M);
     DynamicEntityType::iterator it;
     it = DynElemMap_lvl_3.find(key);
     if (it!=DynElemMap_lvl_3.end()){
         ((DynamicEntity *)DynElemMap_lvl_3[key])->setDynamicEntity(data);
     }
+    SDL_UnlockMutex(setDynElemMap_lvl3M);
 };
 
 std::map<int, DynamicEntity *>getDynElem_Lvl_3_Map(){return DynElemMap_lvl_3;}
@@ -376,11 +407,16 @@ DynamicEntity *getRemPlayerMapElem(int key){
 };
 
 void setRemPlayerMap(int key, DynamicEntity *data){
+
+    SDL_LockMutex(setRemPlayerM);
     DynamicEntityType::iterator it;
     it = remPlayerMap.find(key);
     if (it!=remPlayerMap.end()){
         ((DynamicEntity *)remPlayerMap[key])->setDynamicEntity(data);
     }
+    SDL_UnlockMutex(setRemPlayerM);
+
+
 }
 
 std::map<int, DynamicEntity *>getRemPlayerMap(){return remPlayerMap;}
@@ -411,6 +447,18 @@ std::vector<DynamicEntity *>DynElem_lvl_3;
 std::vector<DynamicEntity *>remPlayer;
 
 /********************************************************/
+
+
+SDL_mutex *setEnemyMap_lvl1M;
+SDL_mutex *setEnemyMap_lvl2M;
+SDL_mutex *setEnemyMap_lvl3M;
+
+SDL_mutex *setDynElemMap_lvl1M;
+SDL_mutex *setDynElemMap_lvl2M;
+SDL_mutex *setDynElemMap_lvl3M;
+
+SDL_mutex *setRemPlayerM;
+
 
 typedef std::map<int, DynamicEntity *> DynamicEntityType;
 

@@ -1,0 +1,2482 @@
+///BITACORA DE DESARROLLO PROGRAMA RESTAURACION SPACESHOOTER2D-2///////////////
+
+Objetivos:
+
+Arreglar las carencias del SpaceShooter2D-2; que hicieron interrumpir el desarrollo en noviembre del 2012
+(Principalmente la gestión del scrolling; y de las colisiones)
+
+Exportar lógica de negocio arreglado a SPACESHOOTER2D-RELOADED2; y seguir con una arquitectura nueva (renderizado
+en OpenGLES 3.0)
+
+Exportar lo desarrollado a una arquitectura basada en componentes. (SINISTAR_ENGINE)
+
+Transformar imagenes; en meshes (pasar de SpaceShooter2D a SpaceShooter3D)
+
+Exportar proyecto a proyecto de Visual C++. Definir distintos tipos de Makes por entorno y SO.
+
+
+25-08-2015:
+
+Creación de las siguientes clases:
+
+1)GameNew.cpp; GameNew.h (Clase Motor de un nivel)
+
+2)GameLevelNew.cpp; GameLevelNew.h (Clase carga de un nivel desde fichero de configuración)
+
+3)GLObjectManagerNew.cpp; GLObjectManagerNew.h
+(Carga de objetos; imágenes, etc; con la información recogida de GameLevelNew)
+
+4)GLEntityNew.cpp; GLEntityNew.h
+(Elemento "conceptual" raiz del nivel)
+
+Derivan de el TileNew.h; PlayerNew.h; EnemyNew.h
+
+5)GLRenderNew.cpp; GLRenderNew.h (Renderizado de los niveles)
+
+6)GLCameraNew.cpp; GLCameraNew.h (Gestión del scrolling)
+
+27-08-2015:
+
+Definición de una clase que gestione de manera eficiente colecciones de datos (Evaluar tiempo de respuesta con STL)
+
+1)MemManagerNew.cpp; MemManagerNew.h
+
+02-09-2015:
+
+Definición de la camara GL.
+
+27-09-2015:
+
+(Despues de resfriados, dolores, etc... vuelvo otra vez! :( )
+
+1-> Tiles estáticos 64x64
+2-> Tiles dinámicos 32x32; 64x64; 128x128
+
+Elementos definición del mapa
+
+GLObjectManagerNew => Gestión de los elementos dinámicos del mapa.
+MemManagerNew => Gestión de la memoria.
+GLRenderNew => Renderizado de los elementos del mapa (una vez evaluado con GLGameLogic.)
+
+GameLevelNew => Parseo del nivel del mapa. Vuelca el contenido en
+
+GLObjectManagerNew (Objetos activos, entities del juego, coordenadas de colision)
+MapManagerNew(?) (Elementos pasivos. Renderizado del mapa),
+MemManager (?) Colleccion de collections que usaran tanto GLObjectManagerNew como MemManager.
+
+GLCameraNew => movimiento de la camara.
+
+GLGameLogic => Evalua IA, Collision, inclusion de nuevos objetos y eliminación de los mismos.
+
+(De momento desplazamiento estático por tiles)
+
+29-09-2015:
+
+Definición de: GLEntity; GLImage.
+
+03-10-2015
+
+Descartado (aunque no totalmente) movimiento rotacional de la camara. Aplicar rotación sobre individuo, no sobre todos los elementos del mapa.
+
+
+04-10-2015
+
+Decidido tamaño de los mapas.
+
+1-Tamaño de los mapas, proporcionales al tamaño de la ventana que se quiera mostrar.
+2-Tiles estáticos 64x64 siempre.
+3-Tiles dinámicos 32x32, 64x64, 128x128 (proporcionales a los tiles estáticos).
+
+los tiles quedarán divididos en secciones de 32x32 o 64x64. Se avanzará cada 64 tiles.
+
+(Tiles dinamicos:= switches, lights, traps, teleporters, enemies, shoots)
+
+
+06-10-2015.
+
+Implementacion de GameLevelNew.h
+
+
+07-10-2015.
+
+Inclusión de un motor desatendido de carga de imagenes (GLImageFactoryManager, GLImage); y de un motor de carga de definicion de elementos (GLEntityDefManager)
+
+11-10-2015:
+
+Creo varias clases nuevas (tal y como lo he comenzado a perfilar el 07/10)
+
+Todas utilizan como collection el motor gestor de memoria MemManagerNew.
+
+GLImage => Versión mejorada del Image.h/Image.cpp => Carga las imágenes del videojuego en diferentes formatos, utilizando SDL, SDL_Image.
+(carga imágenes en formato JPG/PNG, con cuatro canales, y algoritmos de compresion. (Transparencias). Carga Mipmaps, sensación de profundidad)
+
+GLImageFactoryManager => Gestión desatendida de Array de Imágenes. a un identificador de imágenes devuelve el GLUint de la imagen. Si no lo encuentra
+
+GLEntityDefManager => Gestión de elementos dinámicos del mapa. (Carga las definiciones del mismo)
+
+GLStateManager => Gestión de los estados del mapa.
+
+GLGameLogic => Gestión de la lógica del juego (colisiones, gestión del AI, cambio de estado del juego)
+
+(+) llamada a GLRenderNew => Renderizado de los elementos del mapa +  GLCameraNew (GLRenderNew => Presenta los elementos OpenGL por pantalla, después de ser evaluados por
+GLGameLogic y situados por GLCameraNew)
+
+14-10-2015:
+
+Definicion de GlobalNew => Nueva gestión de variables globales:
+
+clases definidas hasta ahora:
+
+GLImageFactoryManager => Gestor de imágenes
+GLImage               => Carga de imagenes
+GLEntityNew           => Entidad dinámica del juego
+GLTile                => Tile (unidad mínima del juego)
+GLEntityDefinition    => Definición estática del juego
+GLEntityDefManager    => Gestor de definiciones dinamicas del juego
+GLStateManager        => Gestor de Estados del juego
+GLGameLogic           => Gestor lógica del juego
+GLRenderNew           => Motor renderizado del juego (gestor OPENGL)
+GLCameraNew           => Gestor de la cámara
+GameNew               => Estado Nivel de juego.
+GlobalNew             => Variables globales
+GLObjectManagerNew    => Gestor de las entidades dinámicas del juego
+GameLevelNew          => Motor de carga de un nivel de memoria
+MemManagerNew         => Gestor de los espacios de memoria de un juego
+ClockEngine           => Gestor del framerrate de un juego
+ConfigFileEngine      => Motor carga ficheros .ini
+
+//Falta por definir.
+
+GLState
+GLPlayer
+StdAfx
+LogEngine
+Utils
+Hud
+Sound
+Text.
+
+Redefinición de Objetivos. Una vez definido el engine del juego. Sustituir el arranque antiguo del juego con el moderno.
+
+15-10-2015:
+
+
+GLImageFactoryManager => Gestor de imágenes
+GLImage               => Carga de imagenes
+GLEntityNew           => Entidad dinámica del juego
+GLTile                => Tile (unidad mínima del juego)
+GLEntityDefinition    => Definición estática del juego
+GLEntityDefManager    => Gestor de definiciones dinamicas del juego
+GLStateManager        => Gestor de Estados del juego
+GLGameLogic           => Gestor lógica del juego
+GLRenderNew           => Motor renderizado del juego (gestor OPENGL)
+GLCameraNew           => Gestor de la cámara
+GameNew               => Estado Nivel de juego.
+GlobalNew             => Variables globales
+GLObjectManagerNew    => Gestor de las entidades dinámicas del juego
+GameLevelNew          => Motor de carga de un nivel de memoria
+MemManagerNew         => Gestor de los espacios de memoria de un juego
+ClockEngine           => Gestor del framerrate de un juego
+ConfigFileEngine      => Motor carga ficheros .ini
+GLState               => Estado del juego.
+
+//Nuevos hoy
+GLInit                => Carga de: Imagenes, Definiciones Estáticas del Juego, Estados en Memoria ==> MemManagerBew.h
+GLLaunchSystems       => Arranque de:
+
+                      SDL (Ventana SDL, Gestor de eventos de teclado)
+                      EGL
+                      OPENGL ES 1.1
+
+GLInitParam           => Gestor de los parámetros de entrada.
+LogEngine             => Gestor de logs.
+
+Stdafx.h              => Carga de librerias comunes. (Global, LogEngine)
+
+
+Redefinicion de objetivos 2: Ir creando y redefiniendo objetos hasta tener extructura coherente
+Después exportar a nuevo proyecto.
+
+(Dependencias: EGL, OpenglES1.1, SDL1.2.15 (SDL, SDL_Image, SDL_TTf, SDL_Mixer, LUA)
+(Estudiar definir diferentes perfiles según la necesidad.)
+
+
+(NOTA: Investigar sobre el patron observable, observator y el paso de mensajes)
+
+MAIN
+
+1) Carga Motor de Logs
+2) Carga GLLaunchSystems
+3) Carga GLInitParam (gestor de parámetros de entrada)
+4) Carga GLInit (Carga en memoria, definicion de objetos, estados, imagenes)
+5) Carga primer estado del GLStateManager
+    5.1)START
+    5.2)RUN
+    5.2)Hay eventos SDL?
+    5.2.1)Si no ESC, FIN => pasa al proceso interno del State
+    5.2.2)ESC = STOP. Pasa al estado ESC. (+ Estado padre) --> 5.1
+    5.2.3)FIN = DELETE --> FINAL
+
+18-10-2015:
+
+Nuevo contexto creado. SpaceShooter2D-Reloaded3, agrupando todos los elementos del motor (fusionando aspectos de SpaceShooter2D-Reloaded2 y SpaceShooter2D-2)
+http://www.sdltutorials.com/sdl-1.2.15-release-notes
+
+Creacion de:
+
+GLInit                  => Arranque de los sistemas. Parseo ficheros .ini, carga objetos en sistema
+GLLaunchSystems         => Arranque ventana EGL. Arranque sistemas SDL auxiliares.
+GLInitParam             => Gestion parámetros de entrada
+GLLuaScriptManager      => Arranque parametros de entrada
+GLStateDefManager       => Arranque definición de los estados.
+
+20-10-2015:
+
+Definidos los objetos del MAIN.
+
+
+21-10-2015:
+
+Definición funciones_
+
+GLLaunchSystems (Carga del entorno SDL2, OpenGLES)
+EventMsg (Clase Estática mensajes)
+
+Asumir gestión de ventana también por SDL. Utilizar SDL2 para gestionar librerias OpenGL ES (1.5/3.0)
+
+https://github.com/Cpasjuste/sdl-1.2.13_gles_example/blob/master/sdl_gles_test.c
+https://github.com/thp/sdl2-opengles-test/blob/master/common.cpp
+
+
+22-10-2015:
+
+Mas decisiones:
+
+GLLaunchSystems => GLLaunchSystemsGL11; GLLaunchSystemsGL30
+GLLaunchSystems => se comunica con GLStateManager a traves de dos colas de comunicacion.
+
+GLStateDefManager => Procesa fichero .ini a Collection de GLStates
+GLStateManager => Gestion de los objetos GLStates
+GLLuaScriptManager => Procesa los scripts LUA y los guarda en una Coleccion de funciones listo para ser ejecutadas
+GLImageFactoryManager => Gestor de imagenes. Devuelve un collection con el GLUint de la imagen procesada lista para ser utilizada en OpenGL
+
+26-10-2015:
+
+Primera version SpaceShooter2D-Reloaded3; compilada correctamente.
+
+29-10-2015:
+
+Creamos dos proyectos toys, para evaluar la interaccion SDL 2.0 con las librerías OPENGL ES 1.1/ OPENGL ES 3.0
+
+SDL 2.0 + OPENGL ES 1.1 => SDL20GL11
+SDL 2.0 + OPENGL ES 3.0 => SDL20GL30
+
+Estudiar URLs siguiente:
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+http://forums.libsdl.org/viewtopic.php?t=9059&sid=083cd4a8694337b4d4de7c780309ca81
+
+http://lazyfoo.net/tutorials/SDL/07_texture_loading_and_rendering/index.php
+
+http://gamedev.stackexchange.com/questions/46640/how-to-draw-2d-images-using-opengl-in-sdl
+
+http://forums.libsdl.org/viewtopic.php?t=7136&sid=02aa9522ce7d02f3cd4faa980a88fb38
+
+http://www.learnopengles.com/loading-a-png-into-memory-and-displaying-it-as-a-texture-with-opengl-es-2-using-almost-the-same-code-on-ios-android-and-emscripten/
+
+https://developer.apple.com/library/ios/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TechniquesForWorkingWithTextureData/TechniquesForWorkingWithTextureData.html
+http://www.learnopengles.com/android-lesson-four-introducing-basic-texturing/
+
+http://iphonedevelopment.blogspot.com.es/2009/05/opengl-es-from-ground-up-part-6_25.html
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+URLS:
+
+http://openme.gl/opengl-4-tutorial-code/
+http://stackoverflow.com/questions/6005076/building-glew-on-windows-with-mingw
+http://glew.sourceforge.net/basic.html
+http://osdl.sourceforge.net/main/documentation/rendering/SDL-openGL.html
+https://www.youtube.com/watch?v=UwpZOwT9nVc
+
+URLS-2:
+
+http://www.gamedev.net/topic/661998-opengl-core-profile-works-fine-but-not-es-20/
+http://www.gamedev.net/topic/534656-sdl-texture-to-opengl-texture/
+
+http://www.gamedev.net/topic/565297-sdlsdlgfx-vs-sdlopengl-vs-sdl-only-for-2d/
+http://www.gamedev.net/topic/599615-get-my-textures-to-stop-bleeding-in-sdlopengl/
+
+http://www.gamedev.net/topic/284259-for-reference-using-sdl_ttf-with-opengl/
+http://www.gamedev.net/topic/599959-opengl-worth-the-try/
+
+
+31-10-2015:
+
+1-Fase, Carga inicial de recursos.
+
+1) -> Carga de variables globales.
+2) -> Carga del .ini de imagenes
+3) -> Carga de definiciones de los elementos del juego.
+4) -> Carga de scripts de LUA
+5) -> Carga de clips de audio, waws, etc...
+
+(Reflexiones: Versión mínima para continuar el 31/12/2015
+
+1)-> Carga/Gestión de recursos.
+2)-> Pantalla gráfica SDL +  OpenGL ES 1.1 funcionando.(Printado de elemento 3D con texturas + 2D con texturas)
+3)-> Captura de elementos de teclado
+
+== CODIGO MONOLITICO ==
+
+Primera Fase: (Carga de Recursos (Def Elementos, imágenes, Estados, Lua) + Pantalla SDL OpenGL ES 1.1) (*)
+Segunda Fase: (Parseo de los diferentes elementos estáticos de un nivel y puesta en pantalla)(*)
+Tercera Fase: (Depuración de Scrolling/Colision)(*) ==> 31/01/2016
+Cuarta Fase:  (Carga de elementos dinámicos de un nivel y puesta en pantalla)
+Quinta Fase:  (Depuración de Scrolling/Colision/IA/Animacion/Triggers)
+Sexta Fase:   (Mejora de los aspectos gráficos del juego; refactorizacion del juego por factorias; generacion niveles automativamente)
+->Luz por niveles/sectores
+->Iluminacion
+->Trasparencias de lava, agua, acido.
+->halos (campos de fuerza)
+->Evaluar como quedaría generar un nivel automaticamente.
+
+(Redefinir los #defines; #ifdef; etc como factorias)
+
+== CODIGO OPTIMIZADO VERSION MONOLITICA ==
+
+Septima     Fase: (Redefinir GLGameLogic como motor multitasking cooperativo.
+    Evalua
+    -IA
+    -Colisiones
+    -Animaciones
+)
+
+Octava     Fase: (Optimizacion global del juego. Simplificar procesos, aligerar clases)
+-- (seguimos con IA, Collisiones, Animaciones en LUA?)
+Novena     Fase: (Sonido?... Música?)
+
+== CODIGO DISTRIBUIDO ==
+
+Decima             Fase:   (Definicion arquitectura servidores distribuidos. Diseño arquitectura de servidores. Algoritmo Bullying Granja Servidores)
+Undecima           Fase:   (Integración Colas MQ(Comunicacion) +  HazelCast(Caching recursos/informacion) +  SQLLite(journaling))
+Duodecima          Fase:   (Carga Cacheada de recursos... packetizacion?)
+DecimoTercera      Fase:   (Diseño comunicacion Cliente-Servidor(Esclavo); Servidor(Esclavo)-Servidor(Master); Servidor(Master)-Servidor(Master))
+DecimoCuarta       Fase:   (Separación parte cliente y parte servidor)
+DecimoQuinta       Fase:   (Cliente: Actualizacion OpenGL ES 1.1 a OpenGL ES 3.0+; 2D)
+DecimoSexta        Fase:   (Migracion Proyecto Final a Visual Studio)
+
+--> Division del proyecto en diferentes subproyectos:
+
+LIB RENDERING               (Libreria Renderizado)
+LIB MEMORY_MANAGEMENT       (Gestion de los espacios de memoria del juego)
+LIB RESOURCES_MANAGEMENT    (Gestion de los diferentes elementos que conforman el engine)
+LIB CACHE                   (Gestion de diferentes niveles de cache)
+LIB IO                      (Accesos IO)
+
+== OPENGL ES 3.0 (MEJORA DE ASPECTOS DEL JUEGO) ==
+
+Undecima Fase: Mejora comportamiento gráfico videojuego
+
+1) --> mejora en los shaders:
+incorporacion de transparencias (agua, lava);
+motor de particulas (Humo, exhaust, explosiones, rayos, halos, nubes, plasma, etc...)
+incorporacion de luces (deferred shader)
+sombreado dinámico
+
+2)--> inclusion de nuevos elementos:
+
+Trampas (fuego,lava, etc...)
+
+== CONSOLIDACION DEL ENGINE ==
+
+Duodecima Fase: Creación editor de niveles. (Qt); Creación procedural de niveles (x BSP)
+
+Decimotercera Fase: Mejora del proceso de profiling (SAT; configuracion del jugador)
+
+Decimocuarta Fase: Definicion de diferentes perfiles:
+
+1) --> Perfil en HTML 5/Javascript
+2) --> Perfil nativo (Windows/Linux)
+
+== SPACESHOOOTER2D - SPACESHOOTER3D ==
+
+Decimoquinta Fase: Migrar de elementos en 2D a 3D; con arquitectura en CÓDIGO DISTRIBUIDO
+Análisis std:string: http://www.data2013.cl/DOCS/INFORMATICA/PROGRC/cap-c8.html
+
+01-11-2015:
+
+LUA
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+http://acamara.es/blog/2012/08/running-a-lua-5-2-script-from-c/
+http://www.codeproject.com/Articles/11508/Integrating-Lua-into-C
+https://www.debian-administration.org/article/264/Embedding_a_scripting_language_inside_your_C/C_code
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+02-11-2015:
+
+1)Gestión del motor de LUA
+2)Gestión de imágenes
+
+EXCEPCIONES:
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+http://www.cplusplus.com/doc/tutorial/exceptions/
+http://stackoverflow.com/questions/16182781/how-to-create-exceptions
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+NAMESPACES:
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+http://www.cprogramming.com/tutorial/namespaces.html
+http://www.learncpp.com/cpp-tutorial/4-3a-namespaces/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+SDL:
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+https://forums.libsdl.org/viewtopic.php?t=9029&sid=f1346b42bba22ddf6a184b3f4bf80720
+http://www.dinomage.com/2013/01/howto-sdl-on-android/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+06-11-2015:
+
+Debido a la imposibilidad de hacer funcionar el motor deseado, se definirá tres perfiles diferentes:
+
+1-SDL12 => Motor Gráfico con SDL 1.2.15 (+Opengle ES 1.1) ==> No funciona. Se necesita version especial de SDL 1.2.13 de CPajuste.
+2-SDL13+OpenGL Es 1.1 => Motor Gráfico SDL 1.3/OpenGL ES 1.1
+3-SDL20+OpenGL Es 3.0 => Motor Gráfico SDL 2.0/OpenGL ES 3.0
+
+Asi mismo se han definido 4 proyectos diferentes:
+
+SDL13GL11 => Proyecto fusion SDL13 + GL11 Impresion cubo + imagen
+SDL20GL30 => Proyecto fusion SDL20 + GL20 Impresion cubo + imagen
+SDL12ENGINE => Proyecto SDL12
+LUAENGINEPROJECT => Proyecto proceso LUA ENGINE
+
+Estos miniproyectos, servirán para analizar la viabilidad de los motores. así como procesos de pruebas de diferentes funcionalidades.
+
+
+07-11-2015:
+
+(Proceso de investigacion de hoy... LUA + IA + AABB + GLEW)
+
+Lua+C:
+
+http://www.codeproject.com/Articles/11508/Integrating-Lua-into-C
+
+IA Steering Behaviour:
+
+https://github.com/Yonaba/Steering-Behaviors/blob/master/src/behavior/steering.lua
+http://stackoverflow.com/questions/17819658/lua-separation-steering-algorithm-groups-overlapping-rooms-into-one-corner
+http://tinykeep.com/dungen/
+https://csl.name/post/lua-and-cpp/
+http://cc.byexamples.com/2008/06/07/how-to-embed-lua-51-in-c/
+
+Colisiones AABB:
+
+http://stackoverflow.com/questions/9458337/swept-aabb-vs-aabb-collision-test-not-working
+https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+http://stackoverflow.com/questions/7285584/pixel-based-collision-detection-problem-with-opengles-2-0-under-android
+http://www.webr2.com/collision-detection-in-opengl-es-on-the-iphone/
+http://gamedev.stackexchange.com/questions/25818/how-to-implement-a-2d-collision-detection-for-android
+http://gamedev.stackexchange.com/questions/15191/is-there-a-good-way-to-get-pixel-perfect-collision-detection-in-xna
+http://www.gamedev.net/topic/475238-per-pixel-collision-with-opengl/
+http://stackoverflow.com/questions/16416955/2d-pixel-perfect-collision-detection-with-opengl
+http://processors.wiki.ti.com/index.php/Render_to_Texture_with_OpenGL_ES
+
+GLEW:
+
+http://sourceforge.net/p/glew/mailman/message/28248253/
+http://sourceforge.net/p/glew/mailman/message/27810164/
+http://sourceforge.net/p/glew/mailman/glew-coders/thread/4C6972AA.3090603@nvidia.com/
+http://stackoverflow.com/questions/3489150/how-to-porting-opengl-code-with-glew-to-opengl-es-code-for-iphone
+
+Creación del gestor de sonidos; y de excepciones.
+
+GLSoundManager => Gestor de efectos de sonidos/música
+GLSoundFile => Motor de sonidos/música
+Excepctions => Motor de excepciones.
+
+
+IDEAS PARA INCORPORAR AL VIDEOJUEGO.
+1)Diferentes modos de juego (modo Dios, modo no clip, etc)
+2)Trasparencias de agua/lava.
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+3D: https://www.opengl.org/discussion_boards/showthread.php/155635-Water-transparency-related-to-depth
+2D:
+http://www.sector12games.com/2d-water-flow-shader/
+http://blog.bonzaisoftware.com/tnp/gl-water-tutorial/
+http://rotatingcanvas.com/fragment-shader-to-simulate-water-surface-in-libgdx/
+http://gamedev.stackexchange.com/questions/56340/2d-water-top-surface-profile
+http://gamedevelopment.tutsplus.com/tutorials/create-a-glowing-flowing-lava-river-using-bezier-curves-and-shaders--gamedev-919
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+3)SAT (Crear ficheros de comandos para simular el comportamiento del jugador)
+
+09-11-2015
+
+1) Acabar el proceso de cargado de recursos. (Gestion de sonidos)
+2) Implementar SDL13GL11; SDL20GL30.
+3) Trabajar con SDL20; proceso de imagenes y tiles.
+
+https://forums.libsdl.org/viewtopic.php?t=10103&sid=ccf8abbf0d73fb03ae9cded991e60959
+https://forums.gentoo.org/viewtopic-t-824653-start-0.html
+http://www.gamedev.net/page/resources/_/technical/graphics-programming-and-theory/dynamic-2d-soft-shadows-r2032
+https://forums.libsdl.org/viewtopic.php?t=4882&sid=44417d187d252ae244114054187926da
+
+SDL+OpenGL
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+http://swarminglogic.com/jotting/2013_10_gamedev01
+http://ogldev.org/
+http://www.neuroproductions.be/opengl/making-a-3d-game-with-opengl-deferred-shading-and-stuff/
+http://www.paulsprojects.net/tutorials/smt/smt.html
+http://hackersome.com/p/WhiteVoidia/2d-lighting-engine
+http://www.gamedev.net/page/resources/_/technical/game-programming/code-for-game-developers-optimization-r4225
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+12-11-2015
+
+
+PROYECTOS DE REFERENCIA:
+
+First3DProject ==> Ejemplo SDL 1.3 + Opengl ES 1.1
+openGLGuideEx1 ==> Ejemplo SDL 2.0 + Opengl ES 3.0
+SDLPrueba11 ==> Ejemplo SDL 2.0 Motor de partículas
+SDLPrueba6 ==> Ejemplo SDL 2.0 Motor de sonido/efecto de sonidos.
+SDLPrueba5 ==> Ejemplo SDL 2.0 Motor pixel collition
+SDLPrueba4 ==> Ejemplo SDL 2.0 Motor Scrolling
+SDLPrueba3 ==> Ejemplo SDL 2.0 Motor Tiles.
+SDLPrueba7 ==> Ejemplo SDL 2.0 Motor TTF. (gestion texto fuentes freetype)
+
+PROYECTOS DE PRUEBA:
+
+SDL13GL11 ==> Motor SDL 1.3 + OpenGL ES 1.1
+SDL20GL30 ==> Motor SDL 2.0 + OpenGL ES 3.0
+
+PROYECTOS DE TESTING
+
+****************************************************************************************************************************************************************
+LUAENGINEPROJECT ==> Motor prueba carga procesado de scripts en LUA
+SDL20GL11TILEBLEND ==> Banco de pruebas sobre renderizado de tile, scrolling, blending, alpha channel. Probar también vertex object buffer y composicion de escena por SDL
+SDL20GL11LIGHT => Banco de pruebas sobre gestion de luces ambientales,difusas, especulares incidencia sobre materiales, etc...
+SDL20GL11SHADOWS => Banco de pruebas sobre FBO, gestión deferred de luces y sombras, utilizando FBO depth y el stencil buffer.
+****************************************************************************************************************************************************************
+
+15-11-2015
+
+SDL Android: http://www.dinomage.com/2013/01/howto-sdl-on-android/
+Lib SDL 2.0: https://forums.libsdl.org/viewtopic.php?t=9029&sid=f1346b42bba22ddf6a184b3f4bf80720
+SDL + opengl: http://www.gamedev.net/topic/565297-sdlsdlgfx-vs-sdlopengl-vs-sdl-only-for-2d/
+GitHub SDL 2.0 - OpenGL ES 1.1/2.0: https://github.com/thp/sdl2-opengles-test
+GitHub SDL 1.3 - OpenGL ES 1.1: https://github.com/Cpasjuste/sdl-1.2.13_gles_example/blob/master/sdl_gles_test.c
+SDL 1.2.15_OPENGL: https://www.libsdl.org/release/SDL-1.2.15/docs/html/guidevideoopengl.html
+GLES 1.1 SDL PANDORA: http://www.pandorawiki.org/GLES#Combining_GLES_1.1_and_SDL_to_make_a_window_on_the_pandora
+SDL 1.2.15_XXX: https://forums.libsdl.org/viewtopic.php?p=42858&sid=00f41e5c2f45280e60f718340490ff29
+
+SDL 2.0 Alpha Blending: https://www.youtube.com/watch?v=B-S1LsnCI90
+
+Carga dinamica dlfcn: https://github.com/dlfcn-win32/dlfcn-win32
+
+16-11-2015
+
+Primer intento, desarrollo SDL 1.3 + OpenGL ES 1.1
+Si no funciona; SDL 2.0
+(En un futuro, intentar SDL 2.0 + OpenGL ES 3.0)
+
+
+Estructura evolucionada del formato de un fichero de nivel:
+
+1a version gestion de luces general y/o por estratos de un mismo nivel. Pensar en un futuro hacerlo por sectores de un mismo estrato.
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+size_x_map size_y_map tile_x_map tile_y_map size_tile_x size_tile_y levels rules
+
+//general
+lighting_general  (luz, sombra, oscuridad, ...)
+collition_general
+ia_steering_general
+music_general
+
+//rules
+rule 1 (id_element1 pos_x_1 pos_y_1 level_1 id_element2 pos_x_2, pos_y_2 level_2 rules)
+
+
+//level 0
+background_image_id
+
+//level 1 static
+num_collision_level_1 num_lighting_level_1
+
+1....1
+.
+.
+1....1
+
+//level 1 dinamic (enemies, lighting spots,)
+1....1
+.
+.
+1....1
+
+collision_1_1
+collision_1_2
+...
+
+lighting level_1
+...
+
+//level 2 static
+num_collision_level_1 num_lighting_level_1
+
+1....1
+.
+.
+1....1
+
+//level 2 dinamic (enemies, lighting spots,)
+1....1
+.
+.
+1....1
+
+num_collision_level_2
+
+collision_2_1
+collision_2_2
+...
+
+lighting_level_2
+...
+
+21-11-2015
+
+Desplazamientos incrementales, se definen los incrementos de movimiento en cada definicion del elemento dinamico.
+
+(Intentar cargar SDL12ENGINEC con SDL13)
+(Intentar cargar GLEW en el proyecto: http://sourceforge.net/p/glew/mailman/message/28212706/)
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+22-11-2015
+Tutorial aburridote sobre compaginar opengl con SDL: http://andrew-flower.com/projects
+
+26-11-2015:
+
+Links de prueba SDL_opengles
+
+//SDL20GL11
+//https://www.opengl.org/discussion_boards/showthread.php/185966-c-SDL2-OpenGL-ES-Camera-without-GLUT-on-Android
+//http://stackoverflow.com/questions/33145547/why-cant-i-create-an-opengl-es-3-0-context-using-sdl2
+//https://forums.libsdl.org/viewtopic.php?t=10236&sid=8783661a52151c6a1f9e199369717343
+
+//EGLSDL13GL11
+//https://forums.khronos.org/showthread.php/5580-EGL-and-SDL-Context-Creation
+//http://stackoverflow.com/questions/12443016/why-is-eglmakecurrent-failing-with-egl-bad-alloc
+//https://forums.libsdl.org/viewtopic.php?t=9181&sid=2d2472aac5304b8c3fa0b29b8dc87980
+//https://forums.khronos.org/showthread.php/5061-Trying-to-implement-EGL-in-SDL
+
+29-11-2015:
+
+Conversion SDL13 a SDL20. Version SDL20GL11 (SDL20+GL11+GLEW?)
+(GLEW ==> "Carga de extensiones")
+
+Gestion SDL Image.
+http://lazyfoo.net/tutorials/SDL/51_SDL_and_modern_opengl/index.php
+http://www.gamedev.net/topic/456772-sdl_image-to-opengl-texture/
+
+Texturas DOOM:
+http://www.doomworld.com/afterglow/textures.shtml
+http://www.bghq.com/textures.php?game=doom
+
+01-12-2015:
+Definiendo el motor del parseo de nivel. (GameLevelNew, GLEntityDefManager)
+
+02-12-2015:
+
+Creado el parser de nivel de la aplicacion.
+
+03-12-2015:
+
+http://www.gamedev.net/topic/673406-wpf-presenting-2d-sprites-2d-map-editor/
+http://ogldev.atspace.co.uk/index.html
+http://www.gamedev.net/topic/673508-event-aggregator-in-c-need-help/
+
+shadow mapping
+http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-16-shadow-mapping/
+http://stackoverflow.com/questions/2855017/real-time-soft-shadows-without-stencil-buffers
+http://joshbeam.com/articles/stenciled_shadow_volumes_in_opengl/
+https://www.youtube.com/watch?v=yD_qTDeZgkA
+
+lighting:
+http://joshbeam.com/articles/dynamic_lightmaps_in_opengl/
+https://www.opengl.org/discussion_boards/showthread.php/175634-More-than-8-lights
+https://www.khronos.org/opengles/sdk/1.1/docs/man/
+http://answers.unity3d.com/questions/155650/lighting-and-lightmapping-opengl-es-11.html
+http://chimera.labs.oreilly.com/books/1234000001814/ch08.html#ch08_id35817098
+http://answers.unity3d.com/questions/155650/lighting-and-lightmapping-opengl-es-11.html
+
+04-12-2015:
+
+1- Definir diferentes estados de ambientación del juego para el tema de las luces. ponerlo como parametro en el nivel de juego
+(primera aproximación nivel global. segunda aproximación x niveles. tercera aproximacion por sectores de nivel)
+
+2-Definir 2ª versión clase GLTile. Definir lightmaps y heighmaps para temas de iluminación y bumpmapping.
+3-Definir 1ª versión clase GLPlayer.
+
+4-Definir 1ª versión de un nivel funcional (intentando ser lo mas simplificado posible) [1 nivel, motor de colisiones, 1 Luz; sin elementos dinámicos]
+5-Renderizado del level-dummy.
+
+Derivar los parseos de datos estaticos de un elemento + datos del gameLevel a GLObjectManagerNew.
+
+08-12-2015:
+
+Primer nivel definido y parseo realizado.
+Definición del objeto GLPlayer; GLEnemy. (derivan ambos de GLEntityNew/GLTile)
+Problemas de stackoverflow en el proceso de carga de recursos. (<-- Analisis)
+
+http://stackoverflow.com/questions/7327250/segmentation-fault-when-calling-new-in-c
+http://stackoverflow.com/questions/413477/is-there-a-good-valgrind-substitute-for-windows
+http://www.programmingincpp.com/segmentation-fault.html
+
+09-12-2015:
+
+Debido a la buena evolución del engine. Definir primera version subida a Git.
+
+1-Renderizado de los componentes estáticos del nivel
+2-1a versión scrolling/collision (visualización de los puntos de colision)
+3-Jugador/Enemigos como puntos. (poder capturar movimientos con SDL y reflejarlos en el juego)
+4-Estadisticas, Framerrate, posicion jugador etc en el Hud (con SDL TTF)
+
+13-12-2015:
+
+Tutorial de luces, blending, alpha-channel:
+http://iphonedevelopment.blogspot.com.es/2009/05/opengl-es-from-ground-up-part-4-let.html
+http://stackoverflow.com/questions/20477397/which-opengl-es-1-1-alpha-blending-configuration-to-use-on-ios
+http://gamedev.stackexchange.com/questions/75589/is-there-a-way-to-use-the-rgb-channels-of-a-texture-as-the-alpha-channel-when-ap
+
+Definimos las siguientes clases nuevas:
+
+GLHud -> hud del juego (en estado de debugging)
+GLPlayer -> Entity PLAYER
+GLEnemy -> Entity ENEMY
+GLPortal -> Entity PORTAL
+GLEnemyGenerator -> Entity PORTAL_ENEMIGOS
+GLBeam -> Entity HAZ LUZ LASER
+GLMissile -> Entity MISSILE
+GLExit -> Entity EXIT (salida del nivel)
+GLItem -> Entity BONUS.
+GLLight -> Entity LUZ NIVEL
+
+Crear los siguientes proyectos:
+
+SDL20GL11TILEBLEND -> Posicionamiento en pantalla de tiles, vision ortho, no ortho. Blending y alpha channel
+SDL20GL11LIGHT -> luces. ambiental, difusa, aplicacion a texturas.
+SDL20GL11SHADOWS -> sombras. (ampliacion del proyecto tutorial 8)
+SDL20GL11PARTICLESSYTEMS -> motor de particulas.
+
+17-12-2015:
+
+Estabilizacion del sistema terminado. gestion del sistema de tiles.
+
+20-12-2015:
+
+Definicion definitiva de los datos de imágenes.
+Gestión definitiva de los vectores de texturas asociados a una imagen.
+http://iphonedevelopment.blogspot.com.es/2009/05/opengl-es-from-ground-up-table-of.html
+
+Gestion de pantalla según tamaño del mapa.
+
+https://maniacdev.com/2009/09/the-categorized-opengl-es-tutorial-collection
+http://stackoverflow.com/questions/11666825/opengl-es-1-1-alpha-mask
+http://stackoverflow.com/questions/72288/learning-opengl-es-1-x
+http://chimera.labs.oreilly.com/books/1234000001814/ch09.html
+
+
+Transformaciones de canales imagenes BMP
+http://www.idevgames.com/forums/printthread.php?tid=5602
+https://wiki.libsdl.org/SDL_CreateRGBSurface
+http://www.gamedev.net/topic/519064-create-bitmap-with-sdl-or-load-one-from-memory/
+
+ETC1 COMPRESSION_ENGINE_HIBER
+http://stackoverflow.com/questions/7106873/opengl-es-1-1-texture-compression-etc1-and-mipmaping-complete-set-of-mipmaps-e
+http://stackoverflow.com/questions/6403106/compressed-textures-become-white-in-android?rq=1
+http://stackoverflow.com/questions/7208794/android-opengl-es-1-1-texture-compression-on-the-fly?rq=1
+
+
+21-12-2015:
+
+Reflexiones:
+
+A:
+Se hará una primera versión gráfica del juego con gráficos "justitos" tal y como se ha ido desarrollando en el "SpaceShooter2D-2", al menos
+hasta terminar el motor de scrolling y colisiones. (Segunda y Tercera fase del proyecto; en la etapa monolítica)
+
+ESTAMOS AQUÍ:
+
+Segunda Fase: (Parseo de los diferentes elementos estáticos de un nivel y puesta en pantalla)
+-Definicion de la estructura de un fichero de nivel.
+-Parseo de un fichero de nivel
+-Puesta en pantalla de la información de un fichero estatico de nivel (asociándolo con nuestra base de datos de imagenes, definicion de elementos y scripts)
+-Puesta en pantalla del jugador
+
+Tercera Fase: (Depuración de Scrolling/Colision)
+
+-Cargar un primer script que gestione los colisiones.
+
+B:
+Definir tanto la creación de objetos dinámicos como el renderizado de los mismos en factorias:
+
+GLObjectManagerTile;
+GLObjectManagerPlayer;
+GLObjectManagerEnemy;
+...
+
+GLRenderBackground;
+GLRenderStaticLevel;
+GLRenderDynamicLevel;
+GLRenderCollision;
+GLRenderPlayer;
+GLRenderEnemies;
+GLRenderRoles;
+GLRenderHud;
+...
+
+C:
+
+Los gráficos serán BMP, con el gestor de imagenes del spaceshooter2d-2. (Gestion de imagenes)
+
+Descartar imagenes PNG, JPG. Descartar imagenes ETC1
+
+Gestion de configuración de carga de imagenes.
+surface = ConvertToRGBA(surface);
+
+Analisis-1:
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+Analisis-2:
+glTexParameterx(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
+
+Analisis-3:
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+23-12-2015:
+
+Ampliación del engine; posibilidad gestion completa SOLO X SDL (2.0)
+(Carga del engine; renderizado del engine; gestion de imagenes)
+
+(Si el aplicativo supera los 10Mbytes, será cuestión de analizarlo)
+
+https://github.com/x414e54/glew-es_core
+https://code.launchpad.net/~rsalveti/linaro-graphics-misc/glew-es-core-trunk
+http://stackoverflow.com/questions/19416521/sdl-2-0-c-how-can-i-make-an-array-of-sdl-textures
+
+25-12-2015:
+
+Empezamos a definir el primer elemento dinamico. El jugador.
+
+Investigacion. Creacion procedural de niveles (...motor en Lua?)
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+http://members.gamedev.net/vertexnormal/tutorial_randlev1.html
+http://gamedev.stackexchange.com/questions/82166/procedual-level-generation-for-a-platformer-game-tilebased-using-player-physic
+http://gamedevelopment.tutsplus.com/tutorials/how-to-use-bsp-trees-to-generate-game-maps--gamedev-12268
+https://github.com/foozmeat/2DCityMaker
+http://www.gamedev.net/topic/262037-2d-collision-detection-with-bsps/
+http://www.gamedev.net/topic/492406-building-robust-2d-level-formats/
+http://gamedev.stackexchange.com/questions/910/algorithm-for-generating-a-2d-maze
+http://gamedevelopment.tutsplus.com/tutorials/create-a-procedurally-generated-dungeon-cave-system--gamedev-10099
+http://forum.unity3d.com/threads/best-unity-procedural-generation-tutorials.294890/
+https://www.reddit.com/r/gamedev/comments/2lyqki/three_techniques_to_procedurally_generate/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+http://www.gridsagegames.com/blog/2014/06/procedural-map-generation/
+http://www.hindawi.com/journals/ijcgt/2010/624817/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+26-12-2015:
+
+GameLogic definido tb en Lua? --> si se pudiese conseguir la flexibilidad del engine sería "casi" total
+La definicion del objeto "DynamicEntity" es tan completa, que casi no necesita especializacion (Player, Enemy, etc...)
+Definicion de un nuevo elemento "extra" con las coordenadas del contorno del entity (sirve para shadows; y para colisiones)
+
+28-12-2015:
+
+http://stackoverflow.com/questions/17557474/getting-sdl-ttf-to-play-nice-with-sdl2
+http://www.willusher.io/sdl2%20tutorials/2013/12/18/lesson-6-true-type-fonts-with-sdl_ttf/
+http://content.gpwiki.org/index.php/SDL_ttf:Tutorials:Fonts_in_OpenGL
+https://github.com/thp/sdl2-opengles-test/blob/master/main_ttf.cpp
+
+Presentar texto por pantalla y ejecutar scripts --> conseguido
+(averiguar como ejecutar scripts en lua, sin tener que compilarlos cada vez)
+
+29-12-2015:
+
+Estudiar como cachear binarios de scripts en Lua; para luego ejecutarlos
+(Mismo estudio para shaders en un futuro)
+
+///////////////////////////////////////////////////////////////////////
+https://csl.name/post/lua-and-cpp/
+http://stackoverflow.com/questions/8936369/compile-lua-code-store-bytecode-then-load-and-execute-it
+///////////////////////////////////////////////////////////////////////
+
+
+Comenzar definicion de GameLogic.
+
+1-Captura de eventos de teclado. Procesado de elementos de teclado/raton. (Movimientos, disparos, eventos control de estados)
+2-Evaluacion de entorno (Colisiones, Roles)
+2.1-Evaluacion si fin de nivel
+3-Evaluacion de elementos dínamicos (IA elementos dinámicos)
+4-Evaluación de entorno de los elementos dinámicos (Colisiones, elementos dinámicos)
+
+2-Crear un nuevo mantenimiento/gestion de TIFF.
+
+30-12-2015:
+
+Reflexiones
+Determinar nuevos "tipos" de elementos (widgets, botones, minimap, etc) -> Definicion del hud; definicion de los menus.
+Avanzar proceso gestión del ratón, rotación diferencial del jugador. (Parte del GameLogic). Definición del cursor.
+
+DEFINIR LOS ELEMENTOS BÁSICOS DE LA APLICACION:
+////////////////////////////////////////////////////////////////////////////////
+//Elementos estáticos
+1-TILE
+//Elementos dinámicos
+2-DYNAMIC TILE (muro destruible, fuente de luz, rampas?)
+3-DYNAMIC_ELEMENT (Player, Enemies)
+4-BEAM (Faser, explosiones) => gestion de partículas.
+5-PORTALS => mueven a otros lados del mapa o salen del nivel
+6-ENEMIES GENERATORS => generadores de enemigos-
+7-ROLES => switches
+8-WIDGETS => Elementos del hud; Elementos de menu
+////////////////////////////////////////////////////////////////////////////////
+
+Coleccion de fuentes: http://www.webpagepublicity.com/free-fonts-x.html (Buscar Digital)
+
+Gestion SDL-OpenGL 24 bits: http://www.mrericsir.com/blog/technology/accelerated-2d-graphics-with-opengl-and-sdl-part-1/
+Parallax docs: http://gamedev.stackexchange.com/questions/29138/how-can-i-add-a-parallax-effect-into-my-side-scrolling-game
+Parallax 3D: http://www.learnopengl.com/#!Advanced-Lighting/Parallax-Mapping
+Parallax 2D por secciones: http://stackoverflow.com/questions/2255585/creating-a-parallax-on-a-tiling-background
+
+textures: http://www.jayway.com/2010/12/30/opengl-es-tutorial-for-android-part-vi-textures/
+http://stackoverflow.com/questions/8047887/trouble-displaying-textures-opengl-es-1-1
+
+format image: http://gamedev.stackexchange.com/questions/15334/best-most-popular-image-format-for-texturing
+
+01-01-2016:
+
+Parallax no funciona. Se tendrá que evaluar por separado.
+
+02-01-2016:
+
+He encontrado una solucion paralela para el Parallax, jugando con SDL en vez de OpenGL Es
+
+problemas de mutabilidad de char:
+
+http://stackoverflow.com/questions/4949254/const-char-const-versus-const-char
+
+
+Puntos para posibles optimizaciones del juego:
+
+1-Utilizar imagenes comprimidas ETC1 o PVR en vez de los formatos tradicionales.
+2-Utilizar ficheros binarios en vez de ficheros de texto para parsear los niveles/ficheros de recursos
+3-Posicionamiento inteligente de los componentes que definen un typedef struct
+4-Evitar estructuras de memoria que propicien la fragmentacion (std::map; std::vector). definir serializacion, división en strings de un tamaño fijo y el volcado de objetos
+en chunks de strings que puedan
+ser parseados. Definir un sistema de cache para guardar los datos a diferentes niveles.
+5-Derivar a una clase/libreria el renderizado de todo
+6-Separar la gestión en memoria de los recursos (cliente en tiempo de ejecución del nivel) del mapeado del mapa (cliente-servidor)
+7-Gestion de los logs por bloques, en vez de ir printando cada accion.
+8-Usar VBO (Vertex Buffer) para plasmar los elementos estáticos en un nivel.
+9-Usar FBO (Frame Buffer) para plasmar las luces y los sombreados dinámicos.
+10-Habilitar herramientas de performing.
+
+04-01-2016:
+
+problemas de mutabilidad del char (parcialmente) solucionados.
+
+http://www.gamasutra.com/view/feature/3361/understanding_and_using_opengl_.php?print=1
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+Segunda Fase: (Parseo de los diferentes elementos estáticos de un nivel y puesta en pantalla) ==> HECHO
+-Definicion de la estructura de un fichero de nivel.
+-Parseo de un fichero de nivel
+-Puesta en pantalla de la información de un fichero estatico de nivel (asociándolo con nuestra base de datos de imagenes, definicion de elementos y scripts)
+-Puesta en pantalla del jugador
+
+ESTAMOS AQUI!
+
+Tercera Fase: (Depuración de Scrolling/Colision) ==>
+
+-Desarrollo del GameLogic
+
+1) Captura de eventos
+2) Procesado de colisiones
+3) Procesado de IA
+
+-Cargar un primer script que gestione los colisiones.
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+OBJETIVO PARA SEGUIR EL 01/06/2016 ==>
+
+***************************************************************************************************************
+TERCERA FASE:
+GAMEPLAY MÍNIMO (independiente del renderizado gráfico):
+
+Para un mapa de un solo nivel
+
+1)Scrolling
+2)Parallax
+3)IA Individual -> (No Steering Behaviour)
+4)Gestion del GamePlay
+5)Llamada Animacion de los elementos (No renderizado)
+6)Collision
+
+Evaluado a nivel de scripts de forma SECUENCIAL
+***************************************************************************************************************
+
+05-01-2016:
+
+Pass Object to Lua: http://stackoverflow.com/questions/2581377/pass-c-object-to-lua-function
+Pass Collection to Lua: http://lua-users.org/wiki/CppLuaDataPassing
+
+funciones LUA a implementar:
+
+(IDLE ==> no script)
+
+1)Collision(relMovementPol, relMovementPol)
+2)Animations(GLDynamicEntityNew)
+
+2.1)AnimationPlayer --> (Animacion subelemento tobera)
+2.2)AnimationEnemy1 --> (Animacion Rotacion/Movimiento)
+2.2)AnimationEnemy2 --> (Animacion subelemento torreta)
+2.3)AnimationEnemy3 --> (Animacion segmentos enemigo)
+
+2.4)AnimationStatic1 --> (Animacion beam)
+2.5)AnimationStatic2 --> (Animacion switch)
+
+
+3)IA(GLDynamicEntityNew, relMovementPol[], posXPlayer, posYPlayer)
+3.1)Simple Chasing Collition
+3.2)Simple Chasing Shoot
+3.2)A* (Manhattan)
+
+4)IAGlobal(Enemies[], posXPlayer, posYPlayer)
+4.1)Steering Behavour --> Herd.
+
+5)GamePlay-triggers-Roles
+5.1)GamePlayEndAnimation --> (Determina si sigue reproduciendo una fuente de particulas o acaba)
+5.2)GamePlayPlayer --> (Decide el comportamiento del nivel dependiendo del comportamiento del jugador)
+5.3)SwitchOnOff --> (Activa-Desactiva un switch)
+5.4)ElementFucked --> (Elemento destruido)
+
+Definir intervalos de frames como parametro global.
+
+Estructura GameLogic Realzada. En espera de integración con scripts de LUA
+
+06-01-2016:
+
+Esqueleto del GameLogic Completado. Siguiente paso investigar como integrar diferentes tipos de scripts de LUA en la aplicación
+unique ID Generator: http://stackoverflow.com/questions/1988679/algorithm-for-generating-a-unique-id-in-c
+
+Replantear la gestion de movimento del tile basado en una posicion inicial + ancho del tile X e Y
+
+08-01-2016:
+
+DESARROLLO DEL GAMELOGIC
+
+A->Colisiones.
+
+1)Definir colision AABB sencilla a modo de evaluación.
+2)Implementar movimiento simple jugador, basado en colision.
+3)Implementar script lua de colisiones.
+
+
+http://stackoverflow.com/questions/10670094/passing-a-lua-table-from-c-to-lua-script
+http://www.gamedev.net/topic/462367-passing-arrays-between-lua-cc/
+http://stackoverflow.com/questions/283042/how-to-pass-large-struct-back-and-forth-between-between-c-and-lua
+http://stackoverflow.com/questions/15396067/lua-newbie-c-lua-how-to-pass-a-struct-buffer-to-lua-from-c
+
+
+4)Implementar movimiento mejorado del jugador (teclado + mouse)
+5)Refinar script lua de colisiones,
+
+B->Animaciones.
+
+C->GamePlay.
+
+D->IA.
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Siguientes pasos del desarrollo
+
+1->Desarrollo de colisiones AABB (por código)
+2->Desplazamiento jugador simple (usando solo teclado)
+2.1 -> Desplazamiento ventana + parallax
+
+3->Desplazamiento completo jugador (teclado + mouse)
+3.1 -> Calculo de matrices de rotacion de elementos
+3.2 -> Desplazamiento ventana + parallax
+
+4 -> Exportación motor de colisiones a LUA
+5 -> Desarrollo de animaciones
+5.1 -> Desarrollo animacion jugador
+
+6-> Desarrollo IA enemigos
+
+
+==> DEPURAR SCROLLING: https://forums.tigsource.com/index.php?topic=30011.0
+==> https://love2d.org/wiki/Tutorial:Tile-based_Scrolling
+
+==>  rendering http://forum.lwjgl.org/index.php?topic=5374.0
+==> http://stackoverflow.com/questions/7274219/drawing-using-vertex-buffer-objects-in-opengl-es-1-1-vs-es-2-0
+==> http://gamedev.stackexchange.com/questions/9048/android-efficient-way-to-draw-tiles-in-opengl-es
+==> http://webcache.googleusercontent.com/search?q=cache:HzyAbV_OZ6MJ:https://www.reddit.com/r/gamedev/comments/12x4tj/player_collision_system_in_the_original_doom/+&cd=1&hl=en&ct=clnk&gl=es
+==> http://webcache.googleusercontent.com/search?q=cache:M4nL6QHw0LAJ:www.peroxide.dk/download/tutorials/tut10/pxdtut10.html+&cd=1&hl=en&ct=clnk&gl=es
+
+Crear dos prototipos de renderizado de un motor de tiles 2D con scrolling (OpenGL11, OpenGL30). Evaluar su validez.
+Si muy complicado ==> SDL
+
+12/01/2016
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ENGINES:
+
+LEFT4KDEAD-JAVA (NOTCH) : https://github.com/codingcampbell
+
+ENGINES ANDROID:
+
+http://stackoverflow.com/questions/18791983/android-2d-game-with-opengl
+http://androidblog.reindustries.com/a-real-open-gl-es-2-0-2d-tutorial-part-1/
+http://stackoverflow.com/questions/3553244/android-opengl-es-and-2d
+http://www.gamedev.net/blog/1771/entry-2259446-dev-journal-2d-sprite-animation-using-opengl-es-20-for-android/
+
+OPENGL ES 2D TILES ENGINE:
+
+http://www.the2dgame.com/index?page=articles
+
+http://gamedev.stackexchange.com/questions/30362/drawing-lots-of-tiles-with-opengl-the-modern-way
+https://github.com/BleuLlama/BL2D
+http://webcache.googleusercontent.com/search?q=cache:joV8yf2C8kQJ:https://www.reddit.com/r/gamedev/comments/2a026a/converting_a_2d_game_to_modern_opengl_lots_of/+&cd=10&hl=en&ct=clnk&gl=es
+
+https://code.google.com/p/replicaisland/source/browse/#svn%2Ftrunk%2Fsrc%2Fcom%2Freplica%2Freplicaisland
+http://gamedev.stackexchange.com/questions/17488/how-should-i-represent-a-tile-in-opengl-es
+http://www.swiftless.com/tutorials/opengl/tiling.html
+https://www.opengl.org/discussion_boards/showthread.php/172661-gaps-between-2D-tiles
+http://www.alcove-games.com/opengl-es-2-tutorials/vertex-shader-for-tiled-water/
+http://gamedev.stackexchange.com/questions/9048/android-efficient-way-to-draw-tiles-in-opengl-es
+
+COLISIONES:
+
+*************************************************************************************************************************************
+Pasos:
+
+Debido a que estoy bloqueado con el renderizado del motor de tiles. Derivo la actidad del render a una posterior investigación.
+
+(probar diferentes ejemplos tanto en OpenGL Es 1.1 como en OpenGL Es 3.0)
+
+1-Investigación/adaptación de diferentes renders de motores de tiles
+2-Avanzar en la implementación de scripts de LUA y paso complejo de parámetros
+3-Avanzar en el motor de colisiones.
+
+(dos niveles de colision:
+
+1- Grano grueso ... definir un blockmap donde se situen los diferentes elementos dinamicos, incluyendo el jugador.
+En caso de estructuras estaticas, se deberian dividir tambien en blockmaps.
+2- Si dos elementos están en el mismo blockmap, evaluar colision de grano fino
+Spherical vs AABB ==> elemento activo vs elemento pasivo
+Spherical vs Spherical => elementos activo vs elemento activo )
+
+BLOCKMAP: http://doom.wikia.com/wiki/Blockmap
+http://www.peroxide.dk/download/tutorials/tut10/pxdtut10.html
+https://www.reddit.com/r/gamedev/comments/12x4tj/player_collision_system_in_the_original_doom/
+http://nk0devlog.blogspot.com.es/2013/05/d4k-hopping-sectors-part-2.html
+
+(cada cara define una normal. Esta normal apunta al jugador. Si está en la misma dirección (sentido inverso), evalua colision.)
+
+http://www.wildbunny.co.uk/blog/2011/04/20/collision-detection-for-dummies/
+http://www.wildbunny.co.uk/blog/2011/04/06/physics-engines-for-dummies/
+http://nk0devlog.blogspot.com.es/2013/05/d4k-hopping-sectors-part-2.html
+
+*************************************************************************************************************************************ç
+
+VERTEX BUFFER OBJECT:
+http://playcontrol.net/ewing/jibberjabber/opengl_vertex_buffer_object.html
+http://www.ozone3d.net/tutorials/opengl_vbo_p3.php
+http://stackoverflow.com/questions/7274219/drawing-using-vertex-buffer-objects-in-opengl-es-1-1-vs-es-2-0
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+MENUS-SPLASH PAGES:
+GUICHAN:
+http://guichan.sourceforge.net/oldsite/
+http://www.gamedev.net/topic/574198-guichan-and-codeblocks/
+https://code.google.com/p/guichan/
+https://github.com/kallisti5/guisan
+http://mdqinc.com/blog/2013/01/integrating-librocket-with-sdl-2/
+
+CEGUI:
+http://cegui.org.uk/
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+15/01/2016:
+
+Tres lineas de desarrollo (en orden de tratamiento)
+
+1-Scrolling + Parallax ==> aplicarlo a nuestro entorno. (tratarlo en opengl es 1.1; opengl es 3.0. Usar VBO)
+
+2-Collition
+(Blockmap?, Spherical Collition - Spherical (Dynamical)//Spherical - AABB (Statical)?, Normal Evaluation?)
+
+http://doom2.net/doom2/research/things.html
+
+3-Scripting
+(Gestion IA)
+
+
+Luces: https://developer.vuforia.com/forum/rendering-opengl-es/light-and-materials-opengl-11
+http://chimera.labs.oreilly.com/books/1234000001814/pr02.html#how_to_contact_us
+http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-16-shadow-mapping/
+
+19/01/2016:
+
+SDL20GL11TILEBLEND ==> Experimentación para: Scrolling; Blending-AlphaBlending; VBO (SDL2.0/GL11)
+SpaceShooter2D-Reloaded2 =>  Experimentación para: Scrolling; Blending-AlphaBlending; VBO (SDL2.0/GL30)
+
+El que convenza mas, será el que determine la libreria a utilizar en un futuro.
+
+https://developer.mozilla.org/en-US/docs/Games/Techniques/Tilemaps/Square_tilemaps_implementation%3A_Scrolling_maps
+
+VBO:
+http://stackoverflow.com/questions/8751462/drawing-with-vertex-buffer-objects-in-opengl-es-1-1-not-working
+http://www.learnopengles.com/tag/vertex-buffer-object/
+http://stackoverflow.com/questions/24905759/android-called-unimplemented-opengl-es-api-at-glmapbufferoes-for-ogl-es-1-1
+http://playcontrol.net/ewing/jibberjabber/opengl_vertex_buffer_object.html
+http://stackoverflow.com/questions/8554257/opengl-es-1-1-vertex-buffer-object-not-working
+
+https://github.com/learnopengles/Learn-OpenGLES-Tutorials/tree/master/android/AndroidOpenGLESLessons/src/com/learnopengles/android
+http://www.songho.ca/opengl/gl_vbo.html
+
+
+Extensiones OPENGL_ES
+https://wiki.libsdl.org/SDL_GL_GetProcAddress
+https://wiki.libsdl.org/SDL_GL_LoadLibrary
+
+22/01/2016:
+******************************************************************************************************************************************
+
+1)-Profile: http://www.gamedev.net/page/resources/_/technical/game-programming/enginuity-part-iii-r1959
+2)-TAS: Gestión automatizada de eventos de teclado (entrada)/(salida)
+3)-Gestión centralizada acceso a IO
+
+Gestion GameLogic:
+
+One thread ==> Player behaviour
+Two thread:
+Collition ==> Pause
+IA ==> Evaluation ==> next()
+Animation ==> Evaluation ==> next()
+GamePlay ==> Evaluation ==> next()
+
+Cooperative multitasking:
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+http://www.drdobbs.com/cpp/cooperative-multitasking-in-c/184408532
+http://aigamedev.com/open/article/round-robin-multi-tasking/
+http://collaboration.cmc.ec.gc.ca/science/rpn/biblio/ddj/Website/articles/DDJ/1991/9104/9104f/9104f.htm
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+******************************************************************************************************************************************
+
+23/01/2016:
+
+1) ==> Gestion IO desacoplada.
+
+URLs de referencia. Como extender los diferentes streams a otros canales más allá de los habituales (cout, cerr, cin, cfile). Strategy pattern.
+http://www.cprogramming.com/tutorial/c++-iostreams.html
+http://stackoverflow.com/questions/1559254/are-there-binary-memory-streams-in-c
+http://www.mr-edd.co.uk/blog/beginners_guide_streambuf
+http://www.hyperrealm.com/libconfig/
+
+
+Carga ficheros binarios + SDL
+
+http://www.linuxquestions.org/questions/programming-9/sdl-raw-image-based-map-loading-228418/
+http://ubuntuforums.org/archive/index.php/t-1047826.html
+http://stackoverflow.com/questions/2058141/reading-sdl-rwops-from-a-stdistream
+https://github.com/yvt/openspades/blob/master/Sources/Core/SdlImageReader.cpp
+
+
+2) ==> Gestion scrolling inicial.
+3) ==> Rehacer el motor GameLogic como multitasking cooperativo
+
+2.1)Thread principal => gestión colisiones, animaciones, ia, gameplay JUGADOR
+
+2.2)Thread dos => gestión colisiones, animaciones, ia, gameplay ENEMIGOS (MULTITASKING)
+    IA INDIVIDUAL --> PAUSE() --> COLLITION --> NEXT()
+    IA GLOBAL --> PAUSE() --> COLLITION --> NEXT()
+    ANIMACION --> NEXT()
+    COLLITION --> PAUSE() --> GAMEPLAY --> NEXT()
+    GAMEPLAY --> FIN()
+
+Porting: http://blog.stuff-o-matic.com/post/2013/09/07/Porting-a-C-game-to-Android,-the-case-of-Andy-s-Super-Great-Park
+
+Contrapartida java multiplataforma: https://libgdx.badlogicgames.com/features.html
+http://obviam.net/index.php/getting-started-in-android-game-development-with-libgdx-create-a-working-prototype-in-a-day-tutorial-part-1/
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Redefinición de objetivos mínimos:
+
+(Estamos entre etapa 3 y 4 del desarrollo del engine)
+
+Mínimos para seguir el 01/06/2016:
+
+1-Primera version de scrolling + gestion del p  1ºarallax. (Gráficos)
+
+2-Implementación inicial de collisiones
+
+2.1-Definición de blockmaps (ÚTIL PARA COLISION ELEMENTOS ACTIVOS-PASIVOS)
+2.2-Evaluacion colision elementos ACTIVOS-PASIVOS (SPHERICAL - AABB) Y ACTIVOS-ACTIVOS (SPHERICAL-SPHERICAL)
+2.3-Gestion de colecciones de normales para evaluar colisiones (ÚTIL PARA COLISION ELEMENTOS ACTIVOS-PASIVOS)
+
+(Nota: GameLogic se seguirá gestionando de manera SECUENCIAL)
+3-Esquema (implementación en fuentes aparte) de:
+
+3.1 -> Gestión multitasking cooperativo
+3.2 -> Parametrización compleja entrada/salida scripting Lua (util en animaciones, IA y GamePlay)
+3.3 -> Implementación de un sistema de performing básico.
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Advanced lighting (fixed pipeline + native nvidia extensions):
+http://www.ronfrazier.net/apparition/index.html?appmain=research/index.html
+
+Usando Framebuffers
+https://www.youtube.com/watch?v=K4Gr1sXnl9A
+http://stackoverflow.com/questions/9750565/opengles-1-1-with-framebuffer-colorbuffer-depthbuffer-for-android-with-ndk-r
+https://www.youtube.com/watch?v=mVlYsGOkkyM
+https://www.youtube.com/watch?v=kw47JxfMlzs
+http://developer.roolez.com/marmaladesdk/api/api/ExampleIwGLExt.html
+https://www.opengl.org/registry/specs/EXT/framebuffer_object.txt
+
+Mas sobre Framebuffers:
+http://www.songho.ca/opengl/gl_fbo.html
+http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-16-shadow-mapping/
+
+Animacion esqueletal 2D opengl
+http://content.gpwiki.org/index.php?title=OpenGL:Tutorials:Basic_Bones_System
+https://www.opengl.org/wiki/Skeletal_Animation
+
+IA A*
+http://www.redblobgames.com/pathfinding/a-star/introduction.html
+http://theory.stanford.edu/~amitp/GameProgramming/AStarComparison.html
+http://www.raywenderlich.com/4970/how-to-implement-a-pathfinding-with-cocos2d-tutorial
+http://aigamedev.com/open/tutorials/clearance-based-pathfinding/
+
+http://www.gamedev.net/page/resources/_/creative/visual-arts/top-10-best-2d-game-asset-sites-r4261
+http://www-cs-students.stanford.edu/~amitp/game-programming/polygon-map-generation/
+
+info documentación direct X
+http://d3dcoder.net/resources.htm
+
+
+////////////////////////////////////////////////////////////////////////////////////
+http://www.gamedev.net/topic/673754-vector-mock-to-catch-bad-accesses/
+http://www.cplusplus.com/reference/cassert/assert/
+https://www.softwariness.com/articles/assertions-in-cpp/
+http://stackoverflow.com/questions/1571340/what-is-the-assert-function
+
+http://www.cplusplus.com/doc/tutorial/exceptions/
+https://msdn.microsoft.com/en-us/library/6dekhbbc.aspx
+////////////////////////////////////////////////////////////////////////////////////
+
+Problemas renderizando poligonos sobre las texturas. Evaluar por separado.
+
+
+28-01-2016:
+
+Gestion de colisiones.
+
+GESTION de COLISIONES ESTATICAS. Repartir los lados por colision segun orientacion de su normal.
+DIVIDIR EL MAPA EN BLOCKMAPS.
+EVALUAR COLISION elemento-lado.
+
+
+****************************************************************************************
+
+Estado del sistema:
+
+1)Scrolling + Parallax ==> Primera version funcional. Investigando scrolling por VBO, scrolling por montaje de imagen ( implementacion SDL)
+
+2)Dibujar Polígonos ==> Investigar la gestión del depth buffer. (en vez de hacer un disabled del depth buffer)
+
+3)Gestion de colisiones ==> Primera versión implementada
+
+Colisiones AABB plano ->(sin gestion de blockmaps)
+Colisiones esfericas
+
+4)Refinar reposicionamientos cuando el tamaño de la pantalla es mayor al del mapa.
+****************************************************************************************
+
+Micro Doom =>
+https://www.youtube.com/watch?v=GXK7BZu04d4
+https://www.youtube.com/watch?v=dKODMs97v-8
+
+Doom 2D =>
+https://www.youtube.com/watch?v=a-PpAf0KOGA
+
+Quake 2D => http://antonior-software.blogspot.com.es/p/if-quake-2-was-2d.html
+Octane 2D Game Engine => http://jharbour.com/forum/index.php?topic=968.0
+avoyd 6dof game => http://www.enkisoftware.com/avoyd.html
+
+https://en.wikibooks.org/wiki/OpenGL_Programming/GLStart/Tut2
+http://stackoverflow.com/questions/13272046/switch-from-glortho-to-gluperspective
+http://www.zeuscmd.com/tutorials/opengles/index2.php
+http://iphonedevelopment.blogspot.com.es/2010/02/drawing-hud-display-in-opengl-es.html
+
+geeks 3D
+http://www.geeks3d.com/forums
+
+Ideas para futuro: evolucionar las colisiones para incluir mas físicas: http://gafferongames.com/game-physics/fix-your-timestep/
+
+31-01-2016
+
+///////////////////////////////////////////////////////////////////////////////////////////
+1)Scrolling + Parallax ==> funcionando primera version. Resolver redimensionamiento de pantalla cuando esta es mayor al  tamaño del mapa.
+
+Probar:
+
+1)Incremento diferencial del movimiento del jugador.
+2)Versiones más adelante: Scrolling por VBO (proyecto VBO); Scrolling por montaje de imagen (SDL)
+
+2) Dibujar poligonos sobre texturas => Conseguido.
+
+3) Colisiones => implementado. => Version de prueba, remarca los espacios de colisiones.
+
+4) Empezar a trabajar con el motor de scripting.
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+ESTADO ACTUAL:
+
+Entre etapa 3 y 4:
+
+1-Acabar de refinar tanto el scrolling como el parallax en primera version.
+2-Evaluar primera version de las colisiones
+3-Estudiar como pasar estructuras Engine->Script; Script->Engine.
+4-Redefinir sistema animacion esqueletal como un fichero a parte:
+(Estructuras básicas; estrella; serpiente)
+
+Estrella: (Player)
+0 1 1 1 1 1 200
+1 0 0 0 0 0 300
+1 0 0 0 0 0 300
+1 0 0 0 0 0 301
+1 0 0 0 0 0 302
+1 0 0 0 0 0 303
+1 0 0 0 0 0 304
+
+Serpiente: (Enemy Snake)
+0 1 0 0 0 0 400
+1 0 1 0 0 0 401
+0 1 0 1 0 0 402
+0 0 1 0 1 0 403
+0 0 0 1 0 1 404
+0 0 0 0 1 0 405
+
+
+5-Pensar animación particulas como un fichero a parte:
+
+
+
+BACKUP.
+
+PROXIMOS PASOS:
+
+1-Definir primera animacion del jugador. (mediante scripting)
+==> posible redefinicion esqueletal de los diferentes actores.
+==> posible ampliacion gestión de colisiones como motor de físicas (Box2D)
+==> posible redefinicón motor de partículas.
+
+2-Establecer nuevo elemento gobierno del jugador. RATON.
+3-Rehacer la animación del jugador.
+
+Tomar una decisión. o seguir con el desarrollo monolítico y desarrollar elementos dinámicos (enemigos) o
+refactorizar el juego en componentes (etapa 8); y seguir a partir de ahí
+
+https://www.opengl.org/discussion_boards/showthread.php/128478-code-for-make-black-color-of-BITMAP-(bmp)-transparent
+http://edndoc.esri.com/arcobjects/9.2/net/45c93c25-2ddb-4e1b-9bef-37c40b931597.htm
+https://docs.google.com/presentation/d/15MtBrLfLpwN3rBCb2xR0PxdbbFY_4PakVZQBjKNUWVM/edit#slide=id.g2c0044ca6_00
+
+
+cola paralela: https://juanchopanzacpp.wordpress.com/2013/02/26/concurrent-queue-c11/
+
+03-02-2016:
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+Siguientes pasos:
+
+1) Redefinir colision AABB mapa.
+2) Integrar Box2D en el motor.
+3) Añadir mapa esqueletal de animaciones en la definicion del objeto.
+4) Incluir motor del raton.
+5) Averiguar como meter estructuras complejas como parámetros con lua.
+
+4) Darle vueltas al primer nivel... (primer nivel de descent)
+(Cosas para "sacarse la chorra": aspectos environtmentales: lluvia de meteoritos, niebla, oscuridad.)
+///////////////////////////////////////////////////////////////////////////////////////
+
+motor de particulas (para lluvia): http://www.raywenderlich.com/37600/opengl-es-particle-system-tutorial-part-1
+
+https://gist.github.com/Thaenor/4d9531cc9a7d1c34b998
+https://www.youtube.com/watch?v=pPWIMQf1iew
+
+otros links interesantes:
+
+opengl 2d c++: https://www.youtube.com/watch?v=L7L9ZUWisfM
+codigo motor doom for scratch: http://bisqwit.iki.fi/jutut/kuvat/programming_examples/portalrendering.html
+codigo opengl para dos for scratch: https://www.youtube.com/watch?v=vkUwT9U1GzA
+soundsphere: https://www.youtube.com/watch?v=y-XIYcXBUpk
+
+doom builder: https://www.youtube.com/watch?v=sS4g_Powors
+gz doom builder: https://www.youtube.com/watch?v=i6nFWG3gnyY
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+6-02-2016:
+Despues de unos dias de inactividad por enfermedad vuelvo.
+
+1-Incluir colision AABB en el mapa.
+2-Integrar Box2D en el motor.
+3-incluir mapa esqueletal en la definicion de los objetos
+4-movimiento con raton.
+/////////////////////////////////////////////////////////////////////////////////////
+
+20-02-2016:
+
+intento rearrancar despues de unas semanas de mierda enfermo.
+
+Vulkan: https://www.youtube.com/watch?v=Ru_vjeun4gY
+Quake from scratch: https://www.youtube.com/user/philipbuuck/videos?shelf_id=1&sort=p&view=0
+3D Engine: https://www.youtube.com/watch?v=7camo8RBWlU
+C++ 11 Engine: https://www.youtube.com/watch?v=RjWWfCIvrbc
+http://insectoid.budwin.net/dos/descent/d1gminfo.html
+https://www.youtube.com/watch?v=Pv9GwRVbODE
+
+
+1)Redefinir motor algebra derivado a glm.
+2)Redefinir motor colisiones como Box2D
+3)Crear mapa esqueletal en los entities.
+4)Movimientos con raton.
+
+http://learnopengl.com/#!In-Practice/2D-Game/Collisions/Collision-resolution
+http://www.iforce2d.net/b2dtut/setup-windows
+http://adventuresinandroidland.blogspot.com.es/2011/06/box2d-and-eclipse.html
+
+
+23-02-2016:
+/////////////////////////////////////////////////////////////////////////////////////
+
+Reflexiones:
+
+Después de haber conseguido "arrancar" las colisiones con resultado dispar; plantearse el avance del engine.
+
+1)Seguir como proceso monolitico, o exportarlo ya a un sistema distribuido y multitasking (4)
+2)Plasmar tile como imagen y mover esta imagen por el viewport. ==> proyecto aparte. (3)
+3)Incluir Box2D en el motor. ==> proyecto aparte. (3)
+***************************************************************************************
+4)Definir motor esqueletal de animaciones. ==> (1) (proyecto aparte)
+5)Movimiento con el raton ==> (2)
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////
+DESCENT DATA:
+http://www.descent2.com/tools/
+http://www.descent2.de/d2x-frames.html
+http://www.descent2.de/dle-frames.html
+https://sourceforge.net/projects/d2x-xl/
+http://www.dxx-rebirth.com/
+http://sectorgame.com/d3/downloads/?nav=browse&category=Development_Tools
+http://moon.descentforum.net/D3FAQ/09.html#9.7
+http://zantor64.fs2downloads.com/descent.htm
+
+3 revivals:
+Overload: http://playoverload.com/media/
+underground: https://descendentstudios.com/
+sol contingency: http://www.sol-contingency.com/
+//////////////////////////////////////////////////////////////////////////////////////
+
+25-02-2016:
+//////////////////////////////////////////////////////////////////////////////////////
+1)Motor esqueletal de animaciones => (proyecto aparte)
+1)Motor Box2D => (proyecto aparte)
+1)Motor scrolling imagen => (proyecto aparte)
+1)Motor cliente-server => (proyecto aparte)
+//////////////////////////////////////////////////////////////////////////////////////
+
+Crear libBox2D con CMake http://www.buildandgun.com/2013/09/box2d-build-mingw-and-codeblocks.html
+https://cmake.org/Wiki/BuildingWinDLL
+
+27-02-2016:
+//////////////////////////////////////////////////////////////////////////////////////
+
+Debido al desmadre de intereses, se quiere centrar los objetivos:
+
+1)Refinar las colisiones; determinar colisiones por polígonos.
+
+(Una vez realizado, generar versión y guardar)
+
+2)Integrar Box2D en la aplicación. (Crear DLL+lib).
+Integrar GLM en la aplicación, rehacer cálculo de vectores y similares.
+
+3)Definir estructura animación definitiva; ==> Proyecto a parte.
+(Utilizando los fuentes de http://content.gpwiki.org/index.php/OpenGL:Tutorials:Basic_Bones_System)
+
+4)Definicion scrolling basado en imagenes (SDLPrueba5)
+
+5)Migración arquitectura monolítica a distribuida. (Crear cliente/servidor)
+
+6)Ampliación control teclado a control teclado+ raton. Definir controles para cuatro jugadores por estación.
+
+Objetivos mínimos para 01/06/2016 --> 1) + 3)
+//////////////////////////////////////////////////////////////////////////////////////
+
+
+28-02-2016:
+///////////////////////////////////////////////////////////////////////////////////////
+
+Voy a definir dos mantenimientos mas:
+
+Mantenimiento de animaciones -> animacionEsqueletal.
+Mantenimiento de particulas -> particulasEsqueletal.
+///////////////////////////////////////////////////////////////////////////////////////
+
+02-03-2016:
+///////////////////////////////////////////////////////////////////////////////////////
+1)-Gestion de colisiones. (dibujo relativo; rombos) (*)
+2)-Estructura animacion/colisiones
+3)-Input definitivo; input raton (Redefinir comandos jugador, Redefinir jugadores)
+4)-Motor tiles (como imagen)
+5)-Box2D
+6)-Arquitectura cliente/servidor.
+///////////////////////////////////////////////////////////////////////////////////////
+
+05-03-2016:
+///////////////////////////////////////////////////////////////////////////////////////
+Culturilla: generacion 3D niveles: http://gamedevelopment.tutsplus.com/tutorials/bake-your-own-3d-dungeons-with-procedural-recipes--gamedev-14360
+///////////////////////////////////////////////////////////////////////////////////////
+
+09-03-2016:
+//////////////////////////////////////////////////////////////////////////////////////
+
+Colisiones -> Gestión colisiones rombos y poligonos terminado.
+Definicion Entities.
+1-GLTile
+1-GLEntityNew
+2-GLDynamicEntityNew
+3-GLActor (Player, Enemy)
+
+(Efectos lasers con sprites... Actor?, Particulas?, Objeto propio (BEAM))
+
+1a Fase: Definir estructura final Entities.
+2a Fase: Definir ficheros estructuras.
+3a Fase: Implementación parseos.
+4a Fase: Implementación estructuras.
+5a Fase: Integracion estructuras en el engine.
+
+1-Indicar en el mapa el jugador actual.
+
+(Nota: en iteraciones futuras, se tendrá que realizar un mantenimiento de texto que vaya en las diferentes cutscenes)
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+12-03-2016:
+
+Siguientes pasos:
+
+1-Toggle entre diferentes actores (cambio de control cuando hay mas de un jugador en escena. Entornos de pruebas), control de teclado de entrada,
+reposicionamiento de la pantalla (scrolling)
+2-Colision entre dos actores (AABB?, Spherical?)
+3-Primer control con raton (habilitar cursor)
+4-Mantenimiento de animaciones. (parseo del fichero y subida a memoria)
+5-Redefinicion de todo el arbol de entities.
+
+(siguientes)
+6-Redefinir motor de scrolling
+7-Estudiar motor generación random de mapas (viabilidad o no)
+8-Integrar Box2D
+9-Arquitectura.
+
+Versión mínima 31-12-2016:
+
+1-Estructura definitiva de actores.
+2-Integración todos los componentes del engine. (libreria Box2D, Pthreats, lua, SDL, Opengl Es 1.1)
+3-Motor definitivo del sistema de tiles.
+4-Claro (al menos conceptualmente), la arquitectura definitiva del engine.
+
+Motor mapa procedural:
+****************************************************************************************
+http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels
+http://www.roguebasin.com/index.php?title=Basic_BSP_Dungeon_generation
+https://www.raywenderlich.com/51786/procedural-level-generation-in-games-part-2
+https://www.raywenderlich.com/66062/procedural-level-generation-games-using-cellular-automaton-part-1
+http://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/
+****************************************************************************************
+
+Motor Box2D:
+*****************************************************************************************
+http://www.iforce2d.net/b2dtut/fixtures
+
+*****************************************************************************************
+
+22-03-2016:
+
+1-Toggle entre diferentes actores --> OK Colisiones (vs Mapa; vs Otros Elementos). OK Scrolling
+2-Colision entre actores --> OK (AABB)
+3-Control Raton - Teclado --> OK (Habilitado solo UP)
+
+24-03-2016:
+
+Decidido hacer primero lo "palo"; porque así es algo que se quita uno de encima, y se puede seguir desarrollando.
+
+1-Reestructuración de actores
+2-Box2D
+3-Smooth scrolling
+4-Mapas procedurales
+5-Separacion cliente/servidor.
+
+DOC:
+
+IMPLEMENTACION FUNCIONES MATEMATICAS RÁPIDAS
+***************************************************************************************
+fast build int functions:
+https://en.wikipedia.org/wiki/CORDIC (Cordic)
+http://www.gamedev.net/topic/583470-c-slowfast-math-functions/
+http://forum.devmaster.net/t/which-trig-function-is-fastest-to-compute/13129/16
+http://forum.arduino.cc/index.php?topic=75126.0
+http://blog.oscarliang.net/enhanced-arduino-c-custom-math-library/
+***************************************************************************************
+
+PROCEDURAL
+***************************************************************************************
+https://www.raywenderlich.com/70610/procedural-level-generation-games-using-cellular-automaton-part-2
+https://www.raywenderlich.com/66062/procedural-level-generation-games-using-cellular-automaton-part-1
+http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels
+http://gamedevelopment.tutsplus.com/tutorials/how-to-use-bsp-trees-to-generate-game-maps--gamedev-12268
+
+http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels
+http://www.roguebasin.com/index.php?title=Basic_BSP_Dungeon_generation
+https://www.raywenderlich.com/51786/procedural-level-generation-in-games-part-2
+https://www.raywenderlich.com/66062/procedural-level-generation-games-using-cellular-automaton-part-1
+http://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/
+***************************************************************************************
+
+
+Tipos
+
+1-Tile (serialize)
+2--Entity (serialize)
+3---Actor (Player, Enemy)
+    +Tiles
+    +Item
+    +Beam
+    +Script
+4---Block
+5---Item
+6---Portal
+    --Enemy
+7---Beam
+    --Particle
+8---Teleporter
+    --Slope,Teleporter
+9---Light
+    --Particle? (mantenimiento de luces?)
+10--Exit
+11--Switch
+
+Roles
+    +-Switch
+    +-Block
+    +-Script
+
+SQLITE: https://www.sqlite.org/howtocompile.html
+http://www.gamedev.net/topic/589013-sdl_net-tutorials-or-code/
+network position: http://www.gamedev.net/index.php?app=forums&module=forums&section=rules&f=15
+http://cboard.cprogramming.com/c-programming/123901-mingw-sqlite.html
+http://forums.codeblocks.org/index.php?topic=455.0
+https://github.com/utelle/wxsqlite3/tree/master/sqlite3/lib
+
+... Siguientes pasos:
+
+Crear los siguientes proyectos
+
+1)SSENTITYMANAGER Gestor de Entidades+SQLLite+Cache
+2)SSSCROLLMANAGER Gestor smooth de scrolling
+3)SSPROCEDURALMAP Creacion procedural de mapas en 2D
+4)SSBOX2DCOMPILATION Motor creación libreria/DLL Box2D
+5)SSBOX2DTESTING Motor testeo libreria Box2D
+6)SSLUATESTING Motor testeo scripts LUA.
+7)SSSQLITEMANAGER Motor de prueba SQLLite.
+8)SSSQLITECOMPILATION Motor creación libreria/DLL SQLITE
+9)SSMULTITASKINGMANAGER Motor gestor multitasking cooperativo gamelogic.
+
+... Creacion del mantenimiento de luces. (de momento como fichero .ini)
+
+Pasos:
+
+1-Desarrollar SSENTITYMANAGER (Estructura de entities + gestion de memoria + carga desde SQLLITE + Cache) ==> sustituye gran parte del MEMMANAGER.
+(
+ver esto:
+http://www.gamedev.net/page/resources/_/technical/game-programming/enginuity-part-iii-r1959
+https://www.sqlite.org/howtocompile.html
+http://phosphor-escence.blogspot.com.es/2010/09/install-sqlite3-ruby-on-mingw-and-msys.html
+http://voidpage.blogspot.com.es/2007/11/sqlite-3-on-windows-with-mingw-and.html
+http://stackoverflow.com/questions/3540355/using-sqlite-with-c-on-windows
+)
+
+
+2-Desarrollar SSSCROLLMANAGER
+3-Mejorar gobierno RATON +  TECLADO (necesito 1 y 2)
+4-Desarrollar SSPROCEDURALMAP (Generacion de mapas+ colisiones)
+5-Compilar BOX2DCompilation + BOX2DTesting
+6-Probar los scripts con SSLUATESTING (se necesita 1 para probarse)
+*****************************************************************
+7-DESARROLLAR LIGHTS (FRAMEBUFFER) => SDL20GL11LIGHT
+8-DESARROLLAR ANIMATION(necesito 1,2,3,6 para probarse)
+9-DESARROLLAR PARTICLES(necesito 1,2,3,6 para probarse)
+10-DESARROLLAR GESTION COOPERATIVE MULTITASKING GESTION ANIMATIONS;PARTICLES;IA(?) (necesito 1,2,3,6 para probarse)
+(
+ver esto:
+http://www.gamedev.net/page/resources/_/technical/game-programming/enginuity-part-iv-r1973
+http://www.drdobbs.com/cpp/cooperative-multitasking-in-c/184408532
+http://aigamedev.com/open/article/round-robin-multi-tasking/
+http://collaboration.cmc.ec.gc.ca/science/rpn/biblio/ddj/Website/articles/DDJ/1991/9104/9104f/9104f.htm
+
+)
+11-THREADS--> descartado.
+
+Después de estos 11 pasos... se puede pasar a estructura cliente-servidor.
+
+Objetivos para cerrar version (version todo en un bloque):
+****************************************************************************
+1-Estructura entities definitiva (Tile, Blocks, Actor, Light, Beam, Particle)--> sqlite?, cache?
+2-Animation del actor (actor = jugador) --> lua + control raton+teclado
+3-Scrolling smooth.
+4-Gestion procedural del mapa. --> gestion colisiones
+5-Cargar Box2D (No hace falta utilizarlo... solo cargarlo y inicializarlo)
+6-Arranque LUA (pasar el objeto entity como parametro... serializado)
+7-Lights
+8-Primera prueba de particulas.
+9-Gestion cooperativa de (animations/particles/ia)
+****************************************************************************
+(acotacion de estos puntos...
+1-llamar a LUA para animacion. No ejecutar desde LUA (Animacion se implementará en codigo)
+2-NO IA de enemigos.
+3-Motor de colision cutre ya implementado.
+4-No GamePlay (En codigo)
+5-Solo jugadores. NO enemigos. No elementos.
+6-Mejorar el control raton+teclado.
+)
+
+Consola tipo Quake:
+*******************************************************************************
+https://github.com/arpg/CVars
+http://www.robots.ox.ac.uk/~gsibley/GLConsole/index.php?n=Main.Documentation
+http://anttweakbar.sourceforge.net/doc/tools:anttweakbar
+*******************************************************************************
+
+Tips version distribuida programa:
+
+1-Hebra/(Fibra) por sesion de cuatro jugadores.
+2-Cinco hebras x sesión.
+  2.1-Hebra cerebro videojuego (IA, Colisiones, Gameplay, animacion)
+  2.2-Tiempo (marca los tiempos de admisión input de entrada, proceso del cerebro, y envio de  los resultados al cliente)
+  2.3-Garbage Collector (elimina elementos del mapa residuales)
+  2.4-Interprete de comandos (recoge los comandos por consola del cliente y los ejecuta)
+  2.5-Renderizado (Envia el mapa completo con toda la información y la envia al cliente.)
+
+  29-03-2016:
+
+  SSENTITYMANAGER:
+
+  Clases nuevas:
+
+  TileFinal ==> definicion de un espacio de memoria equivalente a una imagen o muchas --> NUEVO
+  ImageFinal ==> definición de una imagen cargada en memoria --> REHACER DE VERSION ANTERIOR
+  LightFinal ==> definición de una definición de luces cargada en memoria --> REHACER DE VERSION ANTERIOR
+  ParticleFinal ==> definición de una fuente de particulas --> REAPROVECHAR DE VERSION ANTERIOR
+  AnimationFinal ==> definición esqueletal de un elemento --> NUEVO
+  ScriptFinal ==> definición script aplicación --> NUEVO
+
+
+  EntityFinal ==> Clase Entity (Clase global elementos del juego)
+  -ActorFinal ==> Clase Actor (Type entity) ==> jugador/enemigos --> NUEVO
+  -BlockFinal ==> Clase Block (Type entity) ==> bloques activos interactuación con el jugador --> NUEVO
+  -ExitFinal ==> Clase Salida (Type entity) ==> salida de un nivel --> NUEVO
+  -BeamFinal ==> Clase Beam (Type entity) ==> fuentes de particulas --> NUEVO
+  -LightFinal ==> Clase Luz (Type entity) ==> fuente de luz --> NUEVO.
+  -Teleporter ==> Clase transicion entre niveles (Type entity) --> mueve entre niveles de un mapa
+  -PortalFinal ==> Clase Portal de enemigos (Type entity)
+  -ItemFinal ==> Clase Item de un mapa (Type entity)
+
+  (Añadir clase LogEngine, Crear clase ProfileEngine, definir configuracion acceso a SQLLite, crear los objetos caches. Definir política de caché)
+
+grabar videos (http://www.ezvid.com/)
+
+cache:
+*******************************************************************************
+http://stackoverflow.com/questions/1935777/c-design-how-to-cache-most-recent-used
+MRU cache: http://www.codeproject.com/Articles/19185/MRU-Cache-Using-C-STL
+LRU cache: http://timday.bitbucket.org/lru.html
+https://www.youtube.com/watch?v=UfeTFsYmB-s
+*******************************************************************************
+
+Lights:
+http://www.glprogramming.com/red/chapter05.html
+http://www.falloutsoftware.com/tutorials/gl/gl8.htm
+
+
+31-03-2016
+
+Se ha definido un nuevo concepto: WIDGET (elementos estáticos: botones, etc)
+1-A nivel general, se define un hud.ini; con el mapa del hud a mostrar.
+2-
+TILE
+-- WIDGET
+----CONTAINER
+-------BUTTON
+-------PROGRESSBAR
+-------LABEL
+-------IMAGE
+----MSG
+----CONSOLE
+
+(
+Se define una superclase WIDGET.
+CONTAINER, MSG, CONSOLE son WIDGETS que pueden almacenar otros WIDGETS
+BUTTON, PROGRESSBAR, ICON, IMAGE, LABEL, RADAR son elementos independientes.
+)
+
+
+02-04-2016:
+
+1-Primer intento de server en aplicación distribuida (SpaceShooter2D-Reloaded3.1-Server). Aunque las ganas es hacerlo en Java
+se va a hacer en C++ para aprovechar librerias comunes entre el "Cliente" y el "Servidor". Por tanto.
+
+SpaceShooter2D-Reloaded3.1-Client: Input data, Conexión con SQLite, Conexión con red a Servidor, Menu, gestión devices de entrada, Renderizado
+SpaceShooter2D-Reloaded3.1-Server: Arranca Sistemas (SQLLite, SDL_Net), genera sesion, acepta conexiones entrantes, gestiona estados, gestiona gameplay,
+gestiona timming, envia datos a renderizar.
+S.
+De momento, el server es "MASTER". No me planteo todavia gestionar el concepto Servidor MASTER-ESCLAVO y que entre en juego las MQ.
+
+2-El concepto "Widget", "Container" está a la misma altura que "Entity", y beben ambos de TILE
+
+3-Perfilar (aunque sea un esbozo), el concepto de MESH asociado a un entity.
+
+3.1-Esbozaré un Tipo MESH a la misma altura que TILE y que pueda ser asociado a un entity.
+
+(Se ha podido compilar y trabajar con una versión del sqlite 3.1)
+
+
+03-04-2016:
+
+Compiladas y preparadas para jugar con ellas las librerias siguientes:
+
+1-Box2D: http://www.iforce2d.net/b2dtut/bodies
+2-SQLite: https://www.sqlite.org/
+3-SDL_net: http://jcatki.no-ip.org:8080/SDL_net/
+
+04-04-2016:
+
+Descargado source de:
+1-Graco práctica Raul (ver como trata el tema de la luz)
+2-LRU CACHE: SSENTITYMANAGER
+3-SDL_Net (Interactuación cliente-servidor)
+
+bump map:
+
+Light effects
+################################################################################################
+http://www.paulsprojects.net/tutorials/simplebump/simplebump.html
+http://chimera.labs.oreilly.com/books/1234000001814/ch08.html#ch08_id35940921
+http://stackoverflow.com/questions/763826/is-it-possible-to-do-a-nice-bloom-filter-on-the-iphone
+http://poseidonframework.blogspot.com.es/2010/02/how-to-make-bloom-effect-without.html
+http://www.gamasutra.com/view/feature/192210/tutorial_simple_highperformance_.php?print=1
+################################################################################################
+
+09-04-2016:
+
+Ideas de mierda:
+1-Pantalla partida como en Quake2 2D? (Podría estar bien. Seria dividir la pantalla en dos; representando dos jugadores locales.)
+
+La evolucion seria: (Descartado por su dificultad)
+
+Un cliente - Un servidor (local) - misma sesión
+Un cliente - Un servidor (remoto) - misma sesión (el servidor local, haria de esclavo y derivaría la actividad al master)
+Varios clientes - Un servidor (local) - misma sesión (Por temas de consistencia, solo se permitiría dos jugadores en el mismo nodo)
+Varios clientes - Un servidor (remoto) - misma sesión (4 jugadores repartidos en 2 nodos; o 4 jugadores repartidos en 4 nodos)
+Varios clientes - Un servidor (remoto) - diferente sesiones.
+
+Guis:
+
+http://guichan.sourceforge.net/oldsite/getting-started.shtml
+http://librocket.com/
+http://mdqinc.com/blog/2013/01/integrating-librocket-with-sdl-2/
+http://librocket.com/wiki/documentation/C%2B%2BManual/Interfaces
+
+
+RabbitMQ C++
+http://stackoverflow.com/questions/15534230/building-rabbitmq-c-on-windows-using-mingw
+http://rabbitmq.1065348.n5.nabble.com/compiling-rabbitmq-c-under-mingw-td18848.html
+http://en.cppreference.com/w/cpp/links/libs
+https://sourceforge.net/projects/open-mq/
+http://zeromq.org/intro:get-the-software
+http://stackoverflow.com/questions/24138558/how-to-build-zeromq-with-mingw
+
+GPU_GEMS:
+http://http.developer.nvidia.com/GPUGems/gpugems_ch23.html
+http://www.kong360.com/index.php?option=com_docman&Itemid=40
+
+14-04-2016:
+
+Etapas:
+
+1-Definicion estructura Entidades-SQLite-Cache. Definida una primera versión "sobre el papel"
+
+Se va a implementar los siguientes elementos:
+
+1-Mantenimiento (Imagenes, Script de Lua, Shaders, Estados, Clips de Sonido, luces, animaciones, particles)
+2-Gestion de entities. (Tile, Block, Actor, Weapon, Beam, Exit)
+3-Puesta en marcha de los proyectos de prueba SSCROLL y SSPROCEDURAL.
+
+16-04-2016:
+
+Desdoblamos las diferentes librerias que compondrán la aplicacion. En un futuro es posible que se encapsulen en un solo .lib/.dll
+
+SSENTITY--> Gestion de la capa de DATOS DEL JUEGO (Carga dinámica y en cache ce los elementos que componen el juego)
+SSLOADING --> Motor de carga de los ELEMENTOS DEL JUEGO (Mantenimiento en memoria y parseo de los resources del juego; asi como de los niveles.
+Gestion de carga de los diferentes componentes, asi de la carga del nivel)
+SSCORE --> Carga del motor de logs, de performing, gestión accesos IO (ficheros de recursos, SQLITE)
+
+A parte:
+
+SSNETWORK --> Gestion del protocolo del juego. Comunicacion entre el cliente y el servidor.
+SSRENDERING --> Gestión del renderizado del juego.
+
+
+26-04-2016:
+
+Definicion de la estructura realizada.
+
+Scrolling sobre imagen realizado. Scrolling fluido, aunque la definición de los límites pierde precisión.
+
+28-04-2016:
+
+GUI --> GuiChan (LibRocket es demasiado avanzado). Consola, y pantalla de configuracion. Hud, heredado de SpaceShooter2D-2. (Puede estar fijo)
+
+02-05-2016:
+
+Debido al enorme trabajo que puede generar un engine totalmente funcional, se va a definir unos mínimos para cerrar una versión y empezar una nueva a partir de aqui.
+
+(Retomando la linea de desarrollo impuesta desde el principio, y tener así una plataforma para evaluar su aspecto visual)
+
+Se cierra version de SpaceShooter2D-Reloaded3 con:
+
+1-Capacidad de generar motor de forma procedural (ya sea como automata o como arbol BSP) -->(05/06/16 Hecho)
+2-Multitasking/Multithreading --> (12/06/16 Hecho)
+3-BumpMapping (Generacion de paredes con relieve)
+4-Animacion por codigo del jugador (inspirado en spaceshooter2D-2)
+5-Scrolling optimizado --> (21/06/16 Hecho)
+6-Disparo (primer intento de gestión de partículas)
+7-Gestión de luces
+8-Hud (inspirado en spaceshooter2D-2)
+9-Gestion de enemigos (IA Melee Simple + STEERING BEHAVIOUR)
+
+08-05-2016:
+
+PROYECTOS DE INVESTIGACION:
+
+*************************************************************************************************************
+1-SSPROCEDURALMAP (Creacion procedural de mapas, utilizando automatas (Cavernas) o Arboles BSPs (Interiores))
+1.1-CAVERNAS - OK
+1.2-BSP - OK
+(Falta tratar colisiones en estos casos)
+
+2-SSMULTITASKING
+(Gestion de eventos por multitarea cooperativa/threading)
+2.1-MULTITASKING - OK
+2.2-PTHREADS - OK
+2.3-TIMERS - OK
+2.4-SINCHRONIZATION - OK
+
+3-SSCROLLMANAGER
+(Gestion optima de scroll, gestionando una sola imagen/Gestion SDL)
+3.1-Una sola IMAGEN - OK
+3.2-Metodo SDL - OK
+
+4-SDL20GL11PARTICLESYSTEMS
+(Motor de particulas)
+FALTA
+
+5-SDL20GL11LIGHT (Modular Ship + DynamicShadows)
+(Gestión dinamica de luz utilizando Stencil Buffer y/o FBO)
+FALTA
+
+6-SDL20GL11SHADOWS (Reaprovechado, utilizando código de SSCROLLMANAGER)
+(BUMPMAPPING + Scroll Optimizado)
+FALTA
+
+7-SSENEMIESBEHAVIOUR
+(Comportamiento enemigos, utilizando STEERING BEHAVIOURS y ATAQUE MELEE)
+FALTA.
+
+8-SSGUICHAN
+(GUI Avanzado)
+FALTA.
+*************************************************************************************************************
+
+(Estos proyectos se fusionarán con SPACESHOOTER2D-Reloaded3; cuando esten totalmente testeados).
+
+OTROS:
+*************************************************************************************************************
+LUAENGINEPROJECT ==> banco de pruebas scripts de LUA (ir pasando diferentes scripts para evaluar su comportamiento por separado)
+SSBOX2DTESTING ==> banco de pruebas libreria BOX2D (motor de físicas)
+SSENTITYMANAGER ==> gestor de entidades, motor SQLite, cache de entidades ==> (segunda fase del proyecto)
+SSNETWORKMANAGER+SSNETWORKMANAGERSERVER ==> cliente/servidor(slave)/servidor(master) ==> protocolo de conexión cliente-servidor
+VBO => proyecto de prueba para evaluar VBO en openGL ES 1.1
+SPACESHOOTER2D-RELOADED3.1 => version inicial distribuido parte CLIENTE
+SPACESHOOTER2D-RELOADED3.1-SERVER => version inicial distribuido parte SERVIDOR
+*************************************************************************************************************
+
+12-05-2016:
+
+Miniproyectos de investigacion, antes de incluirlo en el spaceshooter2d-reloaded3:
+
+1-SSCROLLMANAGER
+2-SSPROCEDURALMAP --> ARBOLES BSP.
+3-SSMULTITASKINGMANAGER --> (MULTITASKING/THREADING)
+4-SDL20GL11SHADOWS
+5-SDL20GL11LIGHT
+6-SDL20GL11PARTICLESSYSTEM
+7-(MAS ADELANTE) SSENEMIESBEHAVIOUR
+8-(MAS ADELANTE) SSGUICHAN
+9-(MAS ADELANTE) SSENTITYMANAGER (NO SE INCLUYE EN LA PRIMERA VERSION DEL MOTOR)
+
+16-05-2016:
+
+1-SSCROLLMANAGER  --> SCROLLING MAP COMO IMAGEN UNICA (OK)/MOTOR DE TILES
+2-SSPROCEDURALMAP --> BSP/CELULAR ENGINE (OK)
+3-SSMULTITASKINGMANAGER --> KO
+
+steering behaviours: http://gamedevelopment.tutsplus.com/tutorials/understanding-steering-behaviors-queue--gamedev-14365
+
+DOCS scrolling:
+https://developer.mozilla.org/en-US/docs/Games/Techniques/Tilemaps/Square_tilemaps_implementation%3A_Scrolling_maps
+http://mozdevs.github.io/gamedev-js-tiles/square/logic-grid.html
+
+29-05-2016:
+1-SSCROLLMANAGER        --> SCROLL IMAGEN UNICA (OK)/ FALTA ESTRATEGIA SDL
+2-SSPROCEDURALMAP       --> BSP/CELULAR ENGINE (OK)
+3-SSMULTITASKINGMANAGER --> MULTITASKING OK; THREADING OK; --> NEXT SINCHRONIZATION
+
+04-06-2016:
+
+Siguientes pasos:
+
+1-SSMULTITASKINGMANAGER -> Acabar el proceso de sincronizacion, completando el comportamiento completo de todo el proceso.
+2-SSENTITYMANAGER -> Consulta base de datos +  caché
+3-SSCROLLMANAGER -> Estrategia SDL SCROLLING
+
+06-06-2016:
+
+Acabar proceso de sincronización. Si timers por pthreads no funciona, aplicar signals.
+
+12-06-2016:
+
+Experiencia SSMULTITASKINGMANAGER
+
+1-Reducir al máximo los threads. Optar en la primera version monolitica por multitasking.
+2-Utilizar las herramientas de SDL en vez de threads c++11 o pthreads.
+SDL_Timers; SDL_Threads; SDL_Mutex
+3-Separar en dos procesos distintos la obtención de eventos de entrada y la gestion servidor (cliente-servidor) utilizar
+arquitectura producer-consumer para comunicarse entre procesos (a través de queues)
+
+==> De momento, paro la investigacion
+
+Estudiar en un futuro SDL_net
+http://www.matrix44.net/old/sdl/sdlnet.html#eventqueue
+https://www.youtube.com/watch?v=iJfC4-yNnzY
+https://www.youtube.com/watch?v=LNSqqxIKX_k
+
+http://osdl.sourceforge.net/main/documentation/rendering/SDL-network.html
+
+
+STENCIL:
+http://nehe.gamedev.net/tutorial/clipping__reflections_using_the_stencil_buffer/17004/
+https://www.safaribooksonline.com/library/view/iphone-3d-programming/9781449388133/ch06s06.html
+http://www.zeuscmd.com/tutorials/opengles/25-Reflections.php
+https://www.opengl.org/discussion_boards/archive/index.php/t-174957.html
+ftp://ftp.sgi.com/opengl/contrib/mjk/tips/TexShadowReflectLight.html
+http://ivanleben.blogspot.com.es/2008/03/water-reflections-with-opengl.html
+
+SDL_NET:
+http://www.sdltutorials.com/sdl-net-part-2-user-tutorial
+http://www.sdltutorials.com/sdl-net-part-1-user-tutorial
+
+http://headerphile.com/sdl2/sdl2-part-12-multiplayer/
+http://headerphile.com/sdl2/sdl2-part-13-multiplayer-tcp/
+
+STEERING:
+http://gamedevelopment.tutsplus.com/series/understanding-steering-behaviors--gamedev-12732
+
+
+
+ESTADO DE LOS PROYECTOS:
+
+(NOTA. El motor de scripting, está cargado; pero no se le da utilidad. se la dará mas adelante.
+los algoritmos de animación e IA se implementarán en el mismo código.
+)
+1-- FASE:
+SSPROCEDURALMAP ==> OK
+SSMULTITASKINGMANAGER ==> OK
+(NEXT) SSENTITYMANAGER ==> ESTRUCTURA BEANS CREADA. FALTA GESTION SQLITE + CACHE
+(NEXT) SSCROLLINGMANAGER ==> FALTA SCROLLING x TILES +  ESTRATEGIA COLISION AABB PARA EL SCROLLING
+(NEXT) SSNETWORKMANAGER/SSNETWORKMANAGERSERVER ==> PRIMERA PRUEBA CLIENTE/SERVIDOR TCP, con sockets sin colas de mensajes.
+*********** (BACKUP)
+ 2-- FASE:
+(NEXT)SDL20GL11SHADOWS ==> ESTUDIO DIFERENTES ESTILOS TILES (PARALLAX, GLOOM, REFLECTION, BUMPMAPPING)
+(NEXT)SDL20GL11LIGHT ==> LUCES DINAMICAS (STENCIL, FBO)
+(NEXT)SDL20PARTICLESYSTEM ==> MOTOR DE PARTICULAS
+********** (BACKUP)
+3-- FASE:
+(NEXT)SSGUICHAN ==> UI Avanzado (PANTALLA INICIAL DE ARRANQUE + CONSOLA INGAME)
+
+
+18-06-2016:
+1-- FASE:
+SSPROCEDURALMAP ==> OK
+SSMULTITASKINGMANAGER ==> OK
+SSCROLLINGMANAGER ==> ESTRATEGIA IMAGEN COMPLETA (OK) ESTRATEGIA COLISION AABB PARA EL SCROLLING (OK) VBO (KO)
+(NEXT) SSNETWORKMANAGER/SSNETWORKMANAGERSERVER ==> PRIMERA PRUEBA CLIENTE/SERVIDOR TCP, sin colas de mensajes.
+(NEXT) SSENTITYMANAGER ==> ESTRUCTURA BEANS CREADA. FALTA GESTION SQLITE + CACHE
+*********** (BACKUP)
+ 2-- FASE:
+(NEXT)SDL20GL11SHADOWS ==> ESTUDIO DIFERENTES ESTILOS TILES (PARALLAX, GLOOM, REFLECTION, BUMPMAPPING)
+(NEXT)SDL20GL11LIGHT ==> LUCES DINAMICAS (STENCIL, FBO)
+(NEXT)SDL20PARTICLESYSTEM ==> MOTOR DE PARTICULAS
+********** (BACKUP)
+3-- FASE:
+(NEXT)SSGUICHAN ==> UI Avanzado (PANTALLA INICIAL DE ARRANQUE + CONSOLA INGAME)
+
+libreria Matrices: http://chimera.labs.oreilly.com/books/1234000001814/apa.html
+
+*******************************************************************************
+http://www.rbgrn.net/content/439-android-opengl-es-11-fastest-way-to-render-texts
+https://github.com/FrankStain/com.multicontext.test
+https://forums.khronos.org/showthread.php/7329-VBO-Test-glBufferData-vs-glBufferSubData-vs-glMapBufferOES
+http://chimera.labs.oreilly.com/books/1234000001814/ch09.html#ch09_id35816488
+
+http://stackoverflow.com/questions/8554257/opengl-es-1-1-vertex-buffer-object-not-working
+http://www.ozone3d.net/tutorials/opengl_vbo_p2.php
+https://www.opengl.org/wiki/VBO_-_just_examples
+http://www.3dgep.com/using-opengl-vertex-buffer-objects/
+http://pyopengl.cvs.sourceforge.net/pyopengl/OpenGL-ctypes/OpenGL/arrays/vbo.py?view=markup
+http://www.scriptscoop2.com/t/7a112af0452c/android-opengl-1-1-fbo-and-vbo-support.html
+*******************************************************************************
+
+21-06-2016:
+
+SSPROCEDURALMAP ==> OK
+SSMULTITASKINGMANAGER ==> OK
+SSCROLLINGMANAGER ==> ESTRATEGIA IMAGEN COMPLETA (OK) ESTRATEGIA COLISION AABB PARA EL SCROLLING (OK) ==> creado nuevo proyecto de estudio SSSSCROLLMANAGERVBO.
+SSSCROLLMANAGERVBO ==> OK
+
+(NEXT) SSNETWORKMANAGER/SSNETWORKMANAGERSERVER ==> PRIMERA PRUEBA CLIENTE/SERVIDOR TCP/UDP, con sockets sin colas de mensajes. (SIN MQ)
+(NEXT) SSENTITYMANAGER ==> ESTRUCTURA BEANS CREADA. FALTA GESTION SQLITE + CACHE
+
+*********** (BACKUP)
+ 2-- FASE:
+(NEXT)SDL20GL11SHADOWS ==> ESTUDIO DIFERENTES ESTILOS TILES (PARALLAX, GLOOM, REFLECTION, BUMPMAPPING)
+(NEXT)SDL20GL11LIGHT ==> LUCES DINAMICAS (STENCIL, FBO)
+(NEXT)SDL20PARTICLESYSTEM ==> MOTOR DE PARTICULAS
+********** (BACKUP)
+3-- FASE:
+(NEXT)SSGUICHAN ==> UI Avanzado (PANTALLA INICIAL DE ARRANQUE + CONSOLA INGAME)
+
+Estudiar:
+
+1-estudiar bloques destruibles, bloques desplazables
+2-estudiar niebla de guerra.
+3-estudiar fluidos (lava, limo, etc)... animación, gloom,
+
+29-06-2016:
+
+ESTUDIO SSNETWORKMANAGER/SSNETWORKMANAGERSERVER
+
+11-07-2016:
+
+Calculo del FRAMERRATE:
+https://github.com/opengl-tutorials/ogl/blob/master/tutorial09_vbo_indexing/tutorial09.cpp#L142
+https://mycodelog.com/2010/04/16/fps/
+
+13-07-2016:
+
+Consola Ingame, nuevo punto de vista:
+
+http://www.gamedev.net/page/resources/_/technical/directx-and-xna/creating-a-quake-like-console-using-directdraw-r1008
+http://www.gamedev.net/topic/188825-implementing-a-command-handlerparser-c/
+http://www.flipcode.com/archives/Console_Variables_And_Commands.shtml
+http://www.gamedev.net/topic/542061-in-game-console/
+http://www.flipcode.com/archives/Creating_a_Scalable_Console_System_with_STL-Part_1.shtml
+http://www.gamedev.net/topic/384260-in-engine-debugging-console-and-functions/
+
+
+16-07-2016:
+
+SSNETWORKMANAGER/SSNETWORKMANAGERSERVER
+**************************************************************************************************************************
+Tramas a programar en primera version:
+
+1-Conectar a servidor (S/N)
+
+2-Recuperar sesiones activas de servidor
+  Respuesta:(Servidor,sesion,numero_jugadores,numero_jugadores_libres)
+
+3-Conexion a servidor+sesion
+  Respuesta:(Servidor,sesion,ok/nok,idjugador)
+
+4-Comandos Jugador (Movimiento, Shot, ChangeWeapon, Exit)
+
+5-Ordenes (Mensaje a X Jugador, Mensaje All Jugadores, lista Jugadores) ==> Descarto modificacion mapa en caliente (x)
+
+6-Logout.
+
+7-Actualizar Datos servidor (Actores, Msgs)
+**************************************************************************************************************************
+
+17-07-2016
+Concretamos: 4 Players. 4 Sesiones x Mapa. 4 Mapas
+
+20-07-2016
+Tramas Creadas. todas las casuisticas.
+
+5- Se ha conseguido incluir ordenes que modifican el mapa en caliente.
+
+30-07-2016:
+
+1-Conectar a servidor (S/N) ==> DONE
+
+2-Recuperar sesiones activas de servidor
+  Respuesta:(Servidor,sesion,numero_jugadores,numero_jugadores_libres) ==> DONE
+
+3-Conexion a servidor+sesion
+  Respuesta:(Servidor,sesion,ok/nok,idjugador) ==> DONE
+
+7-Actualizar Datos Servidores (Actores, MSG) ==> PRIMERA PRUEBA ENVIANDO 1 TRAMA CADA VEZ. (EN DESARROLLO)
+
+
+03-08-2016:
+
+MAS INFORMACION SOBRE CREACION ARQUITECTURA CLIENTE SERVIDOR
+****************************************************************************************************************************
+http://gamedevelopment.tutsplus.com/tutorials/building-a-peer-to-peer-multiplayer-networked-game--gamedev-10074
+http://www.codeproject.com/Articles/412511/Simple-client-server-network-using-Cplusplus-and-W
+https://github.com/shanecarey17/LaserTag/blob/master/server/server.cpp
+http://stackoverflow.com/questions/3834533/basic-design-of-a-multithreaded-game-server
+http://www.codeproject.com/Articles/7108/A-light-weighted-client-server-socket-class-in-C
+http://webcache.googleusercontent.com/search?q=cache:ftXIENaUmFgJ:www.rohitab.com/discuss/topic/26991-cc-how-to-code-a-multi-client-server-in-c-using-threads/+&cd=5&hl=es&ct=clnk&gl=es
+
+http://www.gamedev.net/topic/664163-server-socket-with-select-thread-pool-and-queue-based-approach/
+http://www.gamedev.net/topic/631091-deadlock-dilemma-with-condition-variables/
+https://github.com/reynir/threadpool
+http://www.gamedev.net/topic/661304-threads-with-sdl-within-c-classes/
+https://github.com/vit-vit/CTPL
+
+http://codereview.stackexchange.com/questions/41604/thread-safe-concurrent-fifo-queue-in-c
+http://blogs.msmvps.com/vandooren/2007/01/05/creating-a-thread-safe-producer-consumer-queue-in-c-without-using-locks/
+
+****************************************************************************************************************************
+
+Voy a cambiar filosofia gestion multihreading cliente-servidor;.
+
+1-Cliente. Primer paso; unificar gestion memoria con el resto del cliente.
+2-Servidor. Crear un pool de threads que gestionen cada una de las sesiones.
+
+unique_ptr; shared_ptr: http://headerphile.blogspot.com.es/2014/08/c11-part-3-smart-pointers.html
+
+05-08-2016:
+
+Posible causa del DELAY en la comunicacion TCP mediante SDL_net. FLAG TCP_NODELAY a false. Algoritmo Nagle, desprecia los paquetes que no cumplen estandar.
+Pasos
+1-Habilitar un TCP_NET con TCP_NODELAY.
+2-Agrupar 4 Tramas en 1 (Espacio estimado de 128 bytes, buffer de 512)
+3-Pasar de TCP a UDP.
+(Ejemplo UDP: http://headerphile.com/sdl2/sdl2-part-12-multiplayer/)
+http://stackoverflow.com/questions/36120226/sdl-net-udp-packet-data
+
+Codificacion Huffmann:
+https://tfetimes.com/c-huffman-coding/
+https://rosettacode.org/wiki/Huffman_coding#C.2B.2B
+
+CRC-16:
+http://stackoverflow.com/questions/10564491/function-to-calculate-a-crc16-checksum
+http://www.drdobbs.com/implementing-the-ccitt-cyclical-redundan/199904926
+
+Delta encoding:
+https://en.wikipedia.org/wiki/Delta_encoding#Sample_C_code
+
+Compression:
+http://mattmahoney.net/dc/dce.html#Section_51
+https://0fps.net/2014/02/17/replication-in-networked-games-latency-part-2/
+http://gafferongames.com/networking-for-game-programmers/what-every-programmer-needs-to-know-about-game-networking/
+http://www.tilion.org.uk/2011/11/quake-3-network-format/
+http://fabiensanglard.net/quake3/The%20Quake3%20Networking%20Mode.html
+lzo:http://www.oberhumer.com/opensource/lzo/
+
+
+12-09-2016:
+
+SSPROCEDURALMAP ==> OK
+SSMULTITASKINGMANAGER ==> OK
+SSCROLLINGMANAGER ==> ESTRATEGIA IMAGEN COMPLETA (OK) ESTRATEGIA COLISION AABB PARA EL SCROLLING (OK) ==> creado nuevo proyecto de estudio SSSSCROLLMANAGERVBO.
+SSSCROLLMANAGERVBO ==> OK
+
+(AHORA)
+==> SSNETWORKMANAGER/SSNETWORKMANAGERSERVER ==>
+PRUEBA CON TCP FALLADA. PASAMOS A UDP. (+CRC +COMPRESION)
+
+(NEXT) SSENTITYMANAGER ==> ESTRUCTURA BEANS CREADA. FALTA GESTION SQLITE + CACHE
+
+*********** (BACKUP)
+ 2-- FASE:
+(NEXT)SDL20GL11SHADOWS ==> ESTUDIO DIFERENTES ESTILOS TILES (PARALLAX, GLOOM, REFLECTION, BUMPMAPPING)
+(NEXT)SDL20GL11LIGHT ==> LUCES DINAMICAS (STENCIL, FBO)
+(NEXT)SDL20PARTICLESYSTEM ==> MOTOR DE PARTICULAS
+********** (BACKUP)
+3-- FASE:
+(NEXT)SSGUICHAN ==> UI Avanzado (PANTALLA INICIAL DE ARRANQUE + CONSOLA INGAME)
+
+
+Simple UDP:
+https://www.cs.cmu.edu/afs/cs/academic/class/15213-f99/www/class26/udpclient.c
+https://www.cs.cmu.edu/afs/cs/academic/class/15213-f99/www/class26/udpserver.c
+
+Github tutorials: https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/
+http://www.gabrielgambetta.com/fpm_live.html

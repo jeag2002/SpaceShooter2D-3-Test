@@ -665,6 +665,8 @@ class EventMsg{
         rPType.item_4_val = _rPType.item_4_val;
         rPType.score = _rPType.score;
         rPType.die = _rPType.die;
+        rPType.animIndex = _rPType.animIndex;
+        rPType.enabled = _rPType.enabled;
     }
     void clearRemotePlayerType(){
         rPType.typeTramaID = 0;
@@ -701,6 +703,8 @@ class EventMsg{
         rPType.item_4_val = 0;
         rPType.score = 0;
         rPType.die = 0;
+        rPType.animIndex = 0;
+        rPType.enabled = 0;
     }
     //////////////////////////////////////////////////////
 

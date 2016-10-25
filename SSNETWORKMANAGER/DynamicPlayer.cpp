@@ -107,27 +107,37 @@ void DynamicPlayer::update(EventMsg *msg){
 
         }
 
-        int indexTramaSend = nClient->getIndexTramaSend();
-        indexTramaSend++;
-        nClient->setIndexTramaSend(indexTramaSend);
+        this->sendToServer++;
 
-        log->debug("[DynamicPlayer::update] ID_PLAYER NEW POSITION [%d] (lvl:%d, x:%f, y:%f)",this->indexPlayer,this->actLevel,this->x,this->y);
-        msgCopy->setTypeMsg(TRAMA_COMMAND);
-        msgCopy->setTramaGet(nClient->getIndexTramaGet());
-        msgCopy->setTramaSend(nClient->getIndexTramaSend());
-        msgCopy->setMore(NOK);
-        msgCopy->setNumTrazas(1);
-        msgCopy->setPacketUPD(nClient->getRemotePacket());
+        if (sendToServer==10){
 
-        log->debug("[DynamicPlayer::update] SENDTOSERVER ID_PLAYER[%d] TYPE_PACKET[%d] TYPE_MOVEMENT[%d] TRAMASEND[%d] TRAMAGET[%d] ",
-                   this->indexPlayer,
-                   msgCopy->getTypeMsg(),
-                   msgCopy->getMovementType().movementID,
-                   msgCopy->getTramaSend(),
-                   msgCopy->getTramaGet()
-                   );
+            int indexTramaSend = nClient->getIndexTramaSend();
+            indexTramaSend++;
+            nClient->setIndexTramaSend(indexTramaSend);
 
-        nClient->sendMsgToServer(msgCopy);
+
+            msgCopy->setTypeMsg(TRAMA_COMMAND);
+            msgCopy->setTramaGet(nClient->getIndexTramaGet());
+            msgCopy->setTramaSend(nClient->getIndexTramaSend());
+            msgCopy->setMore(NOK);
+            msgCopy->setNumTrazas(1);
+            msgCopy->setPacketUPD(nClient->getRemotePacket());
+
+            log->debug("[DynamicPlayer::update] SENDTOSERVER ID_PLAYER[%d] TYPE_PACKET[%d] TYPE_MOVEMENT[%d] TRAMASEND[%d] TRAMAGET[%d] ",
+                       this->indexPlayer,
+                       msgCopy->getTypeMsg(),
+                       msgCopy->getMovementType().movementID,
+                       msgCopy->getTramaSend(),
+                       msgCopy->getTramaGet()
+                       );
+
+            log->debug("[DynamicPlayer::update DATA] ID_PLAYER NEW POSITION [%d] (lvl:%d, x:%f, y:%f) SENT TO SERVER",this->indexPlayer,this->actLevel,this->x,this->y);
+
+            nClient->sendMsgToServer(msgCopy);
+            sendToServer = 0;
+        }else{
+            log->debug("[DynamicPlayer::update DATA] ID_PLAYER NEW POSITION [%d] (lvl:%d, x:%f, y:%f) NOT SENT TO SERVER",this->indexPlayer,this->actLevel,this->x,this->y);
+        }
 
 
         this->setLocked(false);

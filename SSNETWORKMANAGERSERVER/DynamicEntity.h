@@ -223,9 +223,11 @@ public:
         rPType.score = 20;
         rPType.die = 0;
         rPType.animIndex = 1;
+        if (this->enabled){rPType.enabled = 1;}
+        else{rPType.enabled = 0;}
 
-        log->debug("[DynamicEntity::setRemoteExit] SEND REMOTE DATA ID:[%d] MAP:[%d] SESSION [%d] (lvl:%d x:%f y:%f width:%d height:%d)",
-                   rPType.idPlayer, rPType.actMap, rPType.session, rPType.lvl, rPType.x_pos, rPType.y_pos, rPType.width, rPType.height);
+        log->debug("[DynamicEntity::setRemoteExit] SEND REMOTE DATA ID:[%d] MAP:[%d] SESSION [%d] (lvl:%d x:%f y:%f width:%d height:%d) enabled? [%d]",
+                   rPType.idPlayer, rPType.actMap, rPType.session, rPType.lvl, rPType.x_pos, rPType.y_pos, rPType.width, rPType.height, rPType.enabled);
 
         return rPType;
     };

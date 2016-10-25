@@ -6,10 +6,8 @@
 #include "PredictionEngine.h"
 #include "Concurrent_queue_UDP.h"
 
-
-
-
 #define MAX_CLIENT 4
+#define SESSION_PORT 63000
 
 /*
 Gestion de una sesion

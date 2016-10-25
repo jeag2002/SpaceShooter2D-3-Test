@@ -6,9 +6,17 @@
 #define TOT_CLIENTS 8
 
 
+/*
 static void* execute_RunTaskUDPSession(void* ctx){
     UDPDispatcherSession *uDPDSes = (UDPDispatcherSession *)ctx;
     uDPDSes->Run();
+};
+*/
+
+static int threadFunction(void* ctx){
+    UDPDispatcherSession *uDPDSes = (UDPDispatcherSession *)ctx;
+    uDPDSes->Run();
+    return 0;
 };
 
 
@@ -40,7 +48,11 @@ public:
 
     void activeSessions();
 
-    ~UDPDispatcherSessionManager(){};
+    ~UDPDispatcherSessionManager(){
+        SDL_WaitThread( hebra_1, NULL );
+        SDL_WaitThread( hebra_2, NULL );
+
+    };
 
     void clearInputClientsToServer(){
         for(int i=0;i<TOT_CLIENTS;i++){
@@ -61,6 +73,9 @@ NetworkClientUDP *nCUDP;
 Concurrent_queue_UDP *cQ1;
 Concurrent_queue_UDP *cQ2;
 
+SDL_Thread *hebra_1;
+SDL_Thread *hebra_2;
+
 UDPDispatcherSession *session_1;
 UDPDispatcherSession *session_2;
 
@@ -75,7 +90,8 @@ EventMsg *generatingACKPackets(int tramaSend,
                                UDPpacket *packet);
 
 
-friend void* execute_RunTaskUDPSession(void* );
+//friend void* execute_RunTaskUDPSession(void* );
+friend int threadFunction(void* ctx);
 
 
 };

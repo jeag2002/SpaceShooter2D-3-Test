@@ -115,8 +115,8 @@ remotePlayerType EventMsg::processSubMsgrRType(const char *subbuffer){
 
     std::string ScoreStr = buffer_to_string.substr(86,5);      //64+5
     std::string DieStr = buffer_to_string.substr(91,1);        //69+1
-    std::string AnimIndexStr = buffer_to_string.substr(92,3);  //70+3
-
+    std::string AnimIndexStr = buffer_to_string.substr(92,2);  //70+2
+    std::string enabledStr = buffer_to_string,substr(94,1);    //elemento remoto enviado
 
     int typeTramaIDInt = atoi(typeTramaIDStr.c_str());
     int typeIDSInt = atoi(typeIDStr.c_str());
@@ -153,6 +153,7 @@ remotePlayerType EventMsg::processSubMsgrRType(const char *subbuffer){
     int ScoreInt = atoi(ScoreStr.c_str());
     int DieInt = atoi(DieStr.c_str());
     int AnimIndexInt = atoi(AnimIndexStr.c_str());
+    int EnabledInt = atoi(enabledStr.c_str());
 
     remotePlayerType rPType;
 
@@ -191,6 +192,7 @@ remotePlayerType EventMsg::processSubMsgrRType(const char *subbuffer){
     rPType.score = ScoreInt;
     rPType.die = DieInt;
     rPType.animIndex = AnimIndexInt;
+    rPType.enabled = EnabledInt;
 
     return rPType;
 }
@@ -661,7 +663,7 @@ void EventMsg::unmarshallMsg(const char *buffer){
     }
 
     //GET ID PLAYER FOR SESSION X MAP Y (CLIENT/SERVER)
-    else if ((typeMsg == TRAMA_ACK_SESSION) || (typeMsg == TRAMA_SYNACK_SESSION)){
+    else if ((typeMsg == TRAMA_ACK_SESSION) || (typeMsg == TRAMA_SYNACK_SESSION) || (typeMsg == TRAMA_QRY_DATASERVER)){
         std::string subbuffer = buffer_to_string.substr(33,95);
         setPlayerDataType(processSubMsgPDType(subbuffer.c_str()));
     }
@@ -679,7 +681,7 @@ std::string EventMsg::serializeMsg(){
     //QUERY SESSION LIST = TRAMA_QRY_SESSION_LIST (CLIENT)
     //QUERY DATA FROM SERVER = TRAMA_QRY_DATASERVER (CLIENT)
     //QUERY LOGOUT = TRAMA_QRY_LOGOUT (CLIENT)
-    if ((typeMsg == TRAMA_QRY_CONECTION) || (typeMsg == TRAMA_QRY_SESSION_LIST) || (typeMsg == TRAMA_QRY_DATASERVER) || (typeMsg == TRAMA_QRY_LOGOUT) || (typeMsg == TRAMA_SYNACK_CONECTION)){
+    if ((typeMsg == TRAMA_QRY_CONECTION) || (typeMsg == TRAMA_QRY_SESSION_LIST) || (typeMsg == TRAMA_QRY_LOGOUT) || (typeMsg == TRAMA_SYNACK_CONECTION)){
 
 
     //CONFIRMATION CONNECTION = TRAMA_GET_CONECTION (SERVER)
@@ -766,7 +768,7 @@ std::string EventMsg::serializeMsg(){
 
         //REMOTE ACTOR (PRIMERA VERSION, TODOS LOS ELEMENTOS ACTIVOS SON ACTORES)
         if (rPType.typeTramaID!=0){ //Longitud 87
-            sprintf(subBuffer,"%03d%03d%03d%03d%03d%05d%05d%01d%06d%02d%06d%02d%03d%03d%01d%03d%03d%02d%01d%03d%01d%03d%01d%03d%01d%03d%01d%02d%01d%02d%01d%02d%01d%02d%05d%01d%03d",
+            sprintf(subBuffer,"%03d%03d%03d%03d%03d%05d%05d%01d%06d%02d%06d%02d%03d%03d%01d%03d%03d%02d%01d%03d%01d%03d%01d%03d%01d%03d%01d%02d%01d%02d%01d%02d%01d%02d%05d%01d%02d%01d",
                  rPType.typeTramaID,
                  rPType.typeID,
                  rPType.entityID,
@@ -803,7 +805,8 @@ std::string EventMsg::serializeMsg(){
                  rPType.item_4_val,
                  rPType.score,
                  rPType.die,
-                 rPType.animIndex
+                 rPType.animIndex,
+                 rPType.enabled
                  );
 
         //SEND MESSAGE FROM SERVER
@@ -854,7 +857,7 @@ std::string EventMsg::serializeMsg(){
                 lSAType.num_player_ava_2_2);
 
     //ENVIO ID JUGADOR PARA SESION X DEL MAPA Y (SERVER)
-    }else if ((typeMsg == TRAMA_ACK_SESSION) || (typeMsg == TRAMA_SYNACK_SESSION)){
+    }else if ((typeMsg == TRAMA_ACK_SESSION) || (typeMsg == TRAMA_SYNACK_SESSION) || (typeMsg == TRAMA_QRY_DATASERVER) ){
         sprintf(subBuffer,"%03d%03d%03d%03d%05d%03d%06d%02d%06d%02d%03d%03d",
                 pDType.playerDataID,
                 pDType.actMap,

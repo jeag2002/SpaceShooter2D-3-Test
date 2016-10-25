@@ -162,15 +162,26 @@ EventMsg *NetworkClientUDP::registerToActiveSession(int mapClient, int sessionCl
 //send one message to REMOTE
 void NetworkClientUDP::sendMsgToServer(EventMsg *msg){
 
+    SDL_LockMutex(send_mutex);
+
     clearBuffer();
-    UDPpacket *packetUDP = msg->getPacketUPD();
+    UDPpacket *packetUDP = SDLNet_AllocPacket(BUFFER_SIZE);
     clearBufferPacket(packetUDP);
 
     char *tramaBuffChr = msg->marshallMsg();
     std::string tramaStr(tramaBuffChr);
 
-    memcpy(packetUDP->data, tramaStr.c_str(), tramaStr.length() );
+    //memcpy(packetUDP->data, tramaStr.c_str(), tramaStr.length() );
+
+    for(int i=0; i<tramaStr.length(); i++){
+        packetUDP->data[i] = ((Uint8)(tramaBuffChr[i]));
+    }
+
     packetUDP->len = tramaStr.length();
+    packetUDP->address.host = msg->getPacketUPD()->address.host;
+    packetUDP->address.port = msg->getPacketUPD()->address.port;
+    packetUDP->channel = msg->getPacketUPD()->channel;
+    packetUDP->status = msg->getPacketUPD()->status;
 
     if (enabledCompression){
         unsigned char *dataCompression = cP->CompressionData((char *)packetUDP->data,packetUDP->len);
@@ -178,14 +189,48 @@ void NetworkClientUDP::sendMsgToServer(EventMsg *msg){
         logger->warn("[SSNETWORKMANAGER::sendMsgToServerUPD] --> size_data_before_compression [%d] size_data_after_compression [%d] ",packetUDP->len,size_after_dataCompression);
     }
 
+    logPackets->debug("[TRAMA SEND CLIENT] --> RAW DATA[%s] TRAMABUFF[%s]",packetUDP->data,tramaBuffChr);
+
     if ( SDLNet_UDP_Send(clientSocket, -1, packetUDP) == 0 ){
         logger->warn("[SSNETWORKMANAGER::sendMsgToServerUDP] --> UDP DATA NOT SEND! [%s]", SDLNet_GetError());
         exit(-1);
     }
 
+    delete packetUDP;
+
     logger->debug("[SSNETWORKMANAGER::sendMsgToServerUDP] CLIENT MSG TO SERVER [%s] size [%d]",packetUDP->data,packetUDP->len);
 
+    SDL_UnlockMutex(send_mutex);
+
 };
+
+EventMsg **NetworkClientUDP::getMsgsFromServer(){
+
+    EventMsg **dataMsg = new EventMsg *[PACKETS];
+
+    for(int i=0; i<PACKETS; i++){
+        dataMsg[i] = new EventMsg();
+    }
+
+    UDPpacket **packetV = SDLNet_AllocPacketV(PACKETS, BUFFER_SIZE);
+
+    int numrecv = SDLNet_UDP_RecvV(clientSocket, packetV);
+
+    if (numrecv == -1){
+        logger->warn("[SSNETWORKMANAGER::getMsgsFromServer] GET DATA [%d] ERROR [%s]",numrecv,SDLNet_GetError());
+    }else{
+        logger->debug("SSNETWORKMANAGER::getMsgsFromServer] GET [%d] PACKETS",numrecv);
+    }
+
+    for(int i=0; i<numrecv; i++){
+        dataMsg[i]->unmarshallMsg(((const char *)packetV[i]->data));
+    }
+
+    SDLNet_FreePacketV(packetV);
+
+    return dataMsg;
+};
+
 
 //receive one message from REMOTE.
 EventMsg *NetworkClientUDP::getMsgFromServer(){
@@ -194,6 +239,7 @@ EventMsg *NetworkClientUDP::getMsgFromServer(){
 
     EventMsg *returnMsg = new EventMsg();
 
+    SDL_LockMutex(get_mutex);
     long initialMark = SDL_GetTicks();
 
     while(!DONE){
@@ -203,6 +249,7 @@ EventMsg *NetworkClientUDP::getMsgFromServer(){
           if (SDLNet_UDP_Recv(clientSocket, packet)){
 
             logger->warn("[SSNETWORKMANAGER::getMsgFromServerUDP] --> PACKET RECEIVED [%s]", packet->data);
+            logPackets->debug("[TRAMA GET CLIENT] --> RAW DATA[%s]",packet->data);
 
             std::string data((char *)packet->data);
             std::string msg = data.substr(0,128);
@@ -221,6 +268,8 @@ EventMsg *NetworkClientUDP::getMsgFromServer(){
 
           }
     }
+
+    SDL_UnlockMutex(get_mutex);
 
     return returnMsg;
 

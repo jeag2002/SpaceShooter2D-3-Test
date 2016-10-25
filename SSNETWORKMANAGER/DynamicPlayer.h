@@ -21,6 +21,7 @@ DynamicPlayer():Observer(){
     this->actLevel = 0;
     this->mapID = 0;
     this->sessionID = 0;
+    this->sendToServer = 0;
     this->locked = false;
 }
 
@@ -34,6 +35,7 @@ DynamicPlayer(LogEngine *_log, int _indexPlayer, NetworkClientUDP *_nClient):Obs
     this->actLevel = 0;
     this->mapID = 0;
     this->sessionID = 0;
+    this->sendToServer = 0;
     this->locked = false;
     this->nClient = _nClient;
 };
@@ -48,6 +50,7 @@ DynamicPlayer(DynamicPlayer *refEntity):Observer(){
     this->locked = refEntity->isLocked();
     this->mapID = 0;
     this->sessionID = 0;
+    this->sendToServer = 0;
 };
 
 DynamicPlayer(remotePlayerType _rPType):Observer(){
@@ -68,6 +71,7 @@ DynamicPlayer(playerDataType _pDType):Observer(){
     this->actLevel = 0;
     this->mapID = 0;
     this->sessionID = 0;
+    this->sendToServer = 0;
     this->locked = false;
 };
 
@@ -138,6 +142,8 @@ private:
 
 int mapID;
 int sessionID;
+
+int sendToServer;
 
 int actLevel;
 float x;
