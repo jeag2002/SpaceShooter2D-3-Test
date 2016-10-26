@@ -132,6 +132,7 @@ int main (int argc, char *argv[])
             if ((pDT.actMap == 0) || (pDT.session == 0) || (pDT.idPlayer == 0)){
                 logger->error("[SSNETWORKMANAGER::MAIN] error al generar el idSession");
                 attemps--;
+                SDL_Delay(100);
                 //delete nClientUDP;
                 //exit(-1);
             }else{
@@ -153,17 +154,20 @@ int main (int argc, char *argv[])
            answerType aType = responseMsg->getAnswerType();
            logger->warn("[SSNETWORKMANAGER::MAIN] NACK::RESULT [%d]",aType.result);
            attemps--;
+           SDL_Delay(100);
            //delete nClientUDP;
            //exit(-1);
 
        }else if (responseMsg->getTypeMsg() == TRAMA_NULL){
             logger->warn("[SSNETWORKMANAGER::MAIN] RESULT NULL");
             attemps--;
+            SDL_Delay(100);
             //delete nClientUDP;
             //exit(-1);
        }else{
             logger->warn("[SSNETWORKMANAGER::MAIN] PACKET NOT RECOGNIZED");
             attemps--;
+            SDL_Delay(100);
        }
    }
 
@@ -242,7 +246,7 @@ void createEnvirontment(){
     sub = new Subject();
     mem = new MemManager();
 
-    nClient = new NetworkClient(logger);
+    //nClient = new NetworkClient(logger);
     nClientUDP = new NetworkClientUDP(logger);
 
     nClock = new ClockEngine();
@@ -352,7 +356,7 @@ void createEnvirontment(){
 
 void destroyAll(){
 
-    nClient->closeClientSocket();
+    //nClient->closeClientSocket();
 
    //define threads
    SDL_DestroyMutex(gBufferLock);
@@ -369,7 +373,7 @@ void destroyAll(){
    delete aEnt;
    delete iAEnt;
 
-   delete nClient;
+   //delete nClient;
    delete nClientUDP;
 
    delete mem;

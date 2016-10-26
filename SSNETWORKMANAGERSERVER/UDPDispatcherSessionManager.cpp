@@ -30,6 +30,7 @@ void UDPDispatcherSessionManager::processingInputMsgsFromClients(){
                nCUDP->sendMsgToClientUDP(processQueryActiveSessions(msgUDP));
         }else if (msgUDP->getTypeMsg() == TRAMA_SYNACK_SESSION){
                 EventMsg *output = processActivateSession(msgUDP);
+                logger->debug("[UDPDispatcherSessionManager::activeSession] send to client [%s]",output->marshallMsg());
                 if (output->getTypeMsg() != TRAMA_NULL){
                     nCUDP->sendMsgToClientUDP(output);
                 }
@@ -55,14 +56,20 @@ void UDPDispatcherSessionManager::processingInputMsgsFromClients(){
 EventMsg *UDPDispatcherSessionManager::processActivateSession(EventMsg *ackSession){
 
     EventMsg *msgOutput = new EventMsg();
-    logger->debug("[SSNETWORKMANAGERSERVER::processActivateSession] activate session for input client [%d]:[%d]",ackSession->getPacketUPD()->address.host,ackSession->getPacketUPD()->address.port);
+
+    remoteHostData rHD = UtilsProtocol::parseRemoteHostData(ackSession->getPacketUPD());
+    logger->debug("[SSNETWORKMANAGERSERVER::processActivateSession] activate session for input client [%s]:[%d]",rHD.host,rHD.port);
 
     bool found_it = false;
     int loop_1=0;
 
     for(loop_1=0; ((loop_1<MAX_CLIENT) && (!found_it)); loop_1++){
         if (clientPackets[loop_1]!=NULL){
-            found_it = (clientPackets[loop_1]->getPacketUPD()->address.host == ackSession->getPacketUPD()->address.host);
+            found_it = (
+                       (clientPackets[loop_1]->getPacketUPD()->address.host == ackSession->getPacketUPD()->address.host) &&
+                       (clientPackets[loop_1]->getPacketUPD()->address.port == ackSession->getPacketUPD()->address.port) &&
+                       (clientPackets[loop_1]->getTypeMsg() < TRAMA_ACK_SESSION)
+                        );
         }
     }
 
@@ -85,6 +92,7 @@ EventMsg *UDPDispatcherSessionManager::processActivateSession(EventMsg *ackSessi
                 while(!getAnswer){
                       if (!cQ2->isEmpty()){
                           msgOutput->setMsg(cQ2->front());
+                          logger->debug("[SSNETWORKMANAGERSERVER::processActivateSession] IDPLAYER [%d]", msgOutput->getPlayerDataType().idPlayer);
                           if ((msgOutput->getTypeMsg() == TRAMA_ACK_SESSION) &&
                               (msgOutput->getPacketUPD()->address.host == ackSession->getPacketUPD()->address.host) &&
                               (msgOutput->getPacketUPD()->address.port == ackSession->getPacketUPD()->address.port)){
@@ -100,7 +108,7 @@ EventMsg *UDPDispatcherSessionManager::processActivateSession(EventMsg *ackSessi
        delete inputMsg;
 
     }else{
-        logger->warn("[UDPDispatcherSessionManager::processActivateSession] discard input packet not connect [%d]:[%d]",ackSession->getPacketUPD()->address.host,ackSession->getPacketUPD()->address.port);
+        logger->warn("[UDPDispatcherSessionManager::processActivateSession] discard input packet not connect [%s]:[%d]",rHD.host,rHD.port);
     }
     return msgOutput;
 
@@ -110,7 +118,9 @@ EventMsg *UDPDispatcherSessionManager::processActivateSession(EventMsg *ackSessi
 //INDEPENDIENTEMENTE SI SE HA CONECTADO O NO, DEBEMOS DE DAR LA POSIBLIDAD DE CONSULTAR LAS SESIONES Y LOS MAPAS ACTIVOS.
 EventMsg *UDPDispatcherSessionManager::processQueryActiveSessions(EventMsg *qryListTrama){
 
-    logger->debug("[UDPDispatcherSessionManager::processQueryActiveSessions] return Available sessions for input client [%d]:[%d]",qryListTrama->getPacketUPD()->address.host,qryListTrama->getPacketUPD()->address.port);
+    remoteHostData rHD = UtilsProtocol::parseRemoteHostData(qryListTrama->getPacketUPD());
+
+    logger->debug("[UDPDispatcherSessionManager::processQueryActiveSessions] return Available sessions for input client [%s]:[%d]",rHD.host,rHD.port);
 
     EventMsg *msgOutput = new EventMsg();
 
@@ -128,6 +138,10 @@ EventMsg *UDPDispatcherSessionManager::processQueryActiveSessions(EventMsg *qryL
     lSAT.session_1_1 = session_1->getSessionId();
     lSAT.num_player_ava_1_1 = session_1->getNumClients();
     lSAT.num_player_max_1_1 = session_1->getMaxClients();
+
+    //lSAT.session_1_2 = 0;
+    //lSAT.num_player_ava_1_2 = 0;
+    //lSAT.num_player_max_1_2 = 0;
 
     lSAT.session_1_2 = session_2->getSessionId();
     lSAT.num_player_ava_1_2 = session_2->getNumClients();
@@ -171,7 +185,11 @@ void UDPDispatcherSessionManager::processInputConnections(EventMsg *ackTrama){
                     if (clientPackets[loop_1]!=NULL){
                         UDPpacket *pack_1 = clientPackets[loop_1]->getPacketUPD();
                         UDPpacket *pack_2 = ackTrama->getPacketUPD();
-                        logger->debug("free Packet [%d:%d] - Input Packet [%d:%d]",pack_1->address.host,pack_1->address.port,pack_2->address.host,pack_2->address.port);
+
+                        remoteHostData rHD1 = UtilsProtocol::parseRemoteHostData(pack_1);
+                        remoteHostData rHD2 = UtilsProtocol::parseRemoteHostData(pack_2);
+                        logger->debug("free Packet [%s:%d] - Input Packet [%s:%d]",rHD1.host,rHD1.port,rHD2.host,rHD2.port);
+
                         found_it = ((pack_1->address.host == pack_2->address.host) && (pack_1->address.port == pack_2->address.port));
                     }
                 }
@@ -197,19 +215,24 @@ void UDPDispatcherSessionManager::processInputConnections(EventMsg *ackTrama){
                     //RESPUESTA AFIRMATIVA (RESPUESTA ACK SI!)
                     EventMsg *answerACK = generatingACKPackets(1, 1, OK, ackTrama->getPacketUPD());
                     nCUDP->sendMsgToClientUDP(answerACK);
-                    logger->debug("[SSNETWORKMANAGERSERVER::establishCommunication] ACK PACKET ACCEPTED [%d]:[%d]",ackTrama->getPacketUPD()->address.host, ackTrama->getPacketUPD()->address.port);
+
+                    remoteHostData rHD1 = UtilsProtocol::parseRemoteHostData(ackTrama->getPacketUPD());
+
+                    logger->debug("[SSNETWORKMANAGERSERVER::establishCommunication] ACK PACKET ACCEPTED [%s]:[%d]",rHD1.host, rHD1.port);
                     delete answerACK;
 
                 }else{
+                    remoteHostData rHD1 = UtilsProtocol::parseRemoteHostData(ackTrama->getPacketUPD());
                     //SOLICITUD DE CONEXION DE PAQUETE CONECTADO Y DADO DE ALTA PREVIAMENTE (SE DESCARTA)
-                    logger->warn("[SSNETWORKMANAGERSERVER::establishCommunication] ACK PACKET FROM CLIENT [%d]:[%d]. PREVIOUSLY ACCEPTED. DISCART PACKET",ackTrama->getPacketUPD()->address.host, ackTrama->getPacketUPD()->address.port);
+                    logger->warn("[SSNETWORKMANAGERSERVER::establishCommunication] ACK PACKET FROM CLIENT [%s]:[%d]. PREVIOUSLY ACCEPTED. DISCART PACKET",rHD1.host, rHD1.port);
                 }
 
             //NO HA ENCONTRADO ESPACIO LIBRE (RESPUESTA ACK NO!)
             }else{
                 EventMsg *answerACK = generatingACKPackets(1, 1, NOK, ackTrama->getPacketUPD());
                 nCUDP->sendMsgToClientUDP(answerACK);
-                logger->debug("[SSNETWORKMANAGERSERVER::establishCommunication] ACK PACKET REJECTED [%d]:[%d]",ackTrama->getPacketUPD()->address.host, ackTrama->getPacketUPD()->address.port);
+                remoteHostData rHD1 = UtilsProtocol::parseRemoteHostData(ackTrama->getPacketUPD());
+                logger->debug("[SSNETWORKMANAGERSERVER::establishCommunication] ACK PACKET REJECTED [%s]:[%d]",rHD1.host, rHD1.port);
                 delete answerACK;
             }
         }

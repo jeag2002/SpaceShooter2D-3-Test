@@ -68,6 +68,7 @@ void NetworkClientUDP::establishCommunicationUDP(){
        delete qryACK;
 
         //-->ACK PACKET  (GET FROM SERVER) indexTramaSend:1; indexTramaGet:1
+       SDL_Delay(100);
        EventMsg *responseACK = getMsgFromServer();
 
        if ((responseACK->getTypeMsg() == TRAMA_GET_CONECTION) &&
@@ -105,6 +106,8 @@ void NetworkClientUDP::getListActiveSessions(){
     EventMsg *TRQRYSESSIONLIST = new EventMsg(TRAMA_QRY_SESSION_LIST,indexTramaSend,indexTramaGet,0,1,(uint16_t)0,packet);
     sendMsgToServer(TRQRYSESSIONLIST);
     delete TRQRYSESSIONLIST;
+
+    SDL_Delay(100);
 
     EventMsg *response = getMsgFromServer();
     if (response->getTypeMsg() == TRAMA_GET_SESSION_LIST){
@@ -153,6 +156,8 @@ EventMsg *NetworkClientUDP::registerToActiveSession(int mapClient, int sessionCl
     EventMsg *TRSYNACKSESSION = new EventMsg(TRAMA_SYNACK_SESSION,indexTramaSend,indexTramaGet,0,1,(uint16_t)0,packet,pDT);
     sendMsgToServer(TRSYNACKSESSION);
     delete TRSYNACKSESSION;
+
+    SDL_Delay(100);
 
     EventMsg *response = getMsgFromServer();
     return response;

@@ -4,6 +4,9 @@
 #include "SDL.h"
 #include "Task.h"
 #include "LogEngine.h"
+#include "Constants.h"
+
+#define REGRESION_DATA 4
 
 class DynamicEntity : public Task
 {
@@ -188,7 +191,8 @@ public:
     remotePlayerType getDynamicEntityRPT(){
         remotePlayerType rPType;
 
-        rPType.typeTramaID = TYPE_SERVER_DATA_ID;
+        //rPType.typeTramaID = TYPE_SERVER_DATA_ID;
+        rPType.typeTramaID = TYPE_ACTIVE_ELEMENT;
         rPType.typeID = this->getTypeId();
         rPType.entityID = this->getTypeEntityId();
         rPType.actMap = this->getActMap();
@@ -273,6 +277,9 @@ private:
     int randomValues(int min, int max);
 
     LogEngine *log;
+
+    std::queue<positionXY> regresionLine;
+
 
 
 };

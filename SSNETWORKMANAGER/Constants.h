@@ -288,4 +288,24 @@ typedef struct{
     int enabled;
 }remotePlayerType;
 
+typedef struct{
+    const char *host;
+    int port;
+}remoteHostData;
+
+//y = a + b*x
+typedef struct{
+    double ACoef;
+    double BCoef;
+    double CoefD;
+    double CoefC;
+    double stdError;
+}coefLinRegresion;
+
+typedef struct{
+    double x;
+    double y;
+}positionXY;
+
+
 #endif // CONSTANTS_H_INCLUDED

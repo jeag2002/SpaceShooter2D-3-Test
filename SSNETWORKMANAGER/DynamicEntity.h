@@ -4,6 +4,9 @@
 #include "SDL.h"
 #include "Task.h"
 #include "LogEngine.h"
+#include "Constants.h"
+
+#define REGRESION_DATA 4
 
 class DynamicEntity : public Task
 {
@@ -145,6 +148,10 @@ public:
         this->actSession = _rPType.session;
         this->typeId = _rPType.typeID;
         this->idDE = _rPType.idPlayer;
+
+        log->debug("[DYNAMICENTITY::SETDYNAMICENTITY] SET REMOTE DATA FOR ENTITY ID:[%d] (ActMap:%d,Session:%d,lvl:%d,x:%f,y:%f,width:%d,height:%d)",
+                      this->idDE,this->actMap,this->actSession,this->actLevel,this->x,this->y,this->width,this->height);
+
     }
 
     void setDynamicEntity(playerDataType _pDType){
@@ -192,6 +199,8 @@ private:
     int randomValues(int min, int max);
 
     LogEngine *log;
+
+    std::queue<positionXY> regresionLine;
 
 
 };

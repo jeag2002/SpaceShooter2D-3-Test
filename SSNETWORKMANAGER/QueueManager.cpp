@@ -27,14 +27,44 @@ void QueueManager::runRemoteData(){
             nClientUDP->setIndexTramaGet(tramaIndexGet);
             nClientUDP->setIndexTramaSend(tramaIndexSend);
 
-            log->debug("[QueueManager::RemoteData] QRY DATA FROM DATA SERVER SENDPACKET[%d] GETPACKET[%d]",nClientUDP->getIndexTramaSend(),nClientUDP->getIndexTramaGet());
+            log->debug("[QUEUEMANAGER::REMOTEDATA] QRY DATA FROM DATA SERVER SENDPACKET[%d] GETPACKET[%d]",nClientUDP->getIndexTramaSend(),nClientUDP->getIndexTramaGet());
 
             nClientUDP->sendMsgToServer(new EventMsg(TRAMA_QRY_DATASERVER,nClientUDP->getIndexTramaSend(),nClientUDP->getIndexTramaGet(),0,1,(uint16_t)0,nClientUDP->getRemotePacket()));
-            EventMsg **data = nClientUDP->getMsgsFromServer();
 
+            bool DONE = false;
+            int numTramas  = 0;
+            int ticks = SDL_GetTicks();
+
+            while (!DONE){
+                EventMsg *msg = nClientUDP->getMsgFromServer();
+                if (msg->getTypeMsg() == TRAMA_GET_DATASERVER){
+                    //if (msg->getRemotePlayerType().typeTramaID != 0){
+                        log->debug("[QUEUEMANAGER::REMOTEDATA] GET REMOTE INFO FOR TypeTramaID:[%d] IDType:[%d] EntityID:[%d] IDActor:[%d] (actMap:%d,session:%d,lvl:%d,x:%f,y:%f)",
+                                    msg->getRemotePlayerType().typeTramaID,
+                                    msg->getRemotePlayerType().typeID,
+                                    msg->getRemotePlayerType().entityID,
+                                    msg->getRemotePlayerType().idPlayer,
+                                    msg->getRemotePlayerType().actMap,
+                                    msg->getRemotePlayerType().session,
+                                    msg->getRemotePlayerType().lvl,
+                                    msg->getRemotePlayerType().x_pos,
+                                    msg->getRemotePlayerType().y_pos);
+                        dataFromServer.push(msg);
+                        numTramas++;
+                    //}
+                }
+                DONE = (numTramas >= SIZE_REMOTE_ELEMS);
+                if (!DONE){
+                    DONE = ((SDL_GetTicks()-ticks) >= TIMEOUT);
+                }
+            }
+
+
+
+            //EventMsg **data = nClientUDP->getMsgsFromServer();
             //nClientQueue->sendMsgToServer(new EventMsg(TRAMA_QRY_DATASERVER,nClientUDP->getIndexTramaSend(),nClientUDP->getIndexTramaGet(),0,1,(uint16_t)0,nClientQueue->getRemotePacket(), pDT));
             //EventMsg **data = nClientQueue->getMsgsFromServer();
-
+            /*
             for(int i=0; i<SIZE_REMOTE_ELEMS; i++){
                 EventMsg *msg = data[i];
                 if (msg->getTypeMsg() == TRAMA_GET_DATASERVER){
@@ -49,15 +79,16 @@ void QueueManager::runRemoteData(){
                     }
                 }
             }
+            */
         }
 
         if (dataFromServer.size()<=0){
 
-            log->warn("[QueueManager::RemoteData] NO RECOVE ALL THE INFORMATION. ACTIVE PREDICTION CLIENTSIDE ENGINE");
+            log->warn("[QUEUEMANAGER::REMOTEDATA] NO RECOVE ALL THE INFORMATION. ACTIVE PREDICTION CLIENTSIDE ENGINE");
             pEngine->processPrediction();
 
         }else{
-            log->info("[QueueManager::RemoteData] RECOVERING ALL THE INFORMATION DONE. ACTIVE INTERPOLATION CLIENT-SERVER ENGINE");
+            log->info("[QUEUEMANAGER::REMOTEDATA] RECOVERING THE INFORMATION OF [%d] PACKETS. ACTIVE INTERPOLATION CLIENT-SERVER ENGINE",dataFromServer.size());
 
             //PROCESS SERVER DATA. INTERPOLATE WITH LOCAL DATA.
             while(!dataFromServer.empty()){

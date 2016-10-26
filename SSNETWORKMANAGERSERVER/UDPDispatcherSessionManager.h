@@ -50,7 +50,9 @@ public:
 
     ~UDPDispatcherSessionManager(){
         SDL_WaitThread( hebra_1, NULL );
-        SDL_WaitThread( hebra_2, NULL );
+        //SDL_WaitThread( hebra_2, NULL );
+        delete session_1;
+        //delete session_2;
 
     };
 

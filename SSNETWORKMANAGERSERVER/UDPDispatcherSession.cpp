@@ -197,6 +197,9 @@ EventMsg *UDPDispatcherSession::setClientForSession(EventMsg *msg){
     msgOutput->setPacketUPD(msg->getPacketUPD());
     msgOutput->setTypeMsg(TRAMA_NULL);
 
+    remoteHostData rHD = UtilsProtocol::parseRemoteHostData(msg->getPacketUPD());
+
+
     if (clientes.size()==0){
         DynamicEntity *dEntity = getRemotePlayer();
         if (dEntity != NULL){
@@ -224,15 +227,17 @@ EventMsg *UDPDispatcherSession::setClientForSession(EventMsg *msg){
                     clientes.push_back(sessionUDP);
                     numClients++;
                     msgOutput->setMsg(sendAckMsg(dEntity,msg,true));
+                    logger->debug("[UDPDispatcherSession::setClientForSession Map[%d] Session[%d]] IDPLAYER [%d]",this->mapId,this->sessionId, msgOutput->getPlayerDataType().idPlayer);
+                    //logger->debug("[UDPDispatcherSession::setClientForSession Map[%d] Session[%d]] ACK MSG [%s]",this->mapId,this->sessionId,msgOutput->marshallMsg());
                 }else{
-                    logger->warn("[UDPDispatcherSession::setClientForSession Map[%d] Session[%d]] USER [%d]:[%d] NOT ID AVAILABLE, DISCARD PACKET",this->mapId,this->sessionId,msg->getPacketUPD()->address.host,msg->getPacketUPD()->address.port);
+                    logger->warn("[UDPDispatcherSession::setClientForSession Map[%d] Session[%d]] USER [%s]:[%d] NOT ID AVAILABLE, DISCARD PACKET",this->mapId,this->sessionId,rHD.host,rHD.port);
                 }
             }else{
-                logger->warn("[UDPDispatcherSession::setClientForSession Map[%d] Session[%d]] USER [%d]:[%d] ALREADY JOIN TO SESSION, DISCARD PACKET",this->mapId,this->sessionId,msg->getPacketUPD()->address.host,msg->getPacketUPD()->address.port);
+                logger->warn("[UDPDispatcherSession::setClientForSession Map[%d] Session[%d]] USER [%s]:[%d] ALREADY JOIN TO SESSION, DISCARD PACKET",this->mapId,this->sessionId,rHD.host,rHD.port);
                 msgOutput->setMsg(sendAckMsg(NULL,msg,false));
             }
         }else{
-            logger->warn("[UDPDispatcherSession::setClientForSession Map[%d] Session[%d]] USER [%d]:[%d] NO FREE SPACE DISCARD PACKET",this->mapId,this->sessionId, msg->getPacketUPD()->address.host,msg->getPacketUPD()->address.port);
+            logger->warn("[UDPDispatcherSession::setClientForSession Map[%d] Session[%d]] USER [%s]:[%d] NO FREE SPACE DISCARD PACKET",this->mapId,this->sessionId,rHD.host,rHD.port);
             msgOutput->setMsg(sendAckMsg(NULL,msg,false));
         }
     }
@@ -260,13 +265,13 @@ void UDPDispatcherSession::processSessions(EventMsg *msg){
 
         logger->debug("[UDPDispatcherSession::processSessions] eval find it [%i] client",i);
 
-        logger->info("[UDPDispatcherSession::processSessions Map[%d] Session[%d]] dir active session [%d]:[%d] remote dir client [%d]:[%d]",
+        remoteHostData rHD1 = UtilsProtocol::parseRemoteHostData(session->getPacket());
+        remoteHostData rHD2 = UtilsProtocol::parseRemoteHostData(msg->getPacketUPD());
+
+        logger->info("[UDPDispatcherSession::processSessions Map[%d] Session[%d]] dir active session [%s]:[%d] remote dir client [%s]:[%d]",
                      this->mapId,
                      this->sessionId,
-                     session->getPacket()->address.host,
-                     session->getPacket()->address.port,
-                     msg->getPacketUPD()->address.host,
-                     msg->getPacketUPD()->address.port);
+                     rHD1.host,rHD1.port,rHD2.host,rHD2.port);
 
         if (find_it){
             logger->debug("[UDPDispatcherSession::processSessions] PROCESS_INFO_DATA client",i);
@@ -401,7 +406,11 @@ void UDPDispatcherSession::sendInfoDataSession(int playerID, EventMsg *msg){
         indexMsg++;
     }
 
-    nCUDP->sendMsgVectorToClientUDP(msgs);
+    for(int data = 0; data < indexMsg; data++){
+        nCUDP->sendMsgToClientUDP(msgs[data]);
+    }
+
+    //nCUDP->sendMsgVectorToClientUDP(msgs);
 }
 
 
@@ -431,9 +440,10 @@ void UDPDispatcherSession::processInputMsg(){
 
                     if ((pDT.actMap == this->mapId) && (pDT.session == this->sessionId)){
                         EventMsg *response = setClientForSession(msg);
+                        logger->debug("[UDPDispatcherSession::processInputMsg Map[%d] Session[%d]] IDPLAYER [%d]",this->mapId,this->sessionId, response->getPlayerDataType().idPlayer);
                         cQOutput->push(response);
                         cQInput->pop();
-                        delete response;
+                        //delete response;
                     }
                 }else if (msg->getTypeMsg() <= TRAMA_NULL) {
                     processSessions(msg);

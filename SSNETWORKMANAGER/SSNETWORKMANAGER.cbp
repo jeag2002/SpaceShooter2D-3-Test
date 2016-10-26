@@ -93,6 +93,7 @@
 		<Unit filename="SSNETWORKMANAGER.log" />
 		<Unit filename="Stdafx.h" />
 		<Unit filename="Subject.h" />
+		<Unit filename="TRAMACLIENT.log" />
 		<Unit filename="Task.cpp" />
 		<Unit filename="Task.h" />
 		<Unit filename="TaskManager.cpp" />

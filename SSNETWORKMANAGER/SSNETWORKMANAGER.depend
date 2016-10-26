@@ -502,15 +502,16 @@
 	"DynamicEntity.h"
 	"DynamicPlayer.h"
 
-1470267680 c:\workspaces\workcodeblocks\ssnetworkmanager\dynamicentity.h
+1477527020 c:\workspaces\workcodeblocks\ssnetworkmanager\dynamicentity.h
 	"SDL.h"
 	"Task.h"
 	"LogEngine.h"
+	"Constants.h"
 
 1467539707 c:\workspaces\workcodeblocks\ssnetworkmanager\task.h
 	<pthread.h>
 
-1477264144 c:\workspaces\workcodeblocks\ssnetworkmanager\logengine.h
+1477525290 c:\workspaces\workcodeblocks\ssnetworkmanager\logengine.h
 	"Stdafx.h"
 
 1472083406 c:\workspaces\workcodeblocks\ssnetworkmanager\stdafx.h
@@ -539,7 +540,7 @@
 	<functional>
 	<semaphore.h>
 
-1477425115 c:\workspaces\workcodeblocks\ssnetworkmanager\constants.h
+1477510090 c:\workspaces\workcodeblocks\ssnetworkmanager\constants.h
 
 1477349074 c:\workspaces\workcodeblocks\ssnetworkmanager\dynamicplayer.h
 	"Observer.h"
@@ -598,7 +599,7 @@
 	"MemManager.h"
 	"LogEngine.h"
 
-1477429894 source:c:\workspaces\workcodeblocks\ssnetworkmanager\queuemanager.cpp
+1477518382 source:c:\workspaces\workcodeblocks\ssnetworkmanager\queuemanager.cpp
 	"QueueManager.h"
 
 1477430179 c:\workspaces\workcodeblocks\ssnetworkmanager\queuemanager.h
@@ -619,7 +620,7 @@
 1470252262 source:c:\workspaces\workcodeblocks\ssnetworkmanager\taskmanager.cpp
 	"TaskManager.h"
 
-1477429066 source:c:\workspaces\workcodeblocks\ssnetworkmanager\main.cpp
+1477523722 source:c:\workspaces\workcodeblocks\ssnetworkmanager\main.cpp
 	"Stdafx.h"
 	"LogEngine.h"
 	"Subject.h"
@@ -643,11 +644,17 @@
 	"begin_code.h"
 	"close_code.h"
 
-1472072079 c:\workspaces\workcodeblocks\ssnetworkmanager\utilsprotocol.h
+1477510191 c:\workspaces\workcodeblocks\ssnetworkmanager\utilsprotocol.h
 	<cmath>
 	<stdint.h>
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	<SDL_net.h>
+	<SDL.h>
+	"Constants.h"
 
-1477421929 source:c:\workspaces\workcodeblocks\ssnetworkmanager\networkclientudp.cpp
+1477523510 source:c:\workspaces\workcodeblocks\ssnetworkmanager\networkclientudp.cpp
 	"NetworkClientUDP.h"
 
 1477421027 c:\workspaces\workcodeblocks\ssnetworkmanager\networkclientudp.h
