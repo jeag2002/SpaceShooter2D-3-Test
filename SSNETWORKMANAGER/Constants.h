@@ -303,8 +303,9 @@ typedef struct{
 }coefLinRegresion;
 
 typedef struct{
-    double x;
-    double y;
+    float x;
+    float y;
+    int order;
 }positionXY;
 
 

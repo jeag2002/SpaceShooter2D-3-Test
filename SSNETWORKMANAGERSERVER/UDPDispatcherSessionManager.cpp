@@ -13,7 +13,7 @@ void UDPDispatcherSessionManager::activeSessions(){
     logger->info("[UDPDispatcherSessionManager::activeSession] --> SESSIONS CREATED");
 
     hebra_1 = SDL_CreateThread(threadFunction,"Session_1",session_1);
-    hebra_2 = SDL_CreateThread(threadFunction,"Session_2",session_2);
+    //hebra_2 = SDL_CreateThread(threadFunction,"Session_2",session_2);
 
 
 }
@@ -21,27 +21,33 @@ void UDPDispatcherSessionManager::activeSessions(){
 
 void UDPDispatcherSessionManager::processingInputMsgsFromClients(){
 
-    EventMsg *msgUDP = nCUDP->getMsgFromClientUDP();
-    if (msgUDP->getTypeMsg() != TRAMA_NULL){
+    bool DONE = false;
 
-        if (msgUDP->getTypeMsg() == TRAMA_QRY_CONECTION){
-               processInputConnections(msgUDP);
-        }else if (msgUDP->getTypeMsg() == TRAMA_QRY_SESSION_LIST){
-               nCUDP->sendMsgToClientUDP(processQueryActiveSessions(msgUDP));
-        }else if (msgUDP->getTypeMsg() == TRAMA_SYNACK_SESSION){
-                EventMsg *output = processActivateSession(msgUDP);
-                logger->debug("[UDPDispatcherSessionManager::activeSession] send to client [%s]",output->marshallMsg());
-                if (output->getTypeMsg() != TRAMA_NULL){
-                    nCUDP->sendMsgToClientUDP(output);
+    while(!DONE){
+        EventMsg *msgUDP = nCUDP->getMsgFromClientUDP();
+        if (msgUDP->getTypeMsg() != TRAMA_NULL){
+            remoteHostData rHD = UtilsProtocol::parseRemoteHostData(msgUDP->getPacketUPD());
+            if (msgUDP->getTypeMsg() == TRAMA_QRY_CONECTION){
+                   processInputConnections(msgUDP);
+            }else if (msgUDP->getTypeMsg() == TRAMA_QRY_SESSION_LIST){
+                   nCUDP->sendMsgToClientUDP(processQueryActiveSessions(msgUDP));
+            }else if (msgUDP->getTypeMsg() == TRAMA_SYNACK_SESSION){
+                    EventMsg *output = processActivateSession(msgUDP);
+                    logger->debug("[UDPDispatcherSessionManager::activeSession] send to client [%s]",output->marshallMsg());
+                    if (output->getTypeMsg() != TRAMA_NULL){
+                        nCUDP->sendMsgToClientUDP(output);
+                    }
+            }else{
+                //->MENSAJE DE LOG INPUT COMMAND
+                if (msgUDP->getTypeMsg() == TRAMA_COMMAND){
+                    logger->debug("[UDPDispatcherSessionManager::activeSession] set TRAMA_COMMAND INPUT_PACKET_[%02d] TRAMA_SEND [%d] TRAMA_GET [%d] TO QUEUE Q1",msgUDP->getTypeMsg(),msgUDP->getTramaSend(),msgUDP->getTramaGet());
+                }else if (msgUDP->getTypeMsg() == TRAMA_QRY_DATASERVER){
+                    logger->debug("[UDPDispatcherSessionManager::activeSession] set TRAMA_QRY_DATASERVER INPUT_PACKET_[%02d] TRAMA_SEND [%d] TRAMA_GET [%d] TO QUEUE Q1",msgUDP->getTypeMsg(),msgUDP->getTramaSend(),msgUDP->getTramaGet());
                 }
-        }else{
-            //->MENSAJE DE LOG INPUT COMMAND
-            if (msgUDP->getTypeMsg() == TRAMA_COMMAND){
-                logger->debug("[UDPDispatcherSessionManager::activeSession] set TRAMA_COMMAND INPUT_PACKET_[%02d] TRAMA_SEND [%d] TRAMA_GET [%d] TO QUEUE Q1",msgUDP->getTypeMsg(),msgUDP->getTramaSend(),msgUDP->getTramaGet());
-            }else if (msgUDP->getTypeMsg() == TRAMA_QRY_DATASERVER){
-                logger->debug("[UDPDispatcherSessionManager::activeSession] set TRAMA_QRY_DATASERVER INPUT_PACKET_[%02d] TRAMA_SEND [%d] TRAMA_GET [%d] TO QUEUE Q1",msgUDP->getTypeMsg(),msgUDP->getTramaSend(),msgUDP->getTramaGet());
+                cQ1->push(msgUDP);
             }
-            cQ1->push(msgUDP);
+        }else{
+            DONE = true;
         }
     }
 };
@@ -139,13 +145,15 @@ EventMsg *UDPDispatcherSessionManager::processQueryActiveSessions(EventMsg *qryL
     lSAT.num_player_ava_1_1 = session_1->getNumClients();
     lSAT.num_player_max_1_1 = session_1->getMaxClients();
 
-    //lSAT.session_1_2 = 0;
-    //lSAT.num_player_ava_1_2 = 0;
-    //lSAT.num_player_max_1_2 = 0;
+    lSAT.session_1_2 = 0;
+    lSAT.num_player_ava_1_2 = 0;
+    lSAT.num_player_max_1_2 = 0;
 
+    /*
     lSAT.session_1_2 = session_2->getSessionId();
     lSAT.num_player_ava_1_2 = session_2->getNumClients();
     lSAT.num_player_max_1_2 = session_2->getMaxClients();
+    */
 
     lSAT.map_2_id = 0;
     lSAT.session_2_1 = 0;

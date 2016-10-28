@@ -44,6 +44,7 @@ NetworkClientUDP(LogEngine *_logger){
 }
 
 ~NetworkClientUDP(){
+    delete logPackets;
     SDLNet_UDP_Close(clientSocket);
     SDLNet_FreePacket(packet);
     SDLNet_Quit();

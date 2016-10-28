@@ -28,6 +28,8 @@ public:
 
         this->blocked = false;
         this->enabled = false;
+        this->left = false;
+        this->down = false;
 
     }
 
@@ -39,6 +41,13 @@ public:
         this->log = _log;
         this->blocked = false;
         this->enabled = false;
+        this->left = false;
+        this->down = false;
+
+        logPackets = new LogEngine();
+        logPackets->setOwnFile("DYNAMICENTITYSERVER.log");
+        logPackets->deleteLogFile();
+        logPackets->startUp(1,0);
 
         this->idDE = 0;
         this->actLevel = 0;
@@ -57,6 +66,8 @@ public:
         this->log = refEntity->getLog();
         this->blocked = false;
         this->enabled = false;
+        this->left = false;
+        this->down = false;
 
         this->idDE = 0;
         this->actLevel = 0;
@@ -82,6 +93,9 @@ public:
         this->idDE = 0;
         this->blocked = false;
         this->enabled = false;
+        this->left = false;
+        this->down = false;
+
         this->actLevel = 0;
         this->typeId = 0;
         this->typeEntityId = 0;
@@ -277,8 +291,12 @@ private:
     int randomValues(int min, int max);
 
     LogEngine *log;
+    LogEngine *logPackets;
 
     std::queue<positionXY> regresionLine;
+
+    bool left;
+    bool down;
 
 
 

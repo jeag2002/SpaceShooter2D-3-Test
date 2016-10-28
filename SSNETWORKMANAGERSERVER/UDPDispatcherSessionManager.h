@@ -34,7 +34,7 @@ public:
 
 
         session_1 = new UDPDispatcherSession(logger, 1,1, nCUDP, cQ1, cQ2); //mapa 1 session 1
-        session_2 = new UDPDispatcherSession(logger, 1,2, nCUDP, cQ1, cQ2); //mapa 1 session 1
+        //session_2 = new UDPDispatcherSession(logger, 1,2, nCUDP, cQ1, cQ2); //mapa 1 session 1
 
         clearInputClientsToServer();
         activeSessions();
@@ -76,10 +76,10 @@ Concurrent_queue_UDP *cQ1;
 Concurrent_queue_UDP *cQ2;
 
 SDL_Thread *hebra_1;
-SDL_Thread *hebra_2;
+//SDL_Thread *hebra_2;
 
 UDPDispatcherSession *session_1;
-UDPDispatcherSession *session_2;
+//UDPDispatcherSession *session_2;
 
 EventMsg *clientPackets[TOT_CLIENTS];
 bool freeSocket[TOT_CLIENTS];

@@ -42,6 +42,7 @@ QueueManager(LogEngine *_log, MemManager *_mem, NetworkClientUDP *_nClientUDP, P
 
 }
 
+void processRemoteMsg(EventMsg *inputMsg);
 ~QueueManager(){
     //delete nClientQueue;
 }
@@ -51,38 +52,6 @@ bool isRunAsLocal(){return runAsLocal;}
 
 void runRemoteData();
 void runLocalData();
-
-/////////////////////////////////////////////////////
-//--> GET MSG QUEUE MANAGER
-/*
-EventMsg *getMessageOutput(){
-     if (!messageOutput.empty()){
-        EventMsg *msg = messageOutput.front();
-        return msg;
-    }else{
-        EventMsg *data = new EventMsg();
-        return data;
-    }
-};
-
-//--> IS EMPTY QUEUE MANAGER
-bool isEmptyMessageOutput(){
-    return messageOutput.empty();
-};
-
-
-void popMessageOutputQueue(){
-    if (!messageOutput.empty()){
-        messageOutput.pop();
-    }
-};
-
-//--> SEND MSG QUEUE MANAGER
-void setMessageOutput(EventMsg *msg){
-    messageOutput.push(msg);
-};
-*/
-////////////////////////////////////////////////////////
 
 private:
     LogEngine *log;

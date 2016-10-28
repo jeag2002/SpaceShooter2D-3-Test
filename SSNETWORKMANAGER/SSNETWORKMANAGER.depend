@@ -496,13 +496,13 @@
 	"MemManager.h"
 	"LogEngine.h"
 
-1477263567 c:\workspaces\workcodeblocks\ssnetworkmanager\memmanager.h
+1477593222 c:\workspaces\workcodeblocks\ssnetworkmanager\memmanager.h
 	<stdio.h>
 	<stdlib.h>
 	"DynamicEntity.h"
 	"DynamicPlayer.h"
 
-1477527020 c:\workspaces\workcodeblocks\ssnetworkmanager\dynamicentity.h
+1477617632 c:\workspaces\workcodeblocks\ssnetworkmanager\dynamicentity.h
 	"SDL.h"
 	"Task.h"
 	"LogEngine.h"
@@ -540,7 +540,7 @@
 	<functional>
 	<semaphore.h>
 
-1477510090 c:\workspaces\workcodeblocks\ssnetworkmanager\constants.h
+1477614591 c:\workspaces\workcodeblocks\ssnetworkmanager\constants.h
 
 1477349074 c:\workspaces\workcodeblocks\ssnetworkmanager\dynamicplayer.h
 	"Observer.h"
@@ -565,8 +565,9 @@
 	"LogEngine.h"
 	"EventMsg.h"
 
-1470267837 source:c:\workspaces\workcodeblocks\ssnetworkmanager\dynamicentity.cpp
+1477617422 source:c:\workspaces\workcodeblocks\ssnetworkmanager\dynamicentity.cpp
 	"DynamicEntity.h"
+	"UtilsProtocol.h"
 
 1477349806 source:c:\workspaces\workcodeblocks\ssnetworkmanager\dynamicplayer.cpp
 	"DynamicPlayer.h"
@@ -599,10 +600,10 @@
 	"MemManager.h"
 	"LogEngine.h"
 
-1477518382 source:c:\workspaces\workcodeblocks\ssnetworkmanager\queuemanager.cpp
+1477614778 source:c:\workspaces\workcodeblocks\ssnetworkmanager\queuemanager.cpp
 	"QueueManager.h"
 
-1477430179 c:\workspaces\workcodeblocks\ssnetworkmanager\queuemanager.h
+1477593019 c:\workspaces\workcodeblocks\ssnetworkmanager\queuemanager.h
 	"MemManager.h"
 	"EventMsg.h"
 	<queue>
@@ -657,7 +658,7 @@
 1477523510 source:c:\workspaces\workcodeblocks\ssnetworkmanager\networkclientudp.cpp
 	"NetworkClientUDP.h"
 
-1477421027 c:\workspaces\workcodeblocks\ssnetworkmanager\networkclientudp.h
+1477599840 c:\workspaces\workcodeblocks\ssnetworkmanager\networkclientudp.h
 	"Stdafx.h"
 	"LogEngine.h"
 	"EventMsg.h"

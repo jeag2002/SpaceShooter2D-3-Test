@@ -30,6 +30,10 @@ QueueManager(LogEngine *_log, MemManager *_mem, NetworkClient *_nClient, Predict
 
 }
 
+
+void processRemoteMsg(EventMsg *inputMsg);
+
+
 ~QueueManager(){}
 
 void setRunAsLocal(bool _runAsLocal){runAsLocal = _runAsLocal;}
@@ -38,37 +42,6 @@ bool isRunAsLocal(){return runAsLocal;}
 void runRemoteData();
 void runLocalData();
 
-/////////////////////////////////////////////////////
-//--> GET MSG QUEUE MANAGER
-/*
-EventMsg *getMessageOutput(){
-     if (!messageOutput.empty()){
-        EventMsg *msg = messageOutput.front();
-        return msg;
-    }else{
-        EventMsg *data = new EventMsg();
-        return data;
-    }
-};
-
-//--> IS EMPTY QUEUE MANAGER
-bool isEmptyMessageOutput(){
-    return messageOutput.empty();
-};
-
-
-void popMessageOutputQueue(){
-    if (!messageOutput.empty()){
-        messageOutput.pop();
-    }
-};
-
-//--> SEND MSG QUEUE MANAGER
-void setMessageOutput(EventMsg *msg){
-    messageOutput.push(msg);
-};
-*/
-////////////////////////////////////////////////////////
 
 private:
     LogEngine *log;

@@ -6,7 +6,7 @@
 #include "LogEngine.h"
 #include "Constants.h"
 
-#define REGRESION_DATA 4
+#define REGRESION_DATA 10
 
 class DynamicEntity : public Task
 {
@@ -23,10 +23,14 @@ public:
         this->actLevel = 0;
         this->blocked = false;
         this->enabled = false;
+        this->left = false;
+        this->down = false;
         this->typeId = 0;
         this->typeEntityId = 0;
         this->actMap = 1;
         this->actSession = 1;
+        this->num_data = 0;
+        this->indexCoord = 0;
 
     }
 
@@ -36,14 +40,26 @@ public:
         this->width = 64.0f;
         this->height = 64.0f;
         this->log = _log;
+
+        logPackets = new LogEngine();
+        logPackets->setOwnFile("DYNAMICENTITYCLIENT.log");
+        logPackets->deleteLogFile();
+        logPackets->startUp(1,0);
+
+
         this->idDE = 0;
         this->actLevel = 0;
         this->blocked = false;
         this->enabled = false;
+        this->left = false;
+        this->down = false;
+
         this->typeId = 0;
         this->typeEntityId = 0;
         this->actMap = 1;
         this->actSession = 1;
+        this->num_data = 0;
+        this->indexCoord = 0;
 
     };
 
@@ -56,6 +72,8 @@ public:
 
         this->blocked = false;
         this->enabled = false;
+        this->left = false;
+        this->down = false;
 
         this->idDE = 0;
         this->actLevel = 0;
@@ -63,10 +81,22 @@ public:
         this->typeEntityId = 0;
         this->actMap = 1;
         this->actSession = 1;
+        this->num_data = 0;
+        this->indexCoord = 0;
     };
 
     DynamicEntity(remotePlayerType _rPType): Task(DynamicEntity::UNITIALIZED){
-        setDynamicEntity(_rPType);
+        this->width = float(_rPType.width);
+        this->height = float(_rPType.height);
+        this->actLevel = _rPType.lvl;
+        this->actMap = _rPType.actMap;
+        this->actSession = _rPType.session;
+        this->typeId = _rPType.typeID;
+        this->idDE = _rPType.idPlayer;
+        this->x = _rPType.x_pos;
+        this->y = _rPType.y_pos;
+
+
     };
 
 
@@ -83,6 +113,12 @@ public:
         this->idDE = 0;
         this->blocked = false;
         this->enabled = false;
+        this->left = false;
+        this->down = false;
+
+        delete logPackets;
+
+        this->indexCoord = 0;
         this->actLevel = 0;
     };
 
@@ -138,19 +174,31 @@ public:
         this->actSession = refEntity->getActSession();
     }
 
-    void setDynamicEntity(remotePlayerType _rPType){
-        this->x = _rPType.x_pos;
-        this->y = _rPType.y_pos;
-        this->width = _rPType.width;
-        this->height = _rPType.height;
-        this->actLevel = _rPType.lvl;
-        this->actMap = _rPType.actMap;
-        this->actSession = _rPType.session;
-        this->typeId = _rPType.typeID;
-        this->idDE = _rPType.idPlayer;
+    void setDynamicEntity(remotePlayerType _rPType,int getIndex){
 
-        log->debug("[DYNAMICENTITY::SETDYNAMICENTITY] SET REMOTE DATA FOR ENTITY ID:[%d] (ActMap:%d,Session:%d,lvl:%d,x:%f,y:%f,width:%d,height:%d)",
-                      this->idDE,this->actMap,this->actSession,this->actLevel,this->x,this->y,this->width,this->height);
+        if (getIndex > this->indexCoord){
+
+            this->width = float(_rPType.width);
+            this->height = float(_rPType.height);
+            this->actLevel = _rPType.lvl;
+            this->actMap = _rPType.actMap;
+            this->actSession = _rPType.session;
+            this->typeId = _rPType.typeID;
+            this->idDE = _rPType.idPlayer;
+            this->x = _rPType.x_pos;
+            this->y = _rPType.y_pos;
+
+
+
+            log->debug("[DYNAMICENTITY::SETDYNAMICENTITY] SET REMOTE DATA FOR ENTITY ID:[%d] (ActMap:%d,Session:%d,lvl:%d,x:%f,y:%f,width:%f,height:%f)",
+                          this->idDE,this->actMap,this->actSession,this->actLevel,this->x,this->y,this->width,this->height);
+
+            logPackets->debug("[DYNAMICENTITY:SETDYNAMICENTITY:CLIENT] REMOTE TIMESTAMP:(%d) INDEXCOORD TIMESTAMP (%d) ENTITY ID:[%d] (ActMap:%d,Session:%d,lvl:%d,x:%f,y:%f)",
+                              getIndex, this->indexCoord, this->idDE,this->actMap,this->actSession,this->actLevel,this->x,this->y);
+
+            this->indexCoord = getIndex;
+        }
+
 
     }
 
@@ -198,9 +246,17 @@ private:
 
     int randomValues(int min, int max);
 
-    LogEngine *log;
+    positionXY processMovement(float x_data, float y_data);
 
-    std::queue<positionXY> regresionLine;
+    LogEngine *log;
+    LogEngine *logPackets;
+
+    int indexCoord;
+
+    std::deque<positionXY> regresionLine;
+    int num_data;
+    bool left;
+    bool down;
 
 
 };

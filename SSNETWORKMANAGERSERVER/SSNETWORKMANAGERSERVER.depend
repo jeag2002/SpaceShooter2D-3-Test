@@ -394,7 +394,7 @@
 	<stdlib.h>
 	"DynamicEntity.h"
 
-1477522741 c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\dynamicentity.h
+1477609602 c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\dynamicentity.h
 	"SDL.h"
 	"Task.h"
 	"LogEngine.h"
@@ -403,7 +403,7 @@
 1467539707 c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\task.h
 	<pthread.h>
 
-1469060731 c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\queuemanager.h
+1477592423 c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\queuemanager.h
 	"MemManager.h"
 	"EventMsg.h"
 	<queue>
@@ -430,7 +430,7 @@
 	"EventMsg.h"
 	<stdlib.h>
 
-1470180875 source:c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\dynamicentity.cpp
+1477609666 source:c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\dynamicentity.cpp
 	"DynamicEntity.h"
 
 1468454940 source:c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\dynamicplayer.cpp
@@ -568,7 +568,7 @@
 1475886376 source:c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\udpsession.cpp
 	"UDPSession.h"
 
-1477527787 c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\udpdispatchersessionmanager.h
+1477601321 c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\udpdispatchersessionmanager.h
 	"Stdafx.h"
 	"UDPDispatcherSession.h"
 
@@ -590,10 +590,10 @@
 	"EventMsg.h"
 	<SDL_thread.h>
 
-1477526299 source:c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\udpdispatchersessionmanager.cpp
+1477603611 source:c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\udpdispatchersessionmanager.cpp
 	"UDPDispatcherSessionManager.h"
 
-1477526216 source:c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\udpdispatchersession.cpp
+1477527723 source:c:\workspaces\development\workcodeblocks\ssnetworkmanagerserver\udpdispatchersession.cpp
 	"UDPDispatcherSession.h"
 
 1469275247 source:c:\workspaces\workcodeblocks\ssnetworkmanagerserver\collisionentities.cpp

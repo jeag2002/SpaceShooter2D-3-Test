@@ -5,25 +5,25 @@ void UDPDispatcherSession::createEnvirontmentNew(){
 
     //enemigos
     ///////////////////////////////
-    DynamicEntity *enemy_1_1 = new DynamicEntity(logger); enemy_1_1->setActLevel(1); enemy_1_1->setIDDE(4); enemy_1_1->setEnabled(true); enemy_1_1->setTypeId(TYPE_ACTIVE_ELEMENT); enemy_1_1->setActMap(this->mapId); enemy_1_1->setActSession(this->sessionId);
-    DynamicEntity *enemy_2_1 = new DynamicEntity(logger); enemy_2_1->setActLevel(1); enemy_2_1->setIDDE(5); enemy_2_1->setEnabled(true); enemy_2_1->setTypeId(TYPE_ACTIVE_ELEMENT); enemy_2_1->setActMap(this->mapId); enemy_2_1->setActSession(this->sessionId);
-    DynamicEntity *enemy_3_1 = new DynamicEntity(logger); enemy_3_1->setActLevel(1); enemy_3_1->setIDDE(6); enemy_3_1->setEnabled(true); enemy_3_1->setTypeId(TYPE_ACTIVE_ELEMENT); enemy_3_1->setActMap(this->mapId); enemy_3_1->setActSession(this->sessionId);
+    DynamicEntity *enemy_1_1 = new DynamicEntity(logger); enemy_1_1->setActLevel(1); enemy_1_1->setIDDE(4); enemy_1_1->setEnabled(true); enemy_1_1->setTypeId(TYPE_ACTIVE_ELEMENT); enemy_1_1->setActMap(this->mapId); enemy_1_1->setActSession(this->sessionId); enemy_1_1->setX(128); enemy_1_1->setY(128);
+    DynamicEntity *enemy_2_1 = new DynamicEntity(logger); enemy_2_1->setActLevel(1); enemy_2_1->setIDDE(5); enemy_2_1->setEnabled(true); enemy_2_1->setTypeId(TYPE_ACTIVE_ELEMENT); enemy_2_1->setActMap(this->mapId); enemy_2_1->setActSession(this->sessionId); enemy_2_1->setX(64); enemy_2_1->setY(64);
+    DynamicEntity *enemy_3_1 = new DynamicEntity(logger); enemy_3_1->setActLevel(1); enemy_3_1->setIDDE(6); enemy_3_1->setEnabled(true); enemy_3_1->setTypeId(TYPE_ACTIVE_ELEMENT); enemy_3_1->setActMap(this->mapId); enemy_3_1->setActSession(this->sessionId); enemy_3_1->setX(128); enemy_3_1->setY(64);
 
     mem->addEnemiesMap_lvl_1(4,enemy_1_1);
     mem->addEnemiesMap_lvl_1(5,enemy_2_1);
     mem->addEnemiesMap_lvl_1(6,enemy_3_1);
 
-    DynamicEntity *enemy_1_2 = new DynamicEntity(logger); enemy_1_2->setActLevel(2); enemy_1_2->setIDDE(7); enemy_1_2->setEnabled(true); enemy_1_2->setTypeId(TYPE_ACTIVE_ELEMENT); enemy_1_2->setActMap(this->mapId); enemy_1_2->setActSession(this->sessionId);
-    DynamicEntity *enemy_2_2 = new DynamicEntity(logger); enemy_2_2->setActLevel(2); enemy_2_2->setIDDE(8); enemy_2_2->setEnabled(true); enemy_2_2->setTypeId(TYPE_ACTIVE_ELEMENT); enemy_2_2->setActMap(this->mapId); enemy_2_2->setActSession(this->sessionId);
-    DynamicEntity *enemy_3_2 = new DynamicEntity(logger); enemy_3_2->setActLevel(2); enemy_3_2->setIDDE(9); enemy_3_2->setEnabled(true); enemy_3_2->setTypeId(TYPE_ACTIVE_ELEMENT); enemy_3_2->setActMap(this->mapId); enemy_3_2->setActSession(this->sessionId);
+    DynamicEntity *enemy_1_2 = new DynamicEntity(logger); enemy_1_2->setActLevel(2); enemy_1_2->setIDDE(7); enemy_1_2->setEnabled(true); enemy_1_2->setTypeId(TYPE_ACTIVE_ELEMENT); enemy_1_2->setActMap(this->mapId); enemy_1_2->setActSession(this->sessionId); enemy_1_2->setX(128); enemy_1_2->setY(128);
+    DynamicEntity *enemy_2_2 = new DynamicEntity(logger); enemy_2_2->setActLevel(2); enemy_2_2->setIDDE(8); enemy_2_2->setEnabled(true); enemy_2_2->setTypeId(TYPE_ACTIVE_ELEMENT); enemy_2_2->setActMap(this->mapId); enemy_2_2->setActSession(this->sessionId); enemy_2_2->setX(64); enemy_2_2->setY(64);
+    DynamicEntity *enemy_3_2 = new DynamicEntity(logger); enemy_3_2->setActLevel(2); enemy_3_2->setIDDE(9); enemy_3_2->setEnabled(true); enemy_3_2->setTypeId(TYPE_ACTIVE_ELEMENT); enemy_3_2->setActMap(this->mapId); enemy_3_2->setActSession(this->sessionId); enemy_3_2->setX(128); enemy_3_2->setY(64);
 
     mem->addEnemiesMap_lvl_2(7,enemy_1_2);
     mem->addEnemiesMap_lvl_2(8,enemy_2_2);
     mem->addEnemiesMap_lvl_2(9,enemy_3_2);
 
-    DynamicEntity *enemy_1_3 = new DynamicEntity(logger); enemy_1_3->setActLevel(3); enemy_1_3->setIDDE(10); enemy_1_3->setEnabled(true); enemy_1_3->setTypeId(TYPE_ACTIVE_ELEMENT); enemy_1_3->setActMap(this->mapId); enemy_1_3->setActSession(this->sessionId);
-    DynamicEntity *enemy_2_3 = new DynamicEntity(logger); enemy_2_3->setActLevel(3); enemy_2_3->setIDDE(11); enemy_2_3->setEnabled(true); enemy_2_3->setTypeId(TYPE_ACTIVE_ELEMENT); enemy_2_3->setActMap(this->mapId); enemy_2_3->setActSession(this->sessionId);
-    DynamicEntity *enemy_3_3 = new DynamicEntity(logger); enemy_3_3->setActLevel(3); enemy_3_3->setIDDE(12); enemy_3_3->setEnabled(true); enemy_3_3->setTypeId(TYPE_ACTIVE_ELEMENT); enemy_3_3->setActMap(this->mapId); enemy_3_3->setActSession(this->sessionId);
+    DynamicEntity *enemy_1_3 = new DynamicEntity(logger); enemy_1_3->setActLevel(3); enemy_1_3->setIDDE(10); enemy_1_3->setEnabled(true); enemy_1_3->setTypeId(TYPE_ACTIVE_ELEMENT); enemy_1_3->setActMap(this->mapId); enemy_1_3->setActSession(this->sessionId); enemy_1_3->setX(128); enemy_1_3->setY(128);
+    DynamicEntity *enemy_2_3 = new DynamicEntity(logger); enemy_2_3->setActLevel(3); enemy_2_3->setIDDE(11); enemy_2_3->setEnabled(true); enemy_2_3->setTypeId(TYPE_ACTIVE_ELEMENT); enemy_2_3->setActMap(this->mapId); enemy_2_3->setActSession(this->sessionId); enemy_2_3->setX(64); enemy_2_3->setY(64);
+    DynamicEntity *enemy_3_3 = new DynamicEntity(logger); enemy_3_3->setActLevel(3); enemy_3_3->setIDDE(12); enemy_3_3->setEnabled(true); enemy_3_3->setTypeId(TYPE_ACTIVE_ELEMENT); enemy_3_3->setActMap(this->mapId); enemy_3_3->setActSession(this->sessionId); enemy_3_3->setX(128); enemy_3_3->setY(64);
 
     mem->addEnemiesMap_lvl_3(10,enemy_1_3);
     mem->addEnemiesMap_lvl_3(11,enemy_2_3);
@@ -32,25 +32,25 @@ void UDPDispatcherSession::createEnvirontmentNew(){
 
     //elementos dinamicos
     ///////////////////////////////
-    DynamicEntity *DynElem_1_1 = new DynamicEntity(logger); DynElem_1_1->setActLevel(1); DynElem_1_1->setIDDE(14); DynElem_1_1->setEnabled(true); DynElem_1_1->setTypeId(TYPE_ACTIVEOTHER_ELEMENT); DynElem_1_1->setActMap(this->mapId); DynElem_1_1->setActSession(this->sessionId);
-    DynamicEntity *DynElem_2_1 = new DynamicEntity(logger); DynElem_2_1->setActLevel(1); DynElem_2_1->setIDDE(15); DynElem_2_1->setEnabled(true); DynElem_2_1->setTypeId(TYPE_ACTIVEOTHER_ELEMENT); DynElem_2_1->setActMap(this->mapId); DynElem_2_1->setActSession(this->sessionId);
-    DynamicEntity *DynElem_3_1 = new DynamicEntity(logger); DynElem_3_1->setActLevel(1); DynElem_3_1->setIDDE(16); DynElem_3_1->setEnabled(true); DynElem_3_1->setTypeId(TYPE_ACTIVEOTHER_ELEMENT); DynElem_3_1->setActMap(this->mapId); DynElem_3_1->setActSession(this->sessionId);
+    DynamicEntity *DynElem_1_1 = new DynamicEntity(logger); DynElem_1_1->setActLevel(1); DynElem_1_1->setIDDE(14); DynElem_1_1->setEnabled(true); DynElem_1_1->setTypeId(TYPE_ACTIVEOTHER_ELEMENT); DynElem_1_1->setActMap(this->mapId); DynElem_1_1->setActSession(this->sessionId); DynElem_1_1->setX(256); DynElem_1_1->setY(256);
+    DynamicEntity *DynElem_2_1 = new DynamicEntity(logger); DynElem_2_1->setActLevel(1); DynElem_2_1->setIDDE(15); DynElem_2_1->setEnabled(true); DynElem_2_1->setTypeId(TYPE_ACTIVEOTHER_ELEMENT); DynElem_2_1->setActMap(this->mapId); DynElem_2_1->setActSession(this->sessionId); DynElem_2_1->setX(256); DynElem_2_1->setY(64);
+    DynamicEntity *DynElem_3_1 = new DynamicEntity(logger); DynElem_3_1->setActLevel(1); DynElem_3_1->setIDDE(16); DynElem_3_1->setEnabled(true); DynElem_3_1->setTypeId(TYPE_ACTIVEOTHER_ELEMENT); DynElem_3_1->setActMap(this->mapId); DynElem_3_1->setActSession(this->sessionId); DynElem_3_1->setX(64); DynElem_3_1->setY(256);
 
     mem->addDynElemMap_lvl_1(14,DynElem_1_1);
     mem->addDynElemMap_lvl_1(15,DynElem_2_1);
     mem->addDynElemMap_lvl_1(16,DynElem_3_1);
 
-    DynamicEntity *DynElem_1_2 = new DynamicEntity(logger); DynElem_1_2->setActLevel(2); DynElem_1_2->setIDDE(17); DynElem_1_2->setEnabled(true); DynElem_1_2->setTypeId(TYPE_ACTIVEOTHER_ELEMENT); DynElem_1_2->setActMap(this->mapId); DynElem_1_2->setActSession(this->sessionId);
-    DynamicEntity *DynElem_2_2 = new DynamicEntity(logger); DynElem_2_2->setActLevel(2); DynElem_2_2->setIDDE(18); DynElem_2_2->setEnabled(true); DynElem_2_2->setTypeId(TYPE_ACTIVEOTHER_ELEMENT); DynElem_2_2->setActMap(this->mapId); DynElem_2_2->setActSession(this->sessionId);
-    DynamicEntity *DynElem_3_2 = new DynamicEntity(logger); DynElem_3_2->setActLevel(2); DynElem_3_2->setIDDE(19); DynElem_3_2->setEnabled(true); DynElem_3_2->setTypeId(TYPE_ACTIVEOTHER_ELEMENT); DynElem_3_2->setActMap(this->mapId); DynElem_3_2->setActSession(this->sessionId);
+    DynamicEntity *DynElem_1_2 = new DynamicEntity(logger); DynElem_1_2->setActLevel(2); DynElem_1_2->setIDDE(17); DynElem_1_2->setEnabled(true); DynElem_1_2->setTypeId(TYPE_ACTIVEOTHER_ELEMENT); DynElem_1_2->setActMap(this->mapId); DynElem_1_2->setActSession(this->sessionId); DynElem_1_2->setX(256); DynElem_1_2->setY(256);
+    DynamicEntity *DynElem_2_2 = new DynamicEntity(logger); DynElem_2_2->setActLevel(2); DynElem_2_2->setIDDE(18); DynElem_2_2->setEnabled(true); DynElem_2_2->setTypeId(TYPE_ACTIVEOTHER_ELEMENT); DynElem_2_2->setActMap(this->mapId); DynElem_2_2->setActSession(this->sessionId); DynElem_2_2->setX(256); DynElem_2_2->setY(64);
+    DynamicEntity *DynElem_3_2 = new DynamicEntity(logger); DynElem_3_2->setActLevel(2); DynElem_3_2->setIDDE(19); DynElem_3_2->setEnabled(true); DynElem_3_2->setTypeId(TYPE_ACTIVEOTHER_ELEMENT); DynElem_3_2->setActMap(this->mapId); DynElem_3_2->setActSession(this->sessionId); DynElem_3_2->setX(64); DynElem_2_2->setY(256);
 
     mem->addDynElemMap_lvl_2(17,DynElem_1_2);
     mem->addDynElemMap_lvl_2(18,DynElem_2_2);
     mem->addDynElemMap_lvl_2(19,DynElem_3_2);
 
-    DynamicEntity *DynElem_1_3 = new DynamicEntity(logger); DynElem_1_3->setActLevel(3); DynElem_1_3->setIDDE(20); DynElem_1_3->setEnabled(true); DynElem_1_3->setTypeId(TYPE_ACTIVEOTHER_ELEMENT); DynElem_1_3->setActMap(this->mapId); DynElem_1_3->setActSession(this->sessionId);
-    DynamicEntity *DynElem_2_3 = new DynamicEntity(logger); DynElem_2_3->setActLevel(3); DynElem_2_3->setIDDE(21); DynElem_2_3->setEnabled(true); DynElem_2_3->setTypeId(TYPE_ACTIVEOTHER_ELEMENT); DynElem_2_3->setActMap(this->mapId); DynElem_2_3->setActSession(this->sessionId);
-    DynamicEntity *DynElem_3_3 = new DynamicEntity(logger); DynElem_3_3->setActLevel(3); DynElem_3_3->setIDDE(22); DynElem_3_3->setEnabled(true); DynElem_3_3->setTypeId(TYPE_ACTIVEOTHER_ELEMENT); DynElem_3_3->setActMap(this->mapId); DynElem_3_3->setActSession(this->sessionId);
+    DynamicEntity *DynElem_1_3 = new DynamicEntity(logger); DynElem_1_3->setActLevel(3); DynElem_1_3->setIDDE(20); DynElem_1_3->setEnabled(true); DynElem_1_3->setTypeId(TYPE_ACTIVEOTHER_ELEMENT); DynElem_1_3->setActMap(this->mapId); DynElem_1_3->setActSession(this->sessionId); DynElem_1_3->setX(256); DynElem_1_3->setY(256);
+    DynamicEntity *DynElem_2_3 = new DynamicEntity(logger); DynElem_2_3->setActLevel(3); DynElem_2_3->setIDDE(21); DynElem_2_3->setEnabled(true); DynElem_2_3->setTypeId(TYPE_ACTIVEOTHER_ELEMENT); DynElem_2_3->setActMap(this->mapId); DynElem_2_3->setActSession(this->sessionId); DynElem_2_3->setX(256); DynElem_2_3->setY(64);
+    DynamicEntity *DynElem_3_3 = new DynamicEntity(logger); DynElem_3_3->setActLevel(3); DynElem_3_3->setIDDE(22); DynElem_3_3->setEnabled(true); DynElem_3_3->setTypeId(TYPE_ACTIVEOTHER_ELEMENT); DynElem_3_3->setActMap(this->mapId); DynElem_3_3->setActSession(this->sessionId); DynElem_3_3->setX(64); DynElem_3_3->setY(256);
 
     mem->addDynElemMap_lvl_3(20,DynElem_1_3);
     mem->addDynElemMap_lvl_3(21,DynElem_2_3);

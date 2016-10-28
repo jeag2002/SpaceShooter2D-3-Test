@@ -145,6 +145,7 @@ void addEnemiesMap_lvl_1(int key, DynamicEntity *data){
 };
 
 DynamicEntity *getEnemiesMapElem_lvl_1(int key){
+    SDL_LockMutex(setEnemyMap_lvl1M);
     DynamicEntityType::iterator it;
     it = EnemiesMap_lvl_1.find(key);
     if (it!=EnemiesMap_lvl_1.end()){
@@ -152,18 +153,17 @@ DynamicEntity *getEnemiesMapElem_lvl_1(int key){
     }else{
         return NULL;
     }
+    SDL_UnlockMutex(setEnemyMap_lvl1M);
 };
 
 void setEnemiesMap_Lvl_1(int key, DynamicEntity *data){
 
     SDL_LockMutex(setEnemyMap_lvl1M);
-
     DynamicEntityType::iterator it;
     it = EnemiesMap_lvl_1.find(key);
     if (it!=EnemiesMap_lvl_1.end()){
         ((DynamicEntity *)EnemiesMap_lvl_1[key])->setDynamicEntity(data);
     }
-
     SDL_UnlockMutex(setEnemyMap_lvl1M);
 }
 
@@ -178,6 +178,7 @@ void addEnemiesMap_lvl_2(int key, DynamicEntity *data){
 };
 
 DynamicEntity *getEnemiesMapElem_lvl_2(int key){
+    SDL_LockMutex(setEnemyMap_lvl2M);
     DynamicEntityType::iterator it;
     it = EnemiesMap_lvl_2.find(key);
     if (it!=EnemiesMap_lvl_2.end()){
@@ -185,6 +186,7 @@ DynamicEntity *getEnemiesMapElem_lvl_2(int key){
     }else{
         return NULL;
     }
+     SDL_UnlockMutex(setEnemyMap_lvl2M);
 };
 
 void setEnemiesMap_Lvl_2(int key, DynamicEntity *data){
@@ -211,6 +213,7 @@ void addEnemiesMap_lvl_3(int key, DynamicEntity *data){
 };
 
 DynamicEntity *getEnemiesMapElem_lvl_3(int key){
+    SDL_LockMutex(setEnemyMap_lvl3M);
     DynamicEntityType::iterator it;
     it = EnemiesMap_lvl_3.find(key);
     if (it!=EnemiesMap_lvl_3.end()){
@@ -218,6 +221,7 @@ DynamicEntity *getEnemiesMapElem_lvl_3(int key){
     }else{
         return NULL;
     }
+    SDL_UnlockMutex(setEnemyMap_lvl3M);
 };
 
 void setEnemiesMap_Lvl_3(int key, DynamicEntity *data){
@@ -275,6 +279,7 @@ void addDynElemMap_lvl_1(int key, DynamicEntity *data){
 };
 
 DynamicEntity *getDynElemMapElem_lvl_1(int key){
+    SDL_LockMutex(setDynElemMap_lvl1M);
     DynamicEntityType::iterator it;
     it = DynElemMap_lvl_1.find(key);
     if (it!=DynElemMap_lvl_1.end()){
@@ -282,6 +287,7 @@ DynamicEntity *getDynElemMapElem_lvl_1(int key){
     }else{
         return NULL;
     }
+    SDL_UnlockMutex(setDynElemMap_lvl1M);
 };
 
 void setDynElemMap_lvl_1(int key, DynamicEntity *data){
@@ -306,6 +312,7 @@ void addDynElemMap_lvl_2(int key, DynamicEntity *data){
 };
 
 DynamicEntity *getDynElemMapElem_lvl_2(int key){
+    SDL_LockMutex(setDynElemMap_lvl2M);
     DynamicEntityType::iterator it;
     it = DynElemMap_lvl_2.find(key);
     if (it!=DynElemMap_lvl_2.end()){
@@ -313,6 +320,7 @@ DynamicEntity *getDynElemMapElem_lvl_2(int key){
     }else{
         return NULL;
     }
+    SDL_UnlockMutex(setDynElemMap_lvl2M);
 };
 
 void setDynElemMap_lvl_2(int key, DynamicEntity *data){
@@ -336,6 +344,7 @@ void addDynElemMap_lvl_3(int key, DynamicEntity *data){
 };
 
 DynamicEntity *getDynElemMapElem_lvl_3(int key){
+    SDL_LockMutex(setDynElemMap_lvl3M);
     DynamicEntityType::iterator it;
     it = DynElemMap_lvl_3.find(key);
     if (it!=DynElemMap_lvl_3.end()){
@@ -343,6 +352,7 @@ DynamicEntity *getDynElemMapElem_lvl_3(int key){
     }else{
         return NULL;
     }
+    SDL_UnlockMutex(setDynElemMap_lvl3M);
 };
 
 void setDynElemMap_lvl_3(int key, DynamicEntity *data){
@@ -397,6 +407,8 @@ void addRemPlayerMap(int key, DynamicEntity *data){
 };
 
 DynamicEntity *getRemPlayerMapElem(int key){
+    SDL_LockMutex(setRemPlayerM);
+
     DynamicEntityType::iterator it;
     it = remPlayerMap.find(key);
     if (it!=remPlayerMap.end()){
@@ -404,6 +416,8 @@ DynamicEntity *getRemPlayerMapElem(int key){
     }else{
         return NULL;
     }
+
+    SDL_UnlockMutex(setRemPlayerM);
 };
 
 void setRemPlayerMap(int key, DynamicEntity *data){

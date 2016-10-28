@@ -525,6 +525,7 @@ void getEventSDL(playerDataType pDT){
 
 void processLocalPlayer(){
     const Uint32 timeout = 10;
+    pEngine->processPrediction();
     evalLocalPlayerAgainstEnv((DynamicPlayer *)sub->getObserver(mem->getPlayerIndex()-1));
     renderScenario();
 }
