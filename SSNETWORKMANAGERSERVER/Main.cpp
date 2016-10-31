@@ -24,19 +24,6 @@ void createEnvirontmentNew();
 void destroyAllNew();
 
 
-/*
-static void* execute_RunTaskUDPSession(void* ctx){
-    UDPDispatcherSession *uDPDSes = (UDPDispatcherSession *)ctx;
-    uDPDSes->Run();
-};
-
-static void* execute_RunTaskUDPDispatcherSessionManager(void* ctx){
-    UDPDispatcherSessionManager *uDPDSes = (UDPDispatcherSessionManager *)ctx;
-    uDPDSes->processingInputMsgsFromClients();
-};
-*/
-
-
 int main (int argc, char *argv[])
 {
    logger = new LogEngine();
@@ -47,16 +34,6 @@ int main (int argc, char *argv[])
 
    try{
        createEnvirontmentNew();
-
-       /*
-       pthread_create(&hebra_1,NULL,execute_RunTaskUDPDispatcherSessionManager,uDSM);
-       pthread_create(&hebra_2,NULL,execute_RunTaskUDPSession,session_1);
-       pthread_create(&hebra_3,NULL,execute_RunTaskUDPSession,session_2);
-
-       pthread_join(hebra_1,0);
-       pthread_join(hebra_2,0);
-       pthread_join(hebra_3,0);
-       */
 
        while(true){
         uDSM->processingInputMsgsFromClients();
@@ -81,8 +58,6 @@ void createEnvirontmentNew(){
     cQ2 = new Concurrent_queue_UDP();
 
     uDSM = new UDPDispatcherSessionManager(logger, nClientUDP, cQ1, cQ2);
-    //session_1 = new UDPDispatcherSession(logger, 1,1, cQ1, cQ2); //mapa 1 session 1
-    //session_2 = new UDPDispatcherSession(logger, 1,2, cQ1, cQ2); //mapa 1 session 2
 }
 
 

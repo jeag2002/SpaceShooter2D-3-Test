@@ -20,6 +20,10 @@ positionXY  DynamicEntity::processMovement(float x_data, float y_data){
 
     positionXY  result;
 
+    result.x = x_data;
+    result.y = y_data;
+    result.order = 0;
+
     if (!left){
 
         float x_aux = x_data+2.0f;

@@ -70,7 +70,8 @@ void NetworkClientUDP::sendMsgToClientUDP(EventMsg *msg){
         logger->warn("[SSNETWORKMANAGERSERVER::sendMsgToClientUPD] --> size_data_before_compression [%d] size_data_after_compression [%d] ",packetUDP->len,size_after_dataCompression);
     }
 
-    logPackets->debug("[TRAMA SEND SERVER] --> RAW DATA[%s]",packetUDP->data);
+    remoteHostData rHD = UtilsProtocol::parseRemoteHostData(packetUDP);
+    logPackets->debug("[TRAMA SEND SERVER] --> RAW DATA[%s] (%s:%d)",packetUDP->data,rHD.host,rHD.port);
 
     if ( SDLNet_UDP_Send(serverSocket, -1, packetUDP) == 0 ){
         logger->warn("[SSNETWORKMANAGERSERVER::sendMsgToClientUDP] --> UDP DATA NOT SEND! [%s]", SDLNet_GetError());
@@ -152,7 +153,8 @@ EventMsg *NetworkClientUDP::getMsgFromClientUDP(){
         if ( SDLNet_UDP_Recv(serverSocket, packet))
 		{
 		    logger->debug("[SSNETWORKMANAGERSERVER::getMsgFromClientUDP] CHANNEL [%d] RAW DATA [%s]",packet->channel, packet->data);
-		    logPackets->debug("[TRAMA GET SERVER] --> RAW DATA[%s]",packet->data);
+		    remoteHostData rHD = UtilsProtocol::parseRemoteHostData(packet);
+		    logPackets->debug("[TRAMA GET SERVER] --> RAW DATA[%s] - (%s:%d)",packet->data,rHD.host,rHD.port);
 
 		    memcpy(&ipAdd,&packet->address,sizeof(IPaddress));
 

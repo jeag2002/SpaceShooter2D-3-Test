@@ -46,7 +46,7 @@ SDL_Thread *hebra_1;
 void createEnvirontment();
 void destroyAll();
 void getEventSDL(playerDataType pDT);
-void processLocalPlayer();
+void processLocalPlayer(int level);
 void evalLocalPlayerAgainstEnv(DynamicPlayer *dPlayer);
 int threadFunction( void* data );
 void initSDLWindows();
@@ -407,7 +407,8 @@ void getEventSDL(playerDataType pDT){
                     SDL_Keysym *keysym = &event.key.keysym;
 
                     if (keysym->sym == SDLK_LEFT){          //-> mover jugador actual a la izquierda
-                        lATPlayer.idPlayer = mem->getActPlayer(mem->getPlayerIndex())->getIndexPlayer();
+                        lATPlayer.idPlayer = ((DynamicPlayer *)sub->getObserver(mem->getPlayerIndex()-1))->getIndexPlayer();
+                        //mem->getActPlayer(mem->getPlayerIndex())->getIndexPlayer();
                         lATPlayer.typeMovement = LEFT;
                         lATPlayer._inc = 1.0;
                         lATPlayer._x = 0;
@@ -422,7 +423,8 @@ void getEventSDL(playerDataType pDT){
 
                     else if (keysym->sym == SDLK_RIGHT){    //-> mover jugador actual a la derecha
 
-                        lATPlayer.idPlayer = mem->getActPlayer(mem->getPlayerIndex())->getIndexPlayer();
+                        lATPlayer.idPlayer = ((DynamicPlayer *)sub->getObserver(mem->getPlayerIndex()-1))->getIndexPlayer();
+                        //mem->getActPlayer(mem->getPlayerIndex())->getIndexPlayer();
                         lATPlayer.typeMovement = RIGHT;
                         lATPlayer._inc = 1.0;
                         lATPlayer._x = 0;
@@ -436,7 +438,8 @@ void getEventSDL(playerDataType pDT){
                     }
 
                     else if (keysym->sym == SDLK_UP){       //-> mover jugador actual arriba
-                        lATPlayer.idPlayer = mem->getActPlayer(mem->getPlayerIndex())->getIndexPlayer();
+                        lATPlayer.idPlayer = ((DynamicPlayer *)sub->getObserver(mem->getPlayerIndex()-1))->getIndexPlayer();
+                        //mem->getActPlayer(mem->getPlayerIndex())->getIndexPlayer();
                         lATPlayer.typeMovement = UP;
                         lATPlayer._inc = 1.0;
                         lATPlayer._x = 0;
@@ -450,7 +453,8 @@ void getEventSDL(playerDataType pDT){
                     }
 
                     else if (keysym->sym == SDLK_DOWN){     //-> mover jugador actual abajo
-                        lATPlayer.idPlayer = mem->getActPlayer(mem->getPlayerIndex())->getIndexPlayer();
+                        lATPlayer.idPlayer = ((DynamicPlayer *)sub->getObserver(mem->getPlayerIndex()-1))->getIndexPlayer();
+                        //mem->getActPlayer(mem->getPlayerIndex())->getIndexPlayer();
                         lATPlayer.typeMovement = DOWN;
                         lATPlayer._inc = 1.0;
                         lATPlayer._x = 0;
@@ -465,7 +469,8 @@ void getEventSDL(playerDataType pDT){
                     }
 
                     else if (keysym->sym == SDLK_w){
-                        lATPlayer.idPlayer = mem->getActPlayer(mem->getPlayerIndex())->getIndexPlayer();
+                        lATPlayer.idPlayer = ((DynamicPlayer *)sub->getObserver(mem->getPlayerIndex()-1))->getIndexPlayer();
+                        //mem->getActPlayer(mem->getPlayerIndex())->getIndexPlayer();
                         lATPlayer.typeMovement = LVLUP;
                         lATPlayer._inc = 1.0;
                         lATPlayer._x = 0;
@@ -480,7 +485,8 @@ void getEventSDL(playerDataType pDT){
                     }
 
                     else if (keysym->sym == SDLK_s){
-                        lATPlayer.idPlayer = mem->getActPlayer(mem->getPlayerIndex())->getIndexPlayer();
+                        lATPlayer.idPlayer = ((DynamicPlayer *)sub->getObserver(mem->getPlayerIndex()-1))->getIndexPlayer();
+                        //mem->getActPlayer(mem->getPlayerIndex())->getIndexPlayer();
                         lATPlayer.typeMovement = LVLDOWN;
                         lATPlayer._inc = 1.0;
                         lATPlayer._x = 0;
@@ -516,16 +522,16 @@ void getEventSDL(playerDataType pDT){
             }
         }
 
-        processLocalPlayer();
+        processLocalPlayer(((DynamicPlayer *)sub->getObserver(mem->getPlayerIndex()-1))->getActLevel());
         SDL_Delay(16);
     }
 
     SDL_WaitThread(hebra_1, NULL );
 }
 
-void processLocalPlayer(){
+void processLocalPlayer(int level){
     const Uint32 timeout = 10;
-    pEngine->processPrediction();
+    pEngine->processPrediction(level);
     evalLocalPlayerAgainstEnv((DynamicPlayer *)sub->getObserver(mem->getPlayerIndex()-1));
     renderScenario();
 }

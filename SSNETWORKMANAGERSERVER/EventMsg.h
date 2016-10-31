@@ -1,7 +1,7 @@
 #ifndef EVENTMSG_H_INCLUDED
 #define EVENTMSG_H_INCLUDED
 
-#define BUFFER_SIZE 511
+#define BUFFER_SIZE 512
 #define BUFFER_TRAMA 128
 #define BUFFER_SUBTRAMA_INFO 95
 
@@ -881,7 +881,7 @@ class EventMsg{
 
     char *getBuffer(){return buffer;}
     void copyBuffer(char *buffer_old){
-        for(int i=0; i<BUFFER_SIZE; i++){buffer[i] = buffer_old[i];}
+        for(int i=0; i<strlen(buffer_old); i++){buffer[i] = buffer_old[i];}
     }
 
     void setMsg(EventMsg *_remoteMsg){
@@ -892,7 +892,28 @@ class EventMsg{
         more = _remoteMsg->getMore();
         numtrazas = _remoteMsg->getNumTrazas();
         CRC16 = _remoteMsg->getCRC16();
-        packet = _remoteMsg->getPacketUPD();
+
+        if (packet == NULL){
+            packet = SDLNet_AllocPacket(512);
+        }
+
+
+        if (_remoteMsg->getPacketUPD() != NULL){
+            packet->address.host = _remoteMsg->getPacketUPD()->address.host;
+            packet->address.port = _remoteMsg->getPacketUPD()->address.port;
+            packet->channel = _remoteMsg->getPacketUPD()->channel;
+            packet->len = _remoteMsg->getPacketUPD()->len;
+            packet->maxlen = _remoteMsg->getPacketUPD()->maxlen;
+            packet->status = _remoteMsg->getPacketUPD()->status;
+        }else{
+            packet->address.host = 0;
+            packet->address.port = 0;
+            packet->channel = 0;
+            packet->len = 0;
+            packet->maxlen = 0;
+            packet->status = 0;
+        }
+
 
         copyBuffer(_remoteMsg->getBuffer());
 
@@ -927,7 +948,7 @@ class EventMsg{
         more = 0;
         numtrazas = 0;
         CRC16 = 0;
-        packet = NULL;
+        packet = SDLNet_AllocPacket(512);
 
         clearBuffer();
 

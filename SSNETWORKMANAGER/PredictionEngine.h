@@ -15,7 +15,7 @@ public:
     }
 
     ~PredictionEngine(){}
-    void processPrediction();
+    void processPrediction(int level);
 
 private:
 

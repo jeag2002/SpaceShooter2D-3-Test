@@ -34,7 +34,7 @@ public:
 
 
         session_1 = new UDPDispatcherSession(logger, 1,1, nCUDP, cQ1, cQ2); //mapa 1 session 1
-        //session_2 = new UDPDispatcherSession(logger, 1,2, nCUDP, cQ1, cQ2); //mapa 1 session 1
+        session_2 = new UDPDispatcherSession(logger, 1,2, nCUDP, cQ1, cQ2); //mapa 1 session 1
 
         clearInputClientsToServer();
         activeSessions();
@@ -50,19 +50,22 @@ public:
 
     ~UDPDispatcherSessionManager(){
         SDL_WaitThread( hebra_1, NULL );
-        //SDL_WaitThread( hebra_2, NULL );
+        SDL_WaitThread( hebra_2, NULL );
         delete session_1;
-        //delete session_2;
+        delete session_2;
 
     };
 
     void clearInputClientsToServer(){
         for(int i=0;i<TOT_CLIENTS;i++){
-            clientPackets[i] = new EventMsg();
+            EventMsg *msg = new EventMsg();
+
             UDPpacket *pack = SDLNet_AllocPacket(BUFFER_SIZE);
             pack->address.host = 0;
             pack->address.port = 0;
-            clientPackets[i]->setPacketUPD(pack);
+            msg->setPacketUPD(pack);
+
+            clientPackets.push_back(msg);
             freeSocket[i] = true;
         }
     }
@@ -76,12 +79,13 @@ Concurrent_queue_UDP *cQ1;
 Concurrent_queue_UDP *cQ2;
 
 SDL_Thread *hebra_1;
-//SDL_Thread *hebra_2;
+SDL_Thread *hebra_2;
 
 UDPDispatcherSession *session_1;
-//UDPDispatcherSession *session_2;
+UDPDispatcherSession *session_2;
 
-EventMsg *clientPackets[TOT_CLIENTS];
+//EventMsg *clientPackets[TOT_CLIENTS];
+std::vector<EventMsg *>clientPackets;
 bool freeSocket[TOT_CLIENTS];
 
 
@@ -94,6 +98,9 @@ EventMsg *generatingACKPackets(int tramaSend,
 
 //friend void* execute_RunTaskUDPSession(void* );
 friend int threadFunction(void* ctx);
+
+//evaluating if client is connected; if yes, assign a session.
+bool isClientConnected(EventMsg *msg, int typeTrama);
 
 
 };

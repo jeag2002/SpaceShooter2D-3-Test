@@ -13,10 +13,42 @@ void UDPDispatcherSessionManager::activeSessions(){
     logger->info("[UDPDispatcherSessionManager::activeSession] --> SESSIONS CREATED");
 
     hebra_1 = SDL_CreateThread(threadFunction,"Session_1",session_1);
-    //hebra_2 = SDL_CreateThread(threadFunction,"Session_2",session_2);
+    hebra_2 = SDL_CreateThread(threadFunction,"Session_2",session_2);
 
 
 }
+
+bool UDPDispatcherSessionManager::isClientConnected(EventMsg *msg, int typeTrama){
+    bool findClient = false;
+
+    int loop_1 = 0;
+    int res = 0;
+    logger->debug("[UDPDispatcherSessionManager::isClientConnected] evaluating input client [%d]",clientPackets.size());
+    for(loop_1=0; ((loop_1<clientPackets.size()) && (!findClient)); loop_1++){
+        if (clientPackets[loop_1]->getTypeMsg() < TRAMA_NULL){
+            findClient = (
+                       (clientPackets[loop_1]->getPacketUPD()->address.host == msg->getPacketUPD()->address.host) &&
+                       (clientPackets[loop_1]->getPacketUPD()->address.port == msg->getPacketUPD()->address.port) &&
+                       (clientPackets[loop_1]->getTypeMsg() == typeTrama)
+                        );
+
+            if (findClient){res = 1;}
+            else{res = 0;}
+
+            logger->debug("[UDPDispatcherSessionManager::isClientConnected] CLIENT REGISTERED(%d:%d)-[%d] == INPUT PACKET(%d:%d)-[%d] res [%d]",
+                          clientPackets[loop_1]->getPacketUPD()->address.host,
+                          clientPackets[loop_1]->getPacketUPD()->address.port,
+                          clientPackets[loop_1]->getTypeMsg(),
+                          msg->getPacketUPD()->address.host,
+                          msg->getPacketUPD()->address.port,
+                          typeTrama,
+                          res);
+        }
+    }
+
+    return findClient;
+}
+
 
 
 void UDPDispatcherSessionManager::processingInputMsgsFromClients(){
@@ -32,31 +64,47 @@ void UDPDispatcherSessionManager::processingInputMsgsFromClients(){
             }else if (msgUDP->getTypeMsg() == TRAMA_QRY_SESSION_LIST){
                    nCUDP->sendMsgToClientUDP(processQueryActiveSessions(msgUDP));
             }else if (msgUDP->getTypeMsg() == TRAMA_SYNACK_SESSION){
-                    EventMsg *output = processActivateSession(msgUDP);
-                    logger->debug("[UDPDispatcherSessionManager::activeSession] send to client [%s]",output->marshallMsg());
-                    if (output->getTypeMsg() != TRAMA_NULL){
-                        nCUDP->sendMsgToClientUDP(output);
+
+                    if (isClientConnected(msgUDP, TRAMA_QRY_CONECTION)){
+                        EventMsg *output = processActivateSession(msgUDP);
+                        logger->debug("[UDPDispatcherSessionManager::activeSession] send to client [%s]",output->marshallMsg());
+                        if (output->getTypeMsg() != TRAMA_NULL){
+                            nCUDP->sendMsgToClientUDP(output);
+                        }
                     }
+
             }else{
-                //->MENSAJE DE LOG INPUT COMMAND
-                if (msgUDP->getTypeMsg() == TRAMA_COMMAND){
-                    logger->debug("[UDPDispatcherSessionManager::activeSession] set TRAMA_COMMAND INPUT_PACKET_[%02d] TRAMA_SEND [%d] TRAMA_GET [%d] TO QUEUE Q1",msgUDP->getTypeMsg(),msgUDP->getTramaSend(),msgUDP->getTramaGet());
-                }else if (msgUDP->getTypeMsg() == TRAMA_QRY_DATASERVER){
-                    logger->debug("[UDPDispatcherSessionManager::activeSession] set TRAMA_QRY_DATASERVER INPUT_PACKET_[%02d] TRAMA_SEND [%d] TRAMA_GET [%d] TO QUEUE Q1",msgUDP->getTypeMsg(),msgUDP->getTramaSend(),msgUDP->getTramaGet());
-                }
-                cQ1->push(msgUDP);
+                    if (isClientConnected(msgUDP, TRAMA_SYNACK_SESSION) || isClientConnected(msgUDP, TRAMA_COMMAND) ||  isClientConnected(msgUDP, TRAMA_QRY_DATASERVER)){
+                        //->MENSAJE DE LOG INPUT COMMAND
+                        if (msgUDP->getTypeMsg() == TRAMA_COMMAND){
+
+                            logger->debug("[UDPDispatcherSessionManager::activeSession] set TRAMA_COMMAND INPUT_PACKET_[%02d] TRAMA_SEND [%d] TRAMA_GET [%d] TO QUEUE Q1 [%s]:[%d]",
+                                          msgUDP->getTypeMsg(),
+                                          msgUDP->getTramaSend(),
+                                          msgUDP->getTramaGet(),
+                                          rHD.host,
+                                          rHD.port
+                                          );
+
+                        }else if (msgUDP->getTypeMsg() == TRAMA_QRY_DATASERVER){
+                            logger->debug("[UDPDispatcherSessionManager::activeSession] set TRAMA_QRY_DATASERVER INPUT_PACKET_[%02d] TRAMA_SEND [%d] TRAMA_GET [%d] TO QUEUE Q1 [%s]:[%d]",
+                                          msgUDP->getTypeMsg(),
+                                          msgUDP->getTramaSend(),
+                                          msgUDP->getTramaGet(),
+                                          rHD.host,
+                                          rHD.port
+                                          );
+                        }
+                        cQ1->push(msgUDP);
+                    }
+
+
             }
         }else{
             DONE = true;
         }
     }
 };
-
-
-
-
-
-
 
 
 EventMsg *UDPDispatcherSessionManager::processActivateSession(EventMsg *ackSession){
@@ -69,12 +117,12 @@ EventMsg *UDPDispatcherSessionManager::processActivateSession(EventMsg *ackSessi
     bool found_it = false;
     int loop_1=0;
 
-    for(loop_1=0; ((loop_1<MAX_CLIENT) && (!found_it)); loop_1++){
-        if (clientPackets[loop_1]!=NULL){
+    for(loop_1=0; ((loop_1<clientPackets.size()) && (!found_it)); loop_1++){
+        if (clientPackets[loop_1]->getTypeMsg() < TRAMA_NULL){
             found_it = (
                        (clientPackets[loop_1]->getPacketUPD()->address.host == ackSession->getPacketUPD()->address.host) &&
                        (clientPackets[loop_1]->getPacketUPD()->address.port == ackSession->getPacketUPD()->address.port) &&
-                       (clientPackets[loop_1]->getTypeMsg() < TRAMA_ACK_SESSION)
+                       (clientPackets[loop_1]->getTypeMsg() == TRAMA_QRY_CONECTION)
                         );
         }
     }
@@ -173,6 +221,8 @@ EventMsg *UDPDispatcherSessionManager::processQueryActiveSessions(EventMsg *qryL
 
 void UDPDispatcherSessionManager::processInputConnections(EventMsg *ackTrama){
 
+     remoteHostData rHD1 = UtilsProtocol::parseRemoteHostData(ackTrama->getPacketUPD());
+
      if ((ackTrama->getTypeMsg() == TRAMA_QRY_CONECTION) &&
         (ackTrama->getTramaSend() == 1) &&
         (ackTrama->getTramaGet() == 0)){
@@ -186,19 +236,33 @@ void UDPDispatcherSessionManager::processInputConnections(EventMsg *ackTrama){
                 }
             }
 
+            logger->debug("[SSNETWORKMANAGER::establishCommunication] --> TYPEMSG [%d] SEND [%d] GET [%d] FREESOCKET [%d] (%s:%d)",
+                          ackTrama->getTypeMsg(),ackTrama->getTramaSend(),ackTrama->getTramaGet(),freeSocketID,rHD1.host,rHD1.port);
+
             if (freeSocketID != -1){
                 bool found_it = false;
                 //new client!
-                for(int loop_1=0; ((loop_1<MAX_CLIENT) && (!found_it)); loop_1++){
-                    if (clientPackets[loop_1]!=NULL){
-                        UDPpacket *pack_1 = clientPackets[loop_1]->getPacketUPD();
-                        UDPpacket *pack_2 = ackTrama->getPacketUPD();
+                for(int loop_1=0; ((loop_1<clientPackets.size()) && (!found_it)); loop_1++){
+                    if (clientPackets[loop_1]->getTypeMsg()<=TRAMA_NULL){
+                        //UDPpacket *pack_1 = clientPackets[loop_1]->getPacketUPD();
+                        //UDPpacket *pack_2 = ackTrama->getPacketUPD();
 
-                        remoteHostData rHD1 = UtilsProtocol::parseRemoteHostData(pack_1);
-                        remoteHostData rHD2 = UtilsProtocol::parseRemoteHostData(pack_2);
-                        logger->debug("free Packet [%s:%d] - Input Packet [%s:%d]",rHD1.host,rHD1.port,rHD2.host,rHD2.port);
+                        logger->debug("[SSNETWORKMANAGER::establishCommunication] REGISTERED_CLIENT[%d] (%d:%d) ACK_PACKET (%d:%d)",
+                                      loop_1,
+                                      clientPackets[loop_1]->getPacketUPD()->address.host,
+                                      clientPackets[loop_1]->getPacketUPD()->address.port,
+                                      ackTrama->getPacketUPD()->address.host,
+                                      ackTrama->getPacketUPD()->address.port
+                                      );
 
-                        found_it = ((pack_1->address.host == pack_2->address.host) && (pack_1->address.port == pack_2->address.port));
+                        //remoteHostData rHD1 = UtilsProtocol::parseRemoteHostData(pack_1);
+                        //remoteHostData rHD2 = UtilsProtocol::parseRemoteHostData(pack_2);
+                        //logger->debug("[SSNETWORKMANAGER::establishCommunication] -->  free Packet [%s:%d] - Input Packet [%s:%d]",rHD1.host,rHD1.port,rHD2.host,rHD2.port);
+
+                        found_it = (
+                                    (clientPackets[loop_1]->getPacketUPD()->address.host == ackTrama->getPacketUPD()->address.host) &&
+                                    (clientPackets[loop_1]->getPacketUPD()->address.port == ackTrama->getPacketUPD()->address.port)
+                                    );
                     }
                 }
 
@@ -212,25 +276,15 @@ void UDPDispatcherSessionManager::processInputConnections(EventMsg *ackTrama){
                                   clientPackets[freeSocketID]->getTypeMsg(),
                                   clientPackets[freeSocketID]->getTramaSend(),
                                   clientPackets[freeSocketID]->getTramaGet());
-                    /*
-                    clientPackets[freeSocketID]->setTypeMsg(ackTrama->getTypeMsg());
-                    clientPackets[freeSocketID]->setTramaSend(ackTrama->getTramaSend());
-                    clientPackets[freeSocketID]->setTramaGet(ackTrama->getTramaGet());
-                    clientPackets[freeSocketID]->setPacketUPD(ackTrama->getPacketUPD());
-                    */
-                    //clientPackets[freeSocketID] = ackTrama;
 
                     //RESPUESTA AFIRMATIVA (RESPUESTA ACK SI!)
                     EventMsg *answerACK = generatingACKPackets(1, 1, OK, ackTrama->getPacketUPD());
                     nCUDP->sendMsgToClientUDP(answerACK);
 
-                    remoteHostData rHD1 = UtilsProtocol::parseRemoteHostData(ackTrama->getPacketUPD());
-
                     logger->debug("[SSNETWORKMANAGERSERVER::establishCommunication] ACK PACKET ACCEPTED [%s]:[%d]",rHD1.host, rHD1.port);
                     delete answerACK;
 
                 }else{
-                    remoteHostData rHD1 = UtilsProtocol::parseRemoteHostData(ackTrama->getPacketUPD());
                     //SOLICITUD DE CONEXION DE PAQUETE CONECTADO Y DADO DE ALTA PREVIAMENTE (SE DESCARTA)
                     logger->warn("[SSNETWORKMANAGERSERVER::establishCommunication] ACK PACKET FROM CLIENT [%s]:[%d]. PREVIOUSLY ACCEPTED. DISCART PACKET",rHD1.host, rHD1.port);
                 }
@@ -239,7 +293,6 @@ void UDPDispatcherSessionManager::processInputConnections(EventMsg *ackTrama){
             }else{
                 EventMsg *answerACK = generatingACKPackets(1, 1, NOK, ackTrama->getPacketUPD());
                 nCUDP->sendMsgToClientUDP(answerACK);
-                remoteHostData rHD1 = UtilsProtocol::parseRemoteHostData(ackTrama->getPacketUPD());
                 logger->debug("[SSNETWORKMANAGERSERVER::establishCommunication] ACK PACKET REJECTED [%s]:[%d]",rHD1.host, rHD1.port);
                 delete answerACK;
             }

@@ -89,6 +89,7 @@
 		<Unit filename="Stdafx.h" />
 		<Unit filename="TCPSession.cpp" />
 		<Unit filename="TCPSession.h" />
+		<Unit filename="TRAMASERVER.log" />
 		<Unit filename="Task.cpp" />
 		<Unit filename="Task.h" />
 		<Unit filename="TaskManager.cpp" />
