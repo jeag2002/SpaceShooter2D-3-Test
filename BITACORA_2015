@@ -2480,3 +2480,13 @@ https://www.cs.cmu.edu/afs/cs/academic/class/15213-f99/www/class26/udpserver.c
 
 Github tutorials: https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/
 http://www.gabrielgambetta.com/fpm_live.html
+
+05-11-2016:
+
+(POR FIN VERSION ESTABLE ARQUITECTURA CLIENTE-SERVIDOR)
+SSNETWORKMANAGER        ==> CLIENTE UDP
+SSNETWORKMANAGERSERVER  ==> SERVER UDP (mantenimiento de dos sesiones)
+
+"Funciona" con 1 SERVER + 2 CLIENTES CONCURRENTES. FALTA. DESCARTE DE TRAMAS ANTIGUAS; PREDICCION (ENEMIGOS+ELEMENTOS ACTIVOS+JUGADORES REMOTOS); CONCILIACION SERVER.
+
+

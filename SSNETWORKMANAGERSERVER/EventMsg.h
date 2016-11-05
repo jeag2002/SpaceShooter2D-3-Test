@@ -168,7 +168,15 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = _packet;
+        ///////////////////////////////////////////////////
+        packet.address.host = _packet->address.host;
+        packet.address.port = _packet->address.port;
+        packet.channel = _packet->channel;
+        packet.status = _packet->status;
+        packet.len = _packet->len;
+        packet.maxlen = _packet->maxlen;
+        ///////////////////////////////////////////////////
+        //packet.address. = _packet;
     };
 
     //Evento Command local Player - movimiento
@@ -180,7 +188,15 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = _packet;
+        ///////////////////////////////////////////////////
+        packet.address.host = _packet->address.host;
+        packet.address.port = _packet->address.port;
+        packet.channel = _packet->channel;
+        packet.status = _packet->status;
+        packet.len = _packet->len;
+        packet.maxlen = _packet->maxlen;
+        ///////////////////////////////////////////////////
+        //packet = _packet;
         setMovementType(_mMovement);
     };
 
@@ -193,7 +209,15 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = _packet;
+        ///////////////////////////////////////////////////
+        packet.address.host = _packet->address.host;
+        packet.address.port = _packet->address.port;
+        packet.channel = _packet->channel;
+        packet.status = _packet->status;
+        packet.len = _packet->len;
+        packet.maxlen = _packet->maxlen;
+        ///////////////////////////////////////////////////
+        //packet = _packet;
         setShotType(_sShot);
     };
 
@@ -206,7 +230,15 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = _packet;
+        ///////////////////////////////////////////////////
+        packet.address.host = _packet->address.host;
+        packet.address.port = _packet->address.port;
+        packet.channel = _packet->channel;
+        packet.status = _packet->status;
+        packet.len = _packet->len;
+        packet.maxlen = _packet->maxlen;
+        ///////////////////////////////////////////////////
+        //packet = _packet;
         setChangeWeaponType(_cWeapon);
     };
 
@@ -219,7 +251,15 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = _packet;
+        ///////////////////////////////////////////////////
+        packet.address.host = _packet->address.host;
+        packet.address.port = _packet->address.port;
+        packet.channel = _packet->channel;
+        packet.status = _packet->status;
+        packet.len = _packet->len;
+        packet.maxlen = _packet->maxlen;
+        ///////////////////////////////////////////////////
+        //packet = _packet;
         setExitType(_eType);
     };
 
@@ -232,7 +272,15 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = _packet;
+        ///////////////////////////////////////////////////
+        packet.address.host = _packet->address.host;
+        packet.address.port = _packet->address.port;
+        packet.channel = _packet->channel;
+        packet.status = _packet->status;
+        packet.len = _packet->len;
+        packet.maxlen = _packet->maxlen;
+        ///////////////////////////////////////////////////
+        //packet = _packet;
         setRemotePlayerType(_rPType);
     };
 
@@ -245,7 +293,15 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = _packet;
+        ///////////////////////////////////////////////////
+        packet.address.host = _packet->address.host;
+        packet.address.port = _packet->address.port;
+        packet.channel = _packet->channel;
+        packet.status = _packet->status;
+        packet.len = _packet->len;
+        packet.maxlen = _packet->maxlen;
+        ///////////////////////////////////////////////////
+        //packet = _packet;
         setMsgType(_mType);
     };
 
@@ -258,7 +314,15 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = _packet;
+        ///////////////////////////////////////////////////
+        packet.address.host = _packet->address.host;
+        packet.address.port = _packet->address.port;
+        packet.channel = _packet->channel;
+        packet.status = _packet->status;
+        packet.len = _packet->len;
+        packet.maxlen = _packet->maxlen;
+        ///////////////////////////////////////////////////
+        //packet = _packet;
         setAnswerType(_aType);
     };
 
@@ -271,7 +335,15 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = _packet;
+        ///////////////////////////////////////////////////
+        packet.address.host = _packet->address.host;
+        packet.address.port = _packet->address.port;
+        packet.channel = _packet->channel;
+        packet.status = _packet->status;
+        packet.len = _packet->len;
+        packet.maxlen = _packet->maxlen;
+        ///////////////////////////////////////////////////
+        //packet = _packet;
         setListOtherPlayerType(_lOPType);
     };
 
@@ -284,7 +356,15 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = _packet;
+        ///////////////////////////////////////////////////
+        packet.address.host = _packet->address.host;
+        packet.address.port = _packet->address.port;
+        packet.channel = _packet->channel;
+        packet.status = _packet->status;
+        packet.len = _packet->len;
+        packet.maxlen = _packet->maxlen;
+        ///////////////////////////////////////////////////
+        //packet = _packet;
         setListSessionAvaliableType(_lSAType);
     };
 
@@ -297,7 +377,15 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = _packet;
+        ///////////////////////////////////////////////////
+        packet.address.host = _packet->address.host;
+        packet.address.port = _packet->address.port;
+        packet.channel = _packet->channel;
+        packet.status = _packet->status;
+        packet.len = _packet->len;
+        packet.maxlen = _packet->maxlen;
+        ///////////////////////////////////////////////////
+        //packet = _packet;
         setPlayerDataType(_pDType);
     };
 
@@ -311,7 +399,18 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = _packet;
+        ///////////////////////////////////////////////////
+        packet.address.host = _packet->address.host;
+        packet.address.port = _packet->address.port;
+        packet.channel = _packet->channel;
+        packet.status = _packet->status;
+        packet.len = _packet->len;
+        packet.maxlen = _packet->maxlen;
+        ///////////////////////////////////////////////////
+
+
+
+        //packet = _packet;
         setOrderType(_OType);
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -329,7 +428,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = NULL;
+        //packet = NULL;
     };
 
     //Evento Command local Player - movimiento
@@ -341,7 +440,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = NULL;
+        //packet = NULL;
         setMovementType(_mMovement);
     };
 
@@ -354,7 +453,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = NULL;
+        //packet = NULL;
         setShotType(_sShot);
     };
 
@@ -367,7 +466,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = NULL;
+        //packet = NULL;
         setChangeWeaponType(_cWeapon);
     };
 
@@ -380,7 +479,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = NULL;
+        //packet = NULL;
         setExitType(_eType);
     };
 
@@ -393,7 +492,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = NULL;
+        //packet = NULL;
         setRemotePlayerType(_rPType);
     };
 
@@ -406,7 +505,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = NULL;
+        //packet = NULL;
         setMsgType(_mType);
     };
 
@@ -419,7 +518,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = NULL;
+        //packet = NULL;
         setAnswerType(_aType);
     };
 
@@ -432,7 +531,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = NULL;
+        //packet = NULL;
         setListOtherPlayerType(_lOPType);
     };
 
@@ -445,7 +544,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = NULL;
+        //packet = NULL;
         setListSessionAvaliableType(_lSAType);
     };
 
@@ -458,7 +557,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = NULL;
+        //packet = NULL;
         setPlayerDataType(_pDType);
     };
 
@@ -472,7 +571,7 @@ class EventMsg{
         more = _more;
         numtrazas = _numtrazas;
         CRC16 = _CRC16;
-        packet = NULL;
+        //packet = NULL;
         setOrderType(_OType);
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -506,8 +605,28 @@ class EventMsg{
     uint16_t getCRC16(){return CRC16;}
     void setCRC16(uint16_t _CRC16){CRC16 = _CRC16;}
 
-    UDPpacket *getPacketUPD(){return packet;}
-    void setPacketUPD(UDPpacket *_packet){packet = _packet;}
+    packetDataType getPacketUPD(){return packet;}
+
+    void setPacketUDP(packetDataType pDT){
+
+        packet.address.host = pDT.address.host;
+        packet.address.port = pDT.address.port;
+        packet.channel = pDT.channel;
+        packet.len = pDT.len;
+        packet.maxlen = pDT.maxlen;
+        packet.status = pDT.status;
+
+    }
+
+    void setPacketUDPTrama(UDPpacket *_packet){
+        packet.address.host = _packet->address.host;
+        packet.address.port = _packet->address.port;
+        packet.channel = _packet->channel;
+        packet.len = _packet->len;
+        packet.maxlen = _packet->maxlen;
+        packet.status = _packet->status;
+    }
+
 
 
     std::string serializeMsg();
@@ -893,10 +1012,28 @@ class EventMsg{
         numtrazas = _remoteMsg->getNumTrazas();
         CRC16 = _remoteMsg->getCRC16();
 
+        ///////////////////////////////////////////////////
+        packet.address.host = 0;
+        packet.address.port = 0;
+        packet.channel = 0;
+        packet.status = 0;
+        packet.len = 0;
+        packet.maxlen = 0;
+        ///////////////////////////////////////////////////
+
+        packet.address.host = _remoteMsg->getPacketUPD().address.host;
+        packet.address.port = _remoteMsg->getPacketUPD().address.port;
+        packet.channel = _remoteMsg->getPacketUPD().channel;
+        packet.status = _remoteMsg->getPacketUPD().status;
+        packet.len = _remoteMsg->getPacketUPD().len;
+        packet.maxlen = _remoteMsg->getPacketUPD().maxlen;
+
+
+
+        /*
         if (packet == NULL){
             packet = SDLNet_AllocPacket(512);
         }
-
 
         if (_remoteMsg->getPacketUPD() != NULL){
             packet->address.host = _remoteMsg->getPacketUPD()->address.host;
@@ -913,6 +1050,7 @@ class EventMsg{
             packet->maxlen = 0;
             packet->status = 0;
         }
+        */
 
 
         copyBuffer(_remoteMsg->getBuffer());
@@ -948,7 +1086,17 @@ class EventMsg{
         more = 0;
         numtrazas = 0;
         CRC16 = 0;
-        packet = SDLNet_AllocPacket(512);
+
+        //packet = SDLNet_AllocPacket(512);
+        ///////////////////////////////////////////////////
+        packet.address.host = 0;
+        packet.address.port = 0;
+        packet.channel = 0;
+        packet.status = 0;
+        packet.len = 0;
+        packet.maxlen = 0;
+        ///////////////////////////////////////////////////
+
 
         clearBuffer();
 
@@ -991,7 +1139,9 @@ class EventMsg{
     int more;
     uint16_t CRC16;
     //solo para tramas UDP.
-    UDPpacket *packet;
+
+    //UDPpacket *packet;
+    packetDataType packet;
 
     char buffer[BUFFER_SIZE];
 

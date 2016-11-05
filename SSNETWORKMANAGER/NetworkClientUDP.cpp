@@ -59,43 +59,76 @@ void NetworkClientUDP::establishCommunicationUDP(){
 
        //indexTramaSend++;
        //-->QRY ACK PACKET (SEND TO SERVER) indexTramaSend:1; indexTramaGet:0
+       int times = 3;
+       int time_resend_ack = 3;
 
-       logger->info("[SSNETWORKMANAGER::establishCommunicationUDP] --> QRY_CONECTION TRAMASEND[%d] TRAMAGET[%d]",indexTramaSend,indexTramaGet);
+       bool DONE = false;
+       bool NOT_ACCEPTED = false;
 
-       EventMsg *qryACK = new EventMsg(TRAMA_QRY_CONECTION,indexTramaSend,indexTramaGet,0,1,(uint16_t)0,packet);
-       sendMsgToServer(qryACK);
-       indexTramaGet++;
-       delete qryACK;
 
-        //-->ACK PACKET  (GET FROM SERVER) indexTramaSend:1; indexTramaGet:1
-       SDL_Delay(100);
-       EventMsg *responseACK = getMsgFromServer();
+       while ((time_resend_ack >= 0) && (!DONE) && (!NOT_ACCEPTED)){
 
-       if ((responseACK->getTypeMsg() == TRAMA_GET_CONECTION) &&
-          (responseACK->getTramaSend() == indexTramaSend) &&
-          (responseACK->getTramaGet() == indexTramaGet)){
+           indexTramaSend=1;
+           indexTramaGet=0;
+           logger->info("[SSNETWORKMANAGER::establishCommunicationUDP] --> QRY_CONECTION TRAMASEND[%d] TRAMAGET[%d]",indexTramaSend,indexTramaGet);
+           EventMsg *qryACK = new EventMsg(TRAMA_QRY_CONECTION,indexTramaSend,indexTramaGet,0,1,(uint16_t)0,packet);
+           sendMsgToServer(qryACK);
+           delete qryACK;
 
-           uint16_t CRC16FromServer = responseACK->getCRC16();
-           uint16_t CRC16Calculated = UtilsProtocol::calculateCRC16_CCITT((const unsigned char *)responseACK->serializeMsg().c_str(),responseACK->serializeMsg().size());
-           logger->debug("[SSNETWORKMANAGER::establishCommunicationUDP] CRC ACK COMM FROM SERVER [%X] COMM FROM CLIENT [%X]",CRC16FromServer,CRC16Calculated);
+           DONE = false;
+           NOT_ACCEPTED = false;
+           times = 3;
 
-           answerType aType = responseACK->getAnswerType();
-           if (aType.result == OK){
-               logger->info("[SSNETWORKMANAGER::establishCommunicationUDP] --> ACK SERVER ESTABLISHED TRAMASEND[%d] TRAMAGET[%d]",indexTramaSend,indexTramaGet);
-           }else{
-               logger->info("[SSNETWORKMANAGER::establishCommunicationUDP] --> ACK SERVER FAILED (CANNOT ACCEPT MORE CLIENTS) TRAMASEND[%d] TRAMAGET[%d]",indexTramaSend,indexTramaGet);
+           while ((times >= 0) && (!DONE)){
+
+               indexTramaGet=1;
+               SDL_Delay(100);
+               EventMsg *responseACK = getMsgFromServer();
+
+               if ((responseACK->getTypeMsg() == TRAMA_GET_CONECTION) &&
+                  (responseACK->getTramaSend() == indexTramaSend) &&
+                  (responseACK->getTramaGet() == indexTramaGet)){
+
+                   uint16_t CRC16FromServer = responseACK->getCRC16();
+                   uint16_t CRC16Calculated = UtilsProtocol::calculateCRC16_CCITT((const unsigned char *)responseACK->serializeMsg().c_str(),responseACK->serializeMsg().size());
+                   logger->debug("[SSNETWORKMANAGER::establishCommunicationUDP] CRC ACK COMM FROM SERVER [%X] COMM FROM CLIENT [%X]",CRC16FromServer,CRC16Calculated);
+
+                   answerType aType = responseACK->getAnswerType();
+                   if (aType.result == OK){
+                       logger->info("[SSNETWORKMANAGER::establishCommunicationUDP] --> ACK SERVER ESTABLISHED TRAMASEND[%d] TRAMAGET[%d]",indexTramaSend,indexTramaGet);
+                   }else{
+                       logger->info("[SSNETWORKMANAGER::establishCommunicationUDP] --> ACK SERVER FAILED (CANNOT ACCEPT MORE CLIENTS) TRAMASEND[%d] TRAMAGET[%d]",indexTramaSend,indexTramaGet);
+                       NOT_ACCEPTED = true;
+                   }
+
+                   DONE = true;
+
+                }else if(responseACK->getTypeMsg() == TRAMA_NULL){
+                    logger->warn("[SSNETWORKMANAGER::establishCommunicationUDP] --> ACK SERVER FAILED (CONNECTION FAILED)");
+                    times--;
+                }
+
+                delete responseACK;
            }
 
-        }else if(responseACK->getTypeMsg() == TRAMA_NULL){
-            logger->warn("[SSNETWORKMANAGER::establishCommunicationUDP] --> ACK SERVER FAILED (CONNECTION FAILED)");
+           time_resend_ack--;
+       }
 
+        if (NOT_ACCEPTED){
             SDLNet_UDP_Close(clientSocket);
             SDLNet_FreePacket(packet);
             SDLNet_Quit();
             exit(1);
         }
 
-        delete responseACK;
+
+        if (!DONE){
+            SDLNet_UDP_Close(clientSocket);
+            SDLNet_FreePacket(packet);
+            SDLNet_Quit();
+            exit(1);
+        }
+
 };
 
 
@@ -134,7 +167,7 @@ void NetworkClientUDP::getListActiveSessions(){
 
 };
 
-EventMsg *NetworkClientUDP::registerToActiveSession(int mapClient, int sessionClient){
+void NetworkClientUDP::registerToActiveSession(int mapClient, int sessionClient){
 
     indexTramaSend++;
 
@@ -156,11 +189,6 @@ EventMsg *NetworkClientUDP::registerToActiveSession(int mapClient, int sessionCl
     EventMsg *TRSYNACKSESSION = new EventMsg(TRAMA_SYNACK_SESSION,indexTramaSend,indexTramaGet,0,1,(uint16_t)0,packet,pDT);
     sendMsgToServer(TRSYNACKSESSION);
     delete TRSYNACKSESSION;
-
-    SDL_Delay(100);
-
-    EventMsg *response = getMsgFromServer();
-    return response;
 }
 
 

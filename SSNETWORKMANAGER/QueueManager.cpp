@@ -70,7 +70,7 @@ void QueueManager::runRemoteData(){
 
             log->debug("[QUEUEMANAGER::REMOTEDATA] QRY DATA FROM DATA SERVER SENDPACKET[%d] GETPACKET[%d]",nClientUDP->getIndexTramaSend(),nClientUDP->getIndexTramaGet());
 
-            nClientUDP->sendMsgToServer(new EventMsg(TRAMA_QRY_DATASERVER,nClientUDP->getIndexTramaSend(),nClientUDP->getIndexTramaGet(),0,1,(uint16_t)0,nClientUDP->getRemotePacket()));
+            nClientUDP->sendMsgToServer(new EventMsg(TRAMA_QRY_DATASERVER,nClientUDP->getIndexTramaSend(),nClientUDP->getIndexTramaGet(),0,1,(uint16_t)0,nClientUDP->getRemotePacket(),pDT));
 
             bool DONE = false;
 
@@ -79,7 +79,8 @@ void QueueManager::runRemoteData(){
             while (!DONE){
                 EventMsg *msg = nClientUDP->getMsgFromServer();
                 if (msg->getTypeMsg() == TRAMA_GET_DATASERVER){
-                    log->debug("[QUEUEMANAGER::REMOTEDATA] GET REMOTE INFO FOR TypeTramaID:[%d] IDType:[%d] EntityID:[%d] IDActor:[%d] (actMap:%d,session:%d,lvl:%d,x:%f,y:%f,width:%d,height:%d)",
+
+                    log->debug("[QUEUEMANAGER::REMOTEDATA] GET REMOTE INFO FOR TypeTramaID:[%d] IDType:[%d] EntityID:[%d] IDActor:[%d] (actMap:%d,session:%d,lvl:%d,x:%f,y:%f,width:%d,height:%d) score[%d] die[%d] animId[%d] enabled [%d]",
                                 msg->getRemotePlayerType().typeTramaID,
                                 msg->getRemotePlayerType().typeID,
                                 msg->getRemotePlayerType().entityID,
@@ -90,7 +91,12 @@ void QueueManager::runRemoteData(){
                                 msg->getRemotePlayerType().x_pos,
                                 msg->getRemotePlayerType().y_pos,
                                 msg->getRemotePlayerType().width,
-                                msg->getRemotePlayerType().height);
+                                msg->getRemotePlayerType().height,
+                                msg->getRemotePlayerType().score,
+                                msg->getRemotePlayerType().die,
+                                msg->getRemotePlayerType().animIndex,
+                                msg->getRemotePlayerType().enabled);
+
                     processRemoteMsg(msg);
                     numTramas++;
                 }

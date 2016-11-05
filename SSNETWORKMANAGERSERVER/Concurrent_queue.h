@@ -1,7 +1,8 @@
 #ifndef CONCURRENT_QUEUE_H_INCLUDED
 #define CONCURRENT_QUEUE_H_INCLUDED
 
-#include <queue>
+//#include <queue>
+#include <deque>
 #include <pthread.h>
 #include <SDL_net.h>
 
@@ -10,7 +11,8 @@ class Concurrent_queue
 
 private:
 
-    std::queue<TCPsocket *> _queue_;
+    //std::queue<TCPsocket *> _queue_;
+    std::deque<TCPsocket *> _queue_;
     pthread_mutex_t push_mutex;
     pthread_mutex_t pop_mutex;
     pthread_cond_t cond;
@@ -28,7 +30,7 @@ public:
     {
         pthread_mutex_lock(&push_mutex);
 
-        _queue_.push(data);
+        _queue_.push_front(data);
 
         pthread_cond_signal(&cond);
         pthread_mutex_unlock(&push_mutex);
@@ -51,7 +53,7 @@ public:
             pthread_cond_wait(&cond, &pop_mutex);
         }
 
-        _queue_.pop();
+        _queue_.pop_back();
 
         pthread_mutex_unlock(&pop_mutex);
     }

@@ -55,8 +55,17 @@ void NetworkClientUDP::sendMsgToClientUDP(EventMsg *msg){
     SDL_CondWaitTimeout( condSendV, mutexSend, 100);
 
     clearBuffer();
-    UDPpacket *packetUDP = msg->getPacketUPD();
+    //UDPpacket *packetUDP = msg->getPacketUPD();
     //clearBufferPacket(packetUDP);
+
+    UDPpacket *packetUDP = SDLNet_AllocPacket(512);
+    packetUDP->address.host = msg->getPacketUPD().address.host;
+    packetUDP->address.port = msg->getPacketUPD().address.port;
+    packetUDP->channel = msg->getPacketUPD().channel;
+    packetUDP->len = msg->getPacketUPD().len;
+    packetUDP->maxlen = msg->getPacketUPD().maxlen;
+    packetUDP->status = msg->getPacketUPD().status;
+
 
     char *tramaBuffChr = msg->marshallMsg();
     std::string tramaStr(tramaBuffChr);
@@ -108,10 +117,10 @@ void NetworkClientUDP::sendMsgVectorToClientUDP(EventMsg **msgs){
              memcpy(packet_data->data, msgAsString.c_str(), msgAsString.length() );
 
              packet_data->len = msgAsString.length();
-             packet_data->channel = eventMsg->getPacketUPD()->channel;
-             packet_data->status = eventMsg->getPacketUPD()->status;
-             packet_data->address.host = eventMsg->getPacketUPD()->address.host;
-             packet_data->address.port = eventMsg->getPacketUPD()->address.port;
+             packet_data->channel = eventMsg->getPacketUPD().channel;
+             packet_data->status = eventMsg->getPacketUPD().status;
+             packet_data->address.host = eventMsg->getPacketUPD().address.host;
+             packet_data->address.port = eventMsg->getPacketUPD().address.port;
 
              logPackets->debug("[TRAMA SEND SERVER VECTOR] --> RAW DATA[%s] [%d]:[%d]",packet_data->data,packet_data->address.host,packet_data->address.port);
 
@@ -180,7 +189,7 @@ EventMsg *NetworkClientUDP::getMsgFromClientUDP(){
             logger->debug("[SSNETWORKMANAGERSERVER::getMsgFromClientUDP] PACKET DATA getMsg [%s]",msg.c_str());
 
             returnMsg->unmarshallMsg((const char *)msg.c_str());
-            returnMsg->setPacketUPD(packet);
+            returnMsg->setPacketUDPTrama(packet);
 
             DONE = true;
 		}

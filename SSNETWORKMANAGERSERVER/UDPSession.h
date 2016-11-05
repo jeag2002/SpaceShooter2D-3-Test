@@ -15,15 +15,14 @@ class UDPSession{
 
 public:
 
-    UDPSession(int _playerID, LogEngine *_logger, MemManager *_mem, UDPpacket *_packet){
+    UDPSession(int _playerID, LogEngine *_logger, MemManager *_mem, int _host, int _port){
 
         logger = _logger;
         mem = _mem;
-        packet = _packet;
-
+        host = _host;
+        port = _port;
         indexDataGet = 0;
         indexDataSend = 0;
-
         playerID = _playerID;
 
     };
@@ -32,11 +31,10 @@ public:
         this->indexDataGet = session->getIndexDataGet();
         this->indexDataSend = session->getIndexDataSend();
         this->playerID = session->getPlayerId();
+        this->host = session->getHost();
+        this->port = session->getPort();
     }
 
-
-    UDPpacket *getPacket(){return packet;}
-    void setPacket(UDPpacket *_packet){packet = _packet;}
 
     int getIndexDataGet(){return indexDataGet;}
     void setIndexDataGet(int _indexDataGet){indexDataGet = _indexDataGet;}
@@ -47,9 +45,21 @@ public:
     void setPlayerId(int _playerID){playerID = _playerID;}
     int getPlayerId(){return playerID;}
 
+    void setHost(int _host){host = _host;}
+    int getHost(){return host;}
+
+    void setPort(int _port){port = _port;}
+    int getPort(){return port;}
+
     void Run(EventMsg *msg);
 
-    ~UDPSession(){};
+    ~UDPSession(){
+        indexDataGet = 0;
+        indexDataSend  = 0;
+        playerID = 0;
+        host = 0;
+        port = 0;
+    };
 
 
 
@@ -58,10 +68,13 @@ private:
 int indexDataGet;
 int indexDataSend;
 int playerID;
+int host;
+int port;
+
 
 LogEngine *logger;
 MemManager *mem;
-UDPpacket *packet;
+
 
 };
 

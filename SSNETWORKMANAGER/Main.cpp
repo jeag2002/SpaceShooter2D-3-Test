@@ -110,8 +110,12 @@ int main (int argc, char *argv[])
    int attemps = 10;
    bool DONE = false;
 
+
+   nClientUDP->registerToActiveSession(mapClient, sessionClient);
+
    while ((attemps >= 0) && (!DONE)){
-        EventMsg *responseMsg =  nClientUDP->registerToActiveSession(mapClient, sessionClient);
+        SDL_Delay(100);
+        EventMsg *responseMsg =  nClientUDP->getMsgFromServer();
         playerDataType pDT;
 
        if (responseMsg->getTypeMsg() == TRAMA_ACK_SESSION){
@@ -680,9 +684,11 @@ void renderScenario(){
     for(auto iterator = remPlayerMap.begin(); iterator != remPlayerMap.end(); iterator++){
         int i = iterator->first;
         DynamicEntity *dEntity = iterator->second;
-        if ((dEntity->getActLevel() == player->getActLevel()) &&
+        if (
+           (dEntity->getActLevel() == player->getActLevel()) &&
            (dEntity->getIDDE() != player->getIndexPlayer()) &&
-           (dEntity->isEnabled())){
+           (dEntity->isEnabled())
+            ){
 
             SDL_Rect rp;
             rp.x = int(dEntity->getX());
@@ -690,7 +696,7 @@ void renderScenario(){
             rp.w = int(dEntity->getWidth());
             rp.h = int(dEntity->getHeight());
 
-            SDL_SetRenderDrawColor(render,0,255,255,255);
+            SDL_SetRenderDrawColor(render,255,255,0,255);
             SDL_RenderFillRect(render, &rp);
 
             logger->debug("[SSNETWORKMANAGER::renderScenario] REM_PLAYER[%d] (lvl:%d,x:%f,y:%f)==>rect(%d,%d,%d,%d)",dEntity->getIDDE(),dEntity->getActLevel(),dEntity->getX(),dEntity->getY(),rp.x,rp.y,rp.w,rp.h);

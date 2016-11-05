@@ -97,26 +97,26 @@ remotePlayerType EventMsg::processSubMsgrRType(const char *subbuffer){
     std::string ActWpnStr = buffer_to_string.substr(55,2);     //42+2
     std::string Wpn1Str = buffer_to_string.substr(57,1);       //44+1
     std::string Wpn1AmmoStr = buffer_to_string.substr(58,3);   //45+3
-    std::string Wpn2Str = buffer_to_string.substr(62,1);       //48+1
-    std::string Wpn2AmmoStr = buffer_to_string.substr(63,3);   //49+3
-    std::string Wpn3Str = buffer_to_string.substr(66,1);       //52+1
-    std::string Wpn3AmmoStr = buffer_to_string.substr(67,3);   //53+3
-    std::string Wpn4Str = buffer_to_string.substr(70,1);       //56+1
-    std::string Wpn4AmmoStr = buffer_to_string.substr(71,3);   //57+3
+    std::string Wpn2Str = buffer_to_string.substr(61,1);       //48+1
+    std::string Wpn2AmmoStr = buffer_to_string.substr(62,3);   //49+3
+    std::string Wpn3Str = buffer_to_string.substr(65,1);       //52+1
+    std::string Wpn3AmmoStr = buffer_to_string.substr(66,3);   //53+3
+    std::string Wpn4Str = buffer_to_string.substr(69,1);       //56+1
+    std::string Wpn4AmmoStr = buffer_to_string.substr(70,3);   //57+3
 
-    std::string Item1Str = buffer_to_string.substr(74,1);      //60+1
-    std::string Item1ValStr = buffer_to_string.substr(75,2);      //60+1
-    std::string Item2Str = buffer_to_string.substr(77,1);      //61+1
-    std::string Item2ValStr = buffer_to_string.substr(78,2);      //60+1
-    std::string Item3Str = buffer_to_string.substr(80,1);      //62+1
-    std::string Item3ValStr = buffer_to_string.substr(81,2);      //60+1
-    std::string Item4Str = buffer_to_string.substr(83,1);      //63+1
-    std::string Item4ValStr = buffer_to_string.substr(84,2);      //60+1
+    std::string Item1Str = buffer_to_string.substr(73,1);      //60+1
+    std::string Item1ValStr = buffer_to_string.substr(74,2);      //60+1
+    std::string Item2Str = buffer_to_string.substr(76,1);      //61+1
+    std::string Item2ValStr = buffer_to_string.substr(77,2);      //60+1
+    std::string Item3Str = buffer_to_string.substr(79,1);      //62+1
+    std::string Item3ValStr = buffer_to_string.substr(80,2);      //60+1
+    std::string Item4Str = buffer_to_string.substr(82,1);      //63+1
+    std::string Item4ValStr = buffer_to_string.substr(83,2);      //60+1
 
-    std::string ScoreStr = buffer_to_string.substr(86,5);      //64+5
-    std::string DieStr = buffer_to_string.substr(91,1);        //69+1
-    std::string AnimIndexStr = buffer_to_string.substr(92,2);  //70+2
-    std::string enabledStr = buffer_to_string,substr(94,1);    //elemento remoto enviado
+    std::string ScoreStr = buffer_to_string.substr(85,5);      //64+5
+    std::string DieStr = buffer_to_string.substr(90,1);        //69+1
+    std::string AnimIndexStr = buffer_to_string.substr(91,2);  //70+2
+    std::string enabledStr = buffer_to_string.substr(93,1);    //elemento remoto enviado
 
     int typeTramaIDInt = atoi(typeTramaIDStr.c_str());
     int typeIDSInt = atoi(typeIDStr.c_str());

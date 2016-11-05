@@ -306,4 +306,19 @@ typedef struct{
     double y;
 }positionXY;
 
+typedef struct{
+    int host;
+    int port;
+}addressPacketDataType;
+
+typedef struct{
+    addressPacketDataType address;
+    int channel;
+    int status;
+    int len;
+    int maxlen;
+}packetDataType;
+
+
+
 #endif // CONSTANTS_H_INCLUDED

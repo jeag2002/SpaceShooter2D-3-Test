@@ -241,6 +241,8 @@ public:
         rPType.score = 20;
         rPType.die = 0;
         rPType.animIndex = 1;
+        rPType.enabled = 0;
+
         if (this->enabled){rPType.enabled = 1;}
         else{rPType.enabled = 0;}
 

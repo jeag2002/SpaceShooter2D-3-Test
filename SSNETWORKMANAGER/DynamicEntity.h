@@ -95,6 +95,7 @@ public:
         this->idDE = _rPType.idPlayer;
         this->x = _rPType.x_pos;
         this->y = _rPType.y_pos;
+        this->enabled = false;
 
 
     };
@@ -188,25 +189,24 @@ public:
             this->x = _rPType.x_pos;
             this->y = _rPType.y_pos;
 
+            if (_rPType.enabled == 1){
+                this->enabled = true;
+            }else{
+                this->enabled = false;
+            }
 
-
-            log->debug("[DYNAMICENTITY::SETDYNAMICENTITY] SET REMOTE TIMESTAMP:(%d) INDEXCOORD TIMESTAMP (%d)  DATA FOR ENTITY ID:[%d] (ActMap:%d,Session:%d,lvl:%d,x:%f,y:%f,width:%f,height:%f)",
-                          getIndex, this->indexCoord, this->idDE,this->actMap,this->actSession,this->actLevel,this->x,this->y,this->width,this->height);
-
-            logPackets->debug("[DYNAMICENTITY:SETDYNAMICENTITY:CLIENT] REMOTE TIMESTAMP:(%d) INDEXCOORD TIMESTAMP (%d) ENTITY ID:[%d] (ActMap:%d,Session:%d,lvl:%d,x:%f,y:%f)",
-                              getIndex, this->indexCoord, this->idDE,this->actMap,this->actSession,this->actLevel,this->x,this->y);
-
+            log->debug("[DYNAMICENTITY::SETDYNAMICENTITY] SET REMOTE TIMESTAMP:(%d) INDEXCOORD TIMESTAMP (%d)  DATA FOR ENTITY ID:[%d] (ActMap:%d,Session:%d,lvl:%d,x:%f,y:%f,width:%f,height:%f) enabled [%d]",
+                          getIndex, this->indexCoord, this->idDE,this->actMap,this->actSession,this->actLevel,this->x,this->y,this->width,this->height,_rPType.enabled);
+            logPackets->debug("[DYNAMICENTITY:SETDYNAMICENTITY:CLIENT] REMOTE TIMESTAMP:(%d) INDEXCOORD TIMESTAMP (%d) ENTITY ID:[%d] (ActMap:%d,Session:%d,lvl:%d,x:%f,y:%f) enabled [%d]",
+                              getIndex, this->indexCoord, this->idDE,this->actMap,this->actSession,this->actLevel,this->x,this->y,_rPType.enabled);
             this->indexCoord = getIndex;
-        }else{
 
+        }else{
             log->debug("[DYNAMICENTITY::SETDYNAMICENTITY] DISCARD REMOTE TIMESTAMP:(%d) INDEXCOORD TIMESTAMP (%d)  DATA FOR ENTITY ID:[%d] (ActMap:%d,Session:%d,lvl:%d,x:%f,y:%f,width:%f,height:%f)",
                           getIndex, this->indexCoord, this->idDE,this->actMap,this->actSession,this->actLevel,this->x,this->y,this->width,this->height);
 
             logPackets->debug("[DYNAMICENTITY:SETDYNAMICENTITY:CLIENT] DISCARD REMOTE TIMESTAMP:(%d) INDEXCOORD TIMESTAMP (%d) ENTITY ID:[%d] (ActMap:%d,Session:%d,lvl:%d,x:%f,y:%f)",
                               getIndex, this->indexCoord, this->idDE,this->actMap,this->actSession,this->actLevel,this->x,this->y);
-
-
-
         }
 
 

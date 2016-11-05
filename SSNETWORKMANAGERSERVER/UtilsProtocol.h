@@ -63,6 +63,24 @@ namespace UtilsProtocol{
         return rHD;
     };
 
+    inline remoteHostData parseRemoteHostData(packetDataType pDT){
+        remoteHostData rHD;
+
+        Uint32 ipnum=SDL_SwapBE32(pDT.address.host);
+        Uint16 port=SDL_SwapBE16(pDT.address.port);
+
+        char ip[100];
+        for(int i=0; i<100; i++){ip[i]='\0';}
+        sprintf(ip,"%d.%d.%d.%d",(ipnum>>24),((ipnum>>16)&0xff),((ipnum>>8)&0xff),(ipnum&0xff));
+        rHD.host = (const char *)ip;
+
+        rHD.port = port;
+        return rHD;
+    };
+
+
+
+
 
     //GET COEF Lineal REGRESSION
     //http://www.oocities.org/david_swaim/cpp/linregc.htm

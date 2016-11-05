@@ -200,7 +200,7 @@ EventMsg **NetworkClient::getMsgsFromServer(){
 
         if (!DONE){
             logger->warn("[SSNETWORKMANAGER::MSGFROMSERVER] --> SOCKET INACTIVE DURING [%d] MS", diff);
-            if (diff > 500){
+            if (diff > 2000){
                 DONE = true;
             }
         }
@@ -254,7 +254,7 @@ EventMsg *NetworkClient::getMsgFromServer(){
 
         if (!DONE){
             logger->warn("[SSNETWORKMANAGER::MSGFROMSERVER] --> SOCKET INACTIVE DURING [%d] MS", diff);
-            if (diff > 500){
+            if (diff > 2000){
                 DONE = true;
             }
         }

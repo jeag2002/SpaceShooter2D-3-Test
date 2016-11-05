@@ -37,6 +37,7 @@ int main (int argc, char *argv[])
 
        while(true){
         uDSM->processingInputMsgsFromClients();
+        uDSM->processingOutputMsgToClients();
        }
 
    }catch(...){

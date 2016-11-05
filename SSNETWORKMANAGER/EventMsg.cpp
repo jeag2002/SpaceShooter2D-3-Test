@@ -73,50 +73,60 @@ answerType EventMsg::processSubMsgAType(const char *subbuffer){
     return aType;
 }
 
+//sprintf(subBuffer,"%03d%03d%03d%03d%03d%05d%05d%01d%06d%02d%06d%02d%03d%03d%01d%03d%03d
+//%02d %01d%03d %01d%03d% 01d%03d %01d%03d
+//%01d%02d %01d%02d %01d%02d %01d%02d
+//%05d %01d %02d %01d",
+
+//sprintf(subBuffer,"%03d%03d%03d%03d%03d%05d%05d%01d%06d%02d%06d%02d%03d%03d%01d%03d%03d
+//%02d %01d%03d %01d%03d %01d%03d %01d%03d
+//%01d%02d %01d%02d %01d%02d %01d%02d
+//%05d %01d %02d% 01d",
+
 //UNMARSHALL REMOTE ACTIVE ELEMENT (ACTOR) (CLIENT)
 remotePlayerType EventMsg::processSubMsgrRType(const char *subbuffer){
 
     std::string buffer_to_string(subbuffer);
     std::string typeTramaIDStr = buffer_to_string.substr(0,3);  //0+3
-    std::string typeIDStr = buffer_to_string.substr(3,3);       //2+3
-    std::string typeEntityIDStr = buffer_to_string.substr(6,3);
-    std::string typeMapIdStr = buffer_to_string.substr(9,3);
-    std::string typeSessionStr = buffer_to_string.substr(12,3);
-    std::string idPlayerStr = buffer_to_string.substr(15,5);    //4+5
-    std::string idParPlayerStr = buffer_to_string.substr(20,5); //8+5
-    std::string lvlStr = buffer_to_string.substr(25,1);        //12+1
-    std::string XPosStr = buffer_to_string.substr(26,6);       //13+6
-    std::string XPosDecStr = buffer_to_string.substr(32,2);    //19+2
-    std::string YPosStr = buffer_to_string.substr(34,6);       //21+6
-    std::string YPosDecStr = buffer_to_string.substr(40,2);    //27+2
-    std::string WidthStr = buffer_to_string.substr(42,3);      //29+3
-    std::string HeightStr = buffer_to_string.substr(45,3);     //32+3
-    std::string lifeStr = buffer_to_string.substr(48,1);       //35+1
-    std::string liveStr = buffer_to_string.substr(49,3);       //36+3
-    std::string ShdStr = buffer_to_string.substr(52,3);        //39+3
-    std::string ActWpnStr = buffer_to_string.substr(55,2);     //42+2
-    std::string Wpn1Str = buffer_to_string.substr(57,1);       //44+1
-    std::string Wpn1AmmoStr = buffer_to_string.substr(58,3);   //45+3
-    std::string Wpn2Str = buffer_to_string.substr(62,1);       //48+1
-    std::string Wpn2AmmoStr = buffer_to_string.substr(63,3);   //49+3
-    std::string Wpn3Str = buffer_to_string.substr(66,1);       //52+1
-    std::string Wpn3AmmoStr = buffer_to_string.substr(67,3);   //53+3
-    std::string Wpn4Str = buffer_to_string.substr(70,1);       //56+1
-    std::string Wpn4AmmoStr = buffer_to_string.substr(71,3);   //57+3
+    std::string typeIDStr = buffer_to_string.substr(3,3);       //3+3
+    std::string typeEntityIDStr = buffer_to_string.substr(6,3); //6+3
+    std::string typeMapIdStr = buffer_to_string.substr(9,3);    //9+3
+    std::string typeSessionStr = buffer_to_string.substr(12,3); //12+3
+    std::string idPlayerStr = buffer_to_string.substr(15,5);    //15+5
+    std::string idParPlayerStr = buffer_to_string.substr(20,5); //20+5
+    std::string lvlStr = buffer_to_string.substr(25,1);         //25+1
+    std::string XPosStr = buffer_to_string.substr(26,6);        //26+6
+    std::string XPosDecStr = buffer_to_string.substr(32,2);     //32+2
+    std::string YPosStr = buffer_to_string.substr(34,6);        //34+6
+    std::string YPosDecStr = buffer_to_string.substr(40,2);     //40+2
+    std::string WidthStr = buffer_to_string.substr(42,3);       //42+3
+    std::string HeightStr = buffer_to_string.substr(45,3);      //45+3
+    std::string lifeStr = buffer_to_string.substr(48,1);        //48+1
+    std::string liveStr = buffer_to_string.substr(49,3);        //49+3
+    std::string ShdStr = buffer_to_string.substr(52,3);         //52+3
+    std::string ActWpnStr = buffer_to_string.substr(55,2);      //55+2
+    std::string Wpn1Str = buffer_to_string.substr(57,1);        //57+1
+    std::string Wpn1AmmoStr = buffer_to_string.substr(58,3);    //58+3
+    std::string Wpn2Str = buffer_to_string.substr(61,1);        //61+1
+    std::string Wpn2AmmoStr = buffer_to_string.substr(62,3);    //62+3
+    std::string Wpn3Str = buffer_to_string.substr(65,1);        //65+1
+    std::string Wpn3AmmoStr = buffer_to_string.substr(66,3);    //66+3
+    std::string Wpn4Str = buffer_to_string.substr(69,1);        //69+1
+    std::string Wpn4AmmoStr = buffer_to_string.substr(70,3);    //70+3
 
-    std::string Item1Str = buffer_to_string.substr(74,1);      //60+1
-    std::string Item1ValStr = buffer_to_string.substr(75,2);      //60+1
-    std::string Item2Str = buffer_to_string.substr(77,1);      //61+1
-    std::string Item2ValStr = buffer_to_string.substr(78,2);      //60+1
-    std::string Item3Str = buffer_to_string.substr(80,1);      //62+1
-    std::string Item3ValStr = buffer_to_string.substr(81,2);      //60+1
-    std::string Item4Str = buffer_to_string.substr(83,1);      //63+1
-    std::string Item4ValStr = buffer_to_string.substr(84,2);      //60+1
+    std::string Item1Str = buffer_to_string.substr(73,1);       //73+1
+    std::string Item1ValStr = buffer_to_string.substr(74,2);    //74+2
+    std::string Item2Str = buffer_to_string.substr(76,1);       //76+1
+    std::string Item2ValStr = buffer_to_string.substr(77,2);    //77+2
+    std::string Item3Str = buffer_to_string.substr(79,1);       //79+1
+    std::string Item3ValStr = buffer_to_string.substr(80,2);    //80+2
+    std::string Item4Str = buffer_to_string.substr(82,1);       //82+1
+    std::string Item4ValStr = buffer_to_string.substr(83,2);    //83+2
 
-    std::string ScoreStr = buffer_to_string.substr(86,5);      //64+5
-    std::string DieStr = buffer_to_string.substr(91,1);        //69+1
-    std::string AnimIndexStr = buffer_to_string.substr(92,2);  //70+2
-    std::string enabledStr = buffer_to_string,substr(94,1);    //elemento remoto enviado
+    std::string ScoreStr = buffer_to_string.substr(85,5);       //85+5
+    std::string DieStr = buffer_to_string.substr(90,1);         //90+1
+    std::string AnimIndexStr = buffer_to_string.substr(91,2);   //91+2
+    std::string enabledStr = buffer_to_string.substr(93,1);     //93+1
 
     int typeTramaIDInt = atoi(typeTramaIDStr.c_str());
     int typeIDSInt = atoi(typeIDStr.c_str());

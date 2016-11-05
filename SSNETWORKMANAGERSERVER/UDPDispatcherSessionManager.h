@@ -41,10 +41,10 @@ public:
     }
 
     void processingInputMsgsFromClients();
+    void processingOutputMsgToClients();
     void processInputConnections(EventMsg *ackTrama);             //--> QRY_CONECTION; CONECTION
     EventMsg *processQueryActiveSessions(EventMsg *qryListTrama); //--> QRY_SESSION_LIST; GET_SESSION_LIST
-    EventMsg *processActivateSession(EventMsg *ackSession);       //--> QRY_SESSION; GET_SESSION
-    void processInputMsgs(){};                                    //--> OTHER INFORMATIONS.
+    void processActivateSession(EventMsg *ackSession);            //--> QRY_SESSION; GET_SESSION
 
     void activeSessions();
 
@@ -63,7 +63,7 @@ public:
             UDPpacket *pack = SDLNet_AllocPacket(BUFFER_SIZE);
             pack->address.host = 0;
             pack->address.port = 0;
-            msg->setPacketUPD(pack);
+            msg->setPacketUDPTrama(pack);
 
             clientPackets.push_back(msg);
             freeSocket[i] = true;
@@ -93,7 +93,7 @@ void processingConnection(){};
 EventMsg *generatingACKPackets(int tramaSend,
                                int tramaGet,
                                int _OK,
-                               UDPpacket *packet);
+                               packetDataType packet);
 
 
 //friend void* execute_RunTaskUDPSession(void* );
