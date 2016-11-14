@@ -2489,4 +2489,34 @@ SSNETWORKMANAGERSERVER  ==> SERVER UDP (mantenimiento de dos sesiones)
 
 "Funciona" con 1 SERVER + 2 CLIENTES CONCURRENTES. FALTA. DESCARTE DE TRAMAS ANTIGUAS; PREDICCION (ENEMIGOS+ELEMENTOS ACTIVOS+JUGADORES REMOTOS); CONCILIACION SERVER.
 
+(Despues de varios meses de investigación he conseguido una plataforma estable para experimentar con la parte multijugador; ademas de definir el esqueleto de la version definitiva)
 
+ESTADO ACTUAL DEL DESARROLLO:
+
+************************************************************************************************************************************
+
+/==== FASE 1 CORE ========================
+1) SSPROCEDURALMAP              (Creacion de mapas procedurales) --> OK
+2) SSCROLLINGMANAGER            (Motor definitivo de scroll) --> OK
+3) SSMULTITASKINGMANAGER        (Estudio Multitasking; PThreads, SDL_Threads, Mutex, Cond) --> OK
+4) SSNETWORKMANAGER
+   SSNETWORKMANAGERSERVER       (Motor cliente servidor sobre UDP, Tramas, CRC, Compresion, Arquitectura Cliente-Servidor) --> 50%
+5) SSENTITYMANAGER              (Motor SQLLite def. Motor SQLLite Journaling, Recursos, Motor Cache, Gestión de recursos) --> FALTA
+6) SSLUAMANAGER                 (Motor Gestion LUA; con LuaBind, compilacion offline ) --> FALTA
+
+/==== FASE 2 VISUAL ======================
+7) SDL20GL11SHADOWS             (Motor TILES, bumpmapping; multitexturing; transparencias) --> FALTA
+8) SDL20GL11LIGHT               (Motor LUCES DINAMICAS) --> FALTA
+9) SDL20PARTICLESYSTEM          (Motor Particulas) --> FALTA
+
+/==== FASE 3 UI ==========================
+
+10) SSGUICHAN                   (Motor IU Ingame)
+
+
+Priority_queue: http://www.cplusplus.com/reference/queue/priority_queue/push/
+************************************************************************************************************************************
+
+13-11-2016
+
+SSENTITYMANAGER ==> SQLite + Cache (LRU Strategy) + Performing Engine

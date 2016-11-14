@@ -12,16 +12,31 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-std=c++11" />
+					<Add option="-pedantic" />
+					<Add option="-std=c++98" />
+					<Add option="-Wextra" />
 					<Add option="-Wall" />
 					<Add option="-g" />
+					<Add option="-DWIN32 -DPROFILING" />
 					<Add directory="C:/workspaces/libs/SQLITE/sqlite-3.11/include" />
+					<Add directory="C:/workspaces/libs/SDL_2.0.3/SDL2-devel-2.0.3-mingw/SDL2-2.0.3/i686-w64-mingw32/include/SDL2" />
+					<Add directory="C:/workspaces/runtimes/CodeBlocks/MinGW/include" />
 				</Compiler>
 				<Linker>
+					<Add option="-lmingw32" />
+					<Add option="-lpsapi" />
+					<Add option="-lSDL2main" />
+					<Add option="-lSDL2" />
 					<Add option="-lsqlite3" />
+					<Add library="C:\workspaces\libs\SDL_2.0.3\SDL2-devel-2.0.3-mingw\SDL2-2.0.3\i686-w64-mingw32\lib\libSDL2.a" />
+					<Add library="C:\workspaces\libs\SDL_2.0.3\SDL2-devel-2.0.3-mingw\SDL2-2.0.3\i686-w64-mingw32\lib\libSDL2.dll.a" />
+					<Add library="C:\workspaces\libs\SDL_2.0.3\SDL2-devel-2.0.3-mingw\SDL2-2.0.3\i686-w64-mingw32\lib\libSDL2_test.a" />
+					<Add library="C:\workspaces\libs\SDL_2.0.3\SDL2-devel-2.0.3-mingw\SDL2-2.0.3\i686-w64-mingw32\lib\libSDL2main.a" />
 					<Add library="C:\workspaces\libs\SQLITE\sqlite-3.11\lib\sqlite3.a" />
 					<Add library="C:\workspaces\libs\SQLITE\sqlite-3.11\lib\sqlite3.lib" />
 					<Add directory="C:/workspaces/libs/SQLITE/sqlite-3.11/lib" />
+					<Add directory="C:/workspaces/libs/SDL_2.0.3/SDL2-devel-2.0.3-mingw/SDL2-2.0.3/i686-w64-mingw32/lib" />
+					<Add directory="C:/workspaces/runtimes/CodeBlocks/MinGW/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -40,22 +55,30 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="ActorEntity.cpp" />
 		<Unit filename="ActorEntity.h" />
-		<Unit filename="AnimationNode.h" />
 		<Unit filename="BlockEntity.h" />
 		<Unit filename="CoreLog.h" />
 		<Unit filename="CoreProfile.h" />
 		<Unit filename="CoreString.h" />
+		<Unit filename="DBConnection.cpp" />
+		<Unit filename="DBConnection.h" />
 		<Unit filename="Entity.h" />
+		<Unit filename="EntityManager.cpp" />
+		<Unit filename="EntityManager.h" />
 		<Unit filename="ExitEntity.h" />
 		<Unit filename="ImageRes.h" />
 		<Unit filename="ItemEntity.h" />
+		<Unit filename="LRUCache.h" />
 		<Unit filename="LightRes.h" />
+		<Unit filename="LogEngine.cpp" />
+		<Unit filename="LogEngine.h" />
 		<Unit filename="Main.cpp" />
 		<Unit filename="MemManagerMap.h" />
 		<Unit filename="MemManagerQueue.h" />
 		<Unit filename="MemManagerRes.h" />
 		<Unit filename="MeshEntity.h" />
+		<Unit filename="PROFILENGINE.log" />
 		<Unit filename="ParticleRes.h" />
 		<Unit filename="ProfileEngine.h" />
 		<Unit filename="Resource.h" />
@@ -66,6 +89,7 @@
 		<Unit filename="StateDestinyRes.h" />
 		<Unit filename="StateRes.h" />
 		<Unit filename="Stdafx.h" />
+		<Unit filename="TRAMACLIENT.log" />
 		<Unit filename="TiffRes.h" />
 		<Unit filename="TileComponent.h" />
 		<Unit filename="TileComponentCoord.h" />

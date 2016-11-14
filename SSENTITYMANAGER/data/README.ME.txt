@@ -8,6 +8,8 @@ https://github.com/utelle/wxsqlite3/tree/master/sqlite3/lib
 
 PROFILE:
 http://www.gamedev.net/page/resources/_/technical/game-programming/enginuity-part-iii-r1959
+http://stackoverflow.com/questions/63166/how-to-determine-cpu-and-memory-consumption-from-inside-a-process
+http://stackoverflow.com/questions/11537097/any-way-to-find-size-of-memory-allocated-to-map
 
 
 CACHE:

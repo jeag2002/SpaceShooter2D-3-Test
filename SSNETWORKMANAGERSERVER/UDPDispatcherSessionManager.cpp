@@ -56,6 +56,17 @@ void UDPDispatcherSessionManager::processingOutputMsgToClients(){
                         rHD.host,
                         rHD.port
                         );
+        /*
+        if (msgUDP->getTypeMsg() == TRAMA_ACK_SESSION){
+            playerDataType pDT = msgUDP->getPlayerDataType();
+            if ((pDT.actMap == 1) && (pDT.session == 1)){
+                session_1->setNumClients(session_1->getNumClients()+1);
+            }
+            if ((pDT.actMap == 1) && (pDT.session == 2)){
+                session_2->setNumClients(session_2->getNumClients()+1);
+            }
+        }
+        */
 
         nCUDP->sendMsgToClientUDP(msgUDP);
         cQ2->pop();
@@ -182,15 +193,14 @@ EventMsg *UDPDispatcherSessionManager::processQueryActiveSessions(EventMsg *qryL
     lSAT.num_player_ava_1_1 = session_1->getNumClients();
     lSAT.num_player_max_1_1 = session_1->getMaxClients();
 
+    /*
     lSAT.session_1_2 = 0;
     lSAT.num_player_ava_1_2 = 0;
     lSAT.num_player_max_1_2 = 0;
-
-    /*
+    */
     lSAT.session_1_2 = session_2->getSessionId();
     lSAT.num_player_ava_1_2 = session_2->getNumClients();
     lSAT.num_player_max_1_2 = session_2->getMaxClients();
-    */
 
     lSAT.map_2_id = 0;
     lSAT.session_2_1 = 0;

@@ -1,0 +1,18 @@
+
+[INFO]  (13/11/2016 - 23:49:31) -  - LogEngine - INITIALIZED! to [DEBUG]  Channel [FILE] 
+[INFO]  (13/11/2016 - 23:49:31) -  - [DBConnection::createConn] connection successfully to local database [data/sea.s3db]
+[INFO]  (13/11/2016 - 23:49:31) -  - ================ [SSENTITYMANAGER - INI] ================
+[DEBUG] (13/11/2016 - 23:49:31) -  - [EntityManager::getActorEntity] get Actor Key from DB [200]
+[DEBUG] (13/11/2016 - 23:49:31) -  - [DBConnection::queryConnection] Get DATA Query [select ID, LIVE, SHIELD, SCORE from ACTOR where ID = 200] 
+[DEBUG] (13/11/2016 - 23:49:31) -  - [DBConnection::queryConnection] col[0] data[200]
+[DEBUG] (13/11/2016 - 23:49:31) -  - [DBConnection::queryConnection] col[1] data[1]
+[DEBUG] (13/11/2016 - 23:49:31) -  - [DBConnection::queryConnection] col[2] data[200]
+[DEBUG] (13/11/2016 - 23:49:31) -  - [DBConnection::queryConnection] col[3] data[20]
+[DEBUG] (13/11/2016 - 23:49:31) -  - [DBConnection::queryConnection] --END DATA
+[DEBUG] (13/11/2016 - 23:49:31) -  - [DBConnection::queryConnection] Get data size (col) [1]
+[INFO]  (13/11/2016 - 23:49:31) -  - GET ACTOR ENTITY 200 1 POS_X:0.000000 POS_Y:0.000000 LIVE:0 SHIELD:200 SCORE:20
+[DEBUG] (13/11/2016 - 23:49:31) -  - [EntityManager::getActorEntity] get Actor Key from CACHE [200]
+[INFO]  (13/11/2016 - 23:49:31) -  - GET ACTOR ENTITY 200 2 POS_X:640.000000 POS_Y:0.000000 LIVE:0 SHIELD:200 SCORE:20
+[DEBUG] (13/11/2016 - 23:49:31) -  - [EntityManager::getActorEntity] get Actor Key from CACHE [200]
+[INFO]  (13/11/2016 - 23:49:31) -  - GET ACTOR ENTITY 200 3 POS_X:640.000000 POS_Y:640.000000 LIVE:0 SHIELD:0 SCORE:0
+[INFO]  (13/11/2016 - 23:49:31) -  - ================ [SSENTITYMANAGER - FIN] ================

@@ -1,0 +1,18 @@
+
+[INFO]  (13/11/2016 - 23:49:31) -  - LogEngine - INITIALIZED! to [DEBUG]  Channel [FILE] 
+[DEBUG] (13/11/2016 - 23:49:31) -  - =============== PROFILING GENERAL STATE DATA INI ================
+[DEBUG] (13/11/2016 - 23:49:31) -  - 	totVirtMem:	-0000000001	bytes	virtMemUsed:	00000000000	bytes	virtMemUsedByMe:	00000000000	bytes
+[DEBUG] (13/11/2016 - 23:49:31) -  - 	totPhysMem:	02147483647	bytes	physMemUsed:	00000000000	bytes	physMemUsedByMe:	00000000000	bytes
+[DEBUG] (13/11/2016 - 23:49:31) -  - 	PercentCPUUsedByMe:		        nan	percent
+[DEBUG] (13/11/2016 - 23:49:31) -  - =============== PROFILING GENERAL STATE DATA FIN ================
+[DEBUG] (13/11/2016 - 23:49:31) -  - getActorEntity key 200 - INI
+[DEBUG] (13/11/2016 - 23:49:31) -  - 	not find Actor in Cache Engine,requested from DB
+[DEBUG] (13/11/2016 - 23:49:31) -  - 		size of cache Engine before set new actor [200] - [172]
+[DEBUG] (13/11/2016 - 23:49:31) -  - 		size of cache Engine after set new actor [200] - [168]
+[DEBUG] (13/11/2016 - 23:49:31) -  - getActorEntity key 200 - END TIME [44] MS
+[DEBUG] (13/11/2016 - 23:49:31) -  - getActorEntity key 200 - INI
+[DEBUG] (13/11/2016 - 23:49:31) -  - 	find Actor Cache Engine
+[DEBUG] (13/11/2016 - 23:49:31) -  - getActorEntity key 200 - END TIME [13] MS
+[DEBUG] (13/11/2016 - 23:49:31) -  - getActorEntity key 200 - INI
+[DEBUG] (13/11/2016 - 23:49:31) -  - 	find Actor Cache Engine
+[DEBUG] (13/11/2016 - 23:49:31) -  - getActorEntity key 200 - END TIME [12] MS

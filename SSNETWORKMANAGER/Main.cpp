@@ -107,7 +107,7 @@ int main (int argc, char *argv[])
    nClientUDP->establishCommunicationUDP();
    nClientUDP->getListActiveSessions();
 
-   int attemps = 10;
+   int attemps = 50;
    bool DONE = false;
 
 

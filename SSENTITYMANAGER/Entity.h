@@ -3,6 +3,7 @@
 
 #include "Stdafx.h"
 #include "Resource.h"
+#include "CoreString.h"
 
 /*
 
@@ -13,10 +14,20 @@ SCRIPT_ANIM     CHAR(20)
 SCRIPT_AI       CHAR(20)
 */
 
-
 class Entity : public Resource{
 
 public:
+
+Entity():Resource(false,0,0){
+    this->id = 0;
+    this->xPos = 0;
+    this->yPos = 0;
+    this->idTile = 0;
+    this->idMesh = 0;
+    this->scriptAnim = "";
+    this->scriptAI = "";
+    clearBuffers();
+}
 
 Entity(uint8_t entityRef):Resource(false,0,entityRef){
     this->id = 0;
@@ -51,7 +62,7 @@ Entity(uint8_t entityRef, uint32_t timestamp):Resource(false,timestamp,entityRef
     clearBuffers();
 }
 
-Entity(Entity *entityRef, uint8_t entityRefID):Resource(false,0,entityRefID){
+Entity(Entity *entityRef, uint8_t entityRefID): Resource(false,0,entityRefID){
     this->id = entityRef->getID();
     this->xPos = entityRef->getXPos();
     this->yPos = entityRef->getYPos();
@@ -62,7 +73,7 @@ Entity(Entity *entityRef, uint8_t entityRefID):Resource(false,0,entityRefID){
     copyBuffer(entityRef);
 }
 
-Entity(Entity *entityRef, uint8_t entityRefID, uint32_t timestamp):Resource(false,timestamp,entityRefID){
+Entity(Entity *entityRef, uint8_t entityRefID, uint32_t timestamp): Resource(false,timestamp,entityRefID){
     this->id = entityRef->getID();
     this->xPos = entityRef->getXPos();
     this->yPos = entityRef->getYPos();
@@ -80,10 +91,16 @@ void copyTo(Entity *entityRef){
     this->yPos = entityRef->getYPos();
     this->idTile =  entityRef->getIDTile();
     this->idMesh =  entityRef->getIDMesh();
-    this->scriptAnim = CoreString::copySafetyString(entityRef->getScriptAnim());
-    this->scriptAI =  CoreString::copySafetyString(entityRef->getScriptAI());
-    copyBuffer(entityRef);
+    //this->scriptAnim = CoreString::copySafetyString(entityRef->getScriptAnim());
+    //this->scriptAI =  CoreString::copySafetyString(entityRef->getScriptAI());
+    //copyBuffer(entityRef);
 }
+
+void copyTo(Resource *res){
+    Entity *entityRes = (Entity *)res;
+    copyTo(entityRes);
+}
+
 
 uint32_t getID(){return this->id;}
 void setID(uint32_t _id){this->id = _id;}
@@ -107,8 +124,8 @@ std::string getScriptAI(){return this->scriptAI;}
 void setScriptAI(std::string _scriptAI){this->scriptAI = CoreString::copySafetyString(_scriptAI);}
 
 //FUNCIONES ENCARGADAS DE ENVIAR-RECIBIR LOS DATOS DE LOS SCRIPTS DE ANIMACION/AI/GAMEPLAY
-virtual std::string serializeToLua(); //C++ --> LUA (JSON)
-virtual void deserializeFromLua();    //LUA --> C++
+//virtual std::string serializeToLua()=0; //C++ --> LUA (JSON)
+//virtual void deserializeFromLua()=0;    //LUA --> C++
 
 void clear(){
     this->id = 0;

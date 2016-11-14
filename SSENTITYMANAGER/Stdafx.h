@@ -24,9 +24,41 @@
 
 #define ITEM_ENT 14
 
-#include <string>
+#define DB "data/sea.s3db"
+#include "sqlite3.h"
+
 #include <vector>
 #include <map>
+#include <list>
+
+#ifdef PROFILING
+    #define DEBUG_DATA 1
+#else
+    #define DEBUG_DATA 2
+    #define NDEBUG
+#endif
+
+#include <cassert>
+
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <time.h>
+
+//INFO PROFILING
+#ifdef WIN32
+#include <windows.h>
+#include <winbase.h>
+#include <psapi.h>
+#include <tchar.h>
+#endif
+
+#include <SDL.h>
+#undef main
+
+#define ACTOR_QUERY "select ID, LIVE, SHIELD, SCORE from ACTOR where ID = %d"
 
 typedef struct{
     float rel_pos_x;

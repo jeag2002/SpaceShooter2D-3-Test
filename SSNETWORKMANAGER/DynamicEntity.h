@@ -209,6 +209,11 @@ public:
                               getIndex, this->indexCoord, this->idDE,this->actMap,this->actSession,this->actLevel,this->x,this->y);
         }
 
+        positionXY pXY;
+        pXY.x = _rPType.x_pos;
+        pXY.y = _rPType.y_pos;
+        pXY.order = getIndex;
+        //interpolationLine.push(pXY);
 
     }
 
@@ -264,6 +269,9 @@ private:
     int indexCoord;
 
     std::deque<positionXY> regresionLine;
+    //std::priority_queue<positionXY> interpolationLine;
+
+
     int num_data;
     bool left;
     bool down;

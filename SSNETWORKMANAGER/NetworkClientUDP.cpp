@@ -59,8 +59,8 @@ void NetworkClientUDP::establishCommunicationUDP(){
 
        //indexTramaSend++;
        //-->QRY ACK PACKET (SEND TO SERVER) indexTramaSend:1; indexTramaGet:0
-       int times = 3;
-       int time_resend_ack = 3;
+       int times = 50;
+       int time_resend_ack = 50;
 
        bool DONE = false;
        bool NOT_ACCEPTED = false;
@@ -158,10 +158,10 @@ void NetworkClientUDP::getListActiveSessions(){
         logger->info("[SSNETWORKMANAGER::LISTACTIVESESSION] *** LIST ACTIVE MAPS - ACTIVE SESSION FROM SERVER *** -END- *** ");
     }else if (response->getTypeMsg() == TRAMA_NULL){
         logger->warn("[SSNETWORKMANAGER::LISTACTIVESESSION] --> CANNOT GET LIST. CLOSE SOCKET");
-        SDLNet_UDP_Close(clientSocket);
-        SDLNet_FreePacket(packet);
-        SDLNet_Quit();
-        exit(1);
+        //SDLNet_UDP_Close(clientSocket);
+        //SDLNet_FreePacket(packet);
+        //SDLNet_Quit();
+        //exit(1);
     }
     delete response;
 

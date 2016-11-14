@@ -6,6 +6,7 @@
 #include "CoreString.h"
 #include "AnimationNode.h"
 
+
 /*
 
 TABLE ENT_ACTOR           //-->definicion actor
@@ -91,9 +92,9 @@ void copyTo(ActorEntity *actorRef){
     this->shield = actorRef->getShield();
     this->live = actorRef->getLive();
     this->score = actorRef->getScore();
-    this->tree = new AnimationNode(actorRef->getAnimationTree());
-    copyBuffers(actorRef);
-    copyActorComponents(actorRef);
+    //this->tree = new AnimationNode(actorRef->getAnimationTree());
+    //copyBuffers(actorRef);
+    //copyActorComponents(actorRef);
 };
 
 
@@ -228,6 +229,9 @@ void copyActorComponents(ActorEntity *actorRef){
     }
 
 }
+
+void marshallActorEntity(char **data);
+
 
 private:
 

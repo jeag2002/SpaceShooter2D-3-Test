@@ -207,18 +207,21 @@ EventMsg *UDPDispatcherSession::setClientForSession(EventMsg *msg){
             sessionUDP->setIndexDataGet(msg->getTramaGet());
             sessionUDP->setIndexDataSend(msg->getTramaSend());
 
-            logger->debug("[UDPDispatcherSession::setClientForSession Map[%d] Session[%d]] JOIN PLAYER [%d] TRAMASEND [%d] TRAMAGET [%d] FROM REMOTE HOST ([%d]:[%d])",
+            clientes.push_back(sessionUDP);
+            numClients++;
+
+            logger->debug("[UDPDispatcherSession::setClientForSession Map[%d] Session[%d]] JOIN PLAYER [%d] TRAMASEND [%d] TRAMAGET [%d] FROM REMOTE HOST ([%d]:[%d]) NUM_CLIENT [%d]",
                           this->mapId,
                           this->sessionId,
                           sessionUDP->getPlayerId(),
                           sessionUDP->getIndexDataSend(),
                           sessionUDP->getIndexDataGet(),
                           sessionUDP->getHost(),
-                          sessionUDP->getPort()
+                          sessionUDP->getPort(),
+                          numClients
                           );
 
-            clientes.push_back(sessionUDP);
-            numClients++;
+
             msgOutput->setMsg(sendAckMsg(dEntity,msg,true));
         }
     }else{
@@ -254,7 +257,7 @@ EventMsg *UDPDispatcherSession::setClientForSession(EventMsg *msg){
                     clientes.push_back(sessionUDP);
                     numClients++;
                     msgOutput->setMsg(sendAckMsg(dEntity,msg,true));
-                    logger->debug("[UDPDispatcherSession::setClientForSession Map[%d] Session[%d]] IDPLAYER [%d] JOINED TO SESSION",this->mapId,this->sessionId, msgOutput->getPlayerDataType().idPlayer);
+                    logger->debug("[UDPDispatcherSession::setClientForSession Map[%d] Session[%d]] IDPLAYER:[%d] JOINED TO SESSION INC NUM_CLIENTS:[%d]",this->mapId,this->sessionId, msgOutput->getPlayerDataType().idPlayer,numClients);
                 }else{
                     logger->warn("[UDPDispatcherSession::setClientForSession Map[%d] Session[%d]] USER [%s]:[%d] NOT ID AVAILABLE, DISCARD PACKET",this->mapId,this->sessionId,rHD.host,rHD.port);
                 }

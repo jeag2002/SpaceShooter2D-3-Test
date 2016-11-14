@@ -66,6 +66,7 @@
 		<Unit filename="Concurrent_queue.h" />
 		<Unit filename="Concurrent_queue_UDP.h" />
 		<Unit filename="Constants.h" />
+		<Unit filename="DBConnection.h" />
 		<Unit filename="DynamicEntity.cpp" />
 		<Unit filename="DynamicEntity.h" />
 		<Unit filename="EventMsg.cpp" />

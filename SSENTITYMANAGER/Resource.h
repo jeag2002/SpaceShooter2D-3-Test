@@ -15,14 +15,14 @@ Resource(bool _isObsolete, uint32_t _timestamp, uint8_t _type){
     obsolete = _isObsolete;
     timestamp = _timestamp;
     type = _type;
-}
+};
 
 
 ~Resource(){
     obsolete = false;
     timestamp = 0;
     type = -1;
-}
+};
 
 void setObsolete(bool _isObsolete){this->obsolete = _isObsolete;}
 bool isObsolete(){return obsolete;}
@@ -33,10 +33,9 @@ uint32_t getTimeStamp(){return this->timestamp;}
 void setType(uint8_t _type){this->type = _type;}
 uint8_t getType(){return this->type;}
 
-virtual void copyTo();
-virtual void copyTo(Resource *res);
-
-virtual void clear();
+//virtual void copyTo()=0;
+virtual void copyTo(Resource *res)=0;
+virtual void clear()=0;
 
 protected:
 

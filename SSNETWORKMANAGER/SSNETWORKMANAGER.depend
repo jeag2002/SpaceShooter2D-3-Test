@@ -502,7 +502,7 @@
 	"DynamicEntity.h"
 	"DynamicPlayer.h"
 
-1478353066 c:\workspaces\workcodeblocks\ssnetworkmanager\dynamicentity.h
+1479058718 c:\workspaces\workcodeblocks\ssnetworkmanager\dynamicentity.h
 	"SDL.h"
 	"Task.h"
 	"LogEngine.h"
@@ -621,7 +621,7 @@
 1470248662 source:c:\workspaces\workcodeblocks\ssnetworkmanager\taskmanager.cpp
 	"TaskManager.h"
 
-1478302019 source:c:\workspaces\workcodeblocks\ssnetworkmanager\main.cpp
+1479058662 source:c:\workspaces\workcodeblocks\ssnetworkmanager\main.cpp
 	"Stdafx.h"
 	"LogEngine.h"
 	"Subject.h"
