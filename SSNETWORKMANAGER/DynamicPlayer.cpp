@@ -5,6 +5,8 @@ void DynamicPlayer::update(EventMsg *msg){
     //SDL_Delay(100);
 
     localActionType lAcType = msg->getLocalActionType();
+    msgType msgType = msg->getMsgType();
+    OrderType oType = msg->getOrderType();
 
     movementType mType;
     EventMsg *msgCopy = new EventMsg();
@@ -100,15 +102,26 @@ void DynamicPlayer::update(EventMsg *msg){
             mType.actMap = this->mapID;
             mType.session = this->sessionID;
             msgCopy->setMovementType(mType);
-
-
-
         }else if (lAcType.typeMovement == MOUSE){
-
         }
+        msgCopy->setTypeMsg(TRAMA_COMMAND);
+        this->setLocked(false);
 
+    }else if (msgType.originMsg == this->indexPlayer){
+        this->setLocked(true);
+        msgCopy->setMsgType(msgType);
+        msgCopy->setTypeMsg(TRAMA_SND_ORDER_TO_SERVER);
+        this->setLocked(false);
+    }else if (oType.entityID == this->indexPlayer){
+        this->setLocked(true);
+        msgCopy->setOrderType(oType);
+        msgCopy->setTypeMsg(TRAMA_SND_ORDER_TO_SERVER);
+        this->setLocked(false);
+    }
+
+
+    if (msgCopy->getTypeMsg()==TRAMA_COMMAND){
         this->sendToServer++;
-
         if (sendToServer==10){
 
             int indexTramaSend = nClient->getIndexTramaSend();
@@ -116,7 +129,6 @@ void DynamicPlayer::update(EventMsg *msg){
             nClient->setIndexTramaSend(indexTramaSend);
 
 
-            msgCopy->setTypeMsg(TRAMA_COMMAND);
             msgCopy->setTramaGet(nClient->getIndexTramaGet());
             msgCopy->setTramaSend(nClient->getIndexTramaSend());
             msgCopy->setMore(NOK);
@@ -124,22 +136,37 @@ void DynamicPlayer::update(EventMsg *msg){
             msgCopy->setPacketUPD(nClient->getRemotePacket());
 
             log->debug("[DynamicPlayer::update] SENDTOSERVER ID_PLAYER[%d] TYPE_PACKET[%d] TYPE_MOVEMENT[%d] TRAMASEND[%d] TRAMAGET[%d] ",
-                       this->indexPlayer,
-                       msgCopy->getTypeMsg(),
-                       msgCopy->getMovementType().movementID,
-                       msgCopy->getTramaSend(),
-                       msgCopy->getTramaGet()
-                       );
-
-            log->debug("[DynamicPlayer::update DATA] ID_PLAYER NEW POSITION [%d] (lvl:%d, x:%f, y:%f) SENT TO SERVER",this->indexPlayer,this->actLevel,this->x,this->y);
-
+                        this->indexPlayer,
+                        msgCopy->getTypeMsg(),
+                        msgCopy->getMovementType().movementID,
+                        msgCopy->getTramaSend(),
+                        msgCopy->getTramaGet()
+                        );
             nClient->sendMsgToServer(msgCopy);
             sendToServer = 0;
-        }else{
-            log->debug("[DynamicPlayer::update DATA] ID_PLAYER NEW POSITION [%d] (lvl:%d, x:%f, y:%f) NOT SENT TO SERVER",this->indexPlayer,this->actLevel,this->x,this->y);
         }
+    }else{
+
+        int indexTramaSend = nClient->getIndexTramaSend();
+        indexTramaSend++;
+        nClient->setIndexTramaSend(indexTramaSend);
 
 
-        this->setLocked(false);
+        msgCopy->setTramaGet(nClient->getIndexTramaGet());
+        msgCopy->setTramaSend(nClient->getIndexTramaSend());
+        msgCopy->setMore(NOK);
+        msgCopy->setNumTrazas(1);
+        msgCopy->setPacketUPD(nClient->getRemotePacket());
+
+        log->debug("[DynamicPlayer::update] SENDTOSERVER ID_PLAYER[%d] TYPE_PACKET[%d] TYPE_MOVEMENT[%d] TRAMASEND[%d] TRAMAGET[%d] ",
+                    this->indexPlayer,
+                    msgCopy->getTypeMsg(),
+                    msgCopy->getMovementType().movementID,
+                    msgCopy->getTramaSend(),
+                    msgCopy->getTramaGet()
+                    );
+        nClient->sendMsgToServer(msgCopy);
+        sendToServer = 0;
     }
+
 };

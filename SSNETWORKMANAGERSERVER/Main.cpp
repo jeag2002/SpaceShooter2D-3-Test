@@ -52,8 +52,16 @@ int main (int argc, char *argv[])
 //UTIL UDPConn
 void createEnvirontmentNew(){
 
+    Uint16 port = 0;
+
     nClientUDP = new NetworkClientUDP(logger);
-    nClientUDP->initCommunicationUDP();
+
+    std::cout << "\r\nEnter local port SSNETWORKMANAGERSERVER: ";
+    std::cin >> port;
+
+    logger->info("[SSNETWORKMANAGERSERVER::Main] OPEN LOCAL PORT (%d)",port);
+
+    nClientUDP->initCommunicationUDP(port);
 
     cQ1 = new Concurrent_queue_UDP();
     cQ2 = new Concurrent_queue_UDP();

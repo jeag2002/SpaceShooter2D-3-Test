@@ -70,7 +70,8 @@ void QueueManager::runRemoteData(){
 
             log->debug("[QUEUEMANAGER::REMOTEDATA] QRY DATA FROM DATA SERVER SENDPACKET[%d] GETPACKET[%d]",nClientUDP->getIndexTramaSend(),nClientUDP->getIndexTramaGet());
 
-            nClientUDP->sendMsgToServer(new EventMsg(TRAMA_QRY_DATASERVER,nClientUDP->getIndexTramaSend(),nClientUDP->getIndexTramaGet(),0,1,(uint16_t)0,nClientUDP->getRemotePacket(),pDT));
+            EventMsg *iMsg = new EventMsg(TRAMA_QRY_DATASERVER,nClientUDP->getIndexTramaSend(),nClientUDP->getIndexTramaGet(),0,1,(uint16_t)0,nClientUDP->getRemotePacket(),pDT);
+            nClientUDP->sendMsgToServer(iMsg);
 
             bool DONE = false;
 
@@ -78,50 +79,50 @@ void QueueManager::runRemoteData(){
 
             while (!DONE){
                 EventMsg *msg = nClientUDP->getMsgFromServer();
+
                 if (msg->getTypeMsg() == TRAMA_GET_DATASERVER){
 
-                    log->debug("[QUEUEMANAGER::REMOTEDATA] GET REMOTE INFO FOR TypeTramaID:[%d] IDType:[%d] EntityID:[%d] IDActor:[%d] (actMap:%d,session:%d,lvl:%d,x:%f,y:%f,width:%d,height:%d) score[%d] die[%d] animId[%d] enabled [%d]",
-                                msg->getRemotePlayerType().typeTramaID,
-                                msg->getRemotePlayerType().typeID,
-                                msg->getRemotePlayerType().entityID,
-                                msg->getRemotePlayerType().idPlayer,
-                                msg->getRemotePlayerType().actMap,
-                                msg->getRemotePlayerType().session,
-                                msg->getRemotePlayerType().lvl,
-                                msg->getRemotePlayerType().x_pos,
-                                msg->getRemotePlayerType().y_pos,
-                                msg->getRemotePlayerType().width,
-                                msg->getRemotePlayerType().height,
-                                msg->getRemotePlayerType().score,
-                                msg->getRemotePlayerType().die,
-                                msg->getRemotePlayerType().animIndex,
-                                msg->getRemotePlayerType().enabled);
+                    if (msg->getTramaSend() < iMsg->getTramaSend()){
 
-                    processRemoteMsg(msg);
+                        log->debug("[QUEUEMANAGER::REMOTEDATA] GET REMOTE INFO FOR TypeTramaID:[%d] IDType:[%d] EntityID:[%d] IDActor:[%d] (actMap:%d,session:%d,lvl:%d,x:%f,y:%f,width:%d,height:%d) score[%d] die[%d] animId[%d] enabled [%d]",
+                                    msg->getRemotePlayerType().typeTramaID,
+                                    msg->getRemotePlayerType().typeID,
+                                    msg->getRemotePlayerType().entityID,
+                                    msg->getRemotePlayerType().idPlayer,
+                                    msg->getRemotePlayerType().actMap,
+                                    msg->getRemotePlayerType().session,
+                                    msg->getRemotePlayerType().lvl,
+                                    msg->getRemotePlayerType().x_pos,
+                                    msg->getRemotePlayerType().y_pos,
+                                    msg->getRemotePlayerType().width,
+                                    msg->getRemotePlayerType().height,
+                                    msg->getRemotePlayerType().score,
+                                    msg->getRemotePlayerType().die,
+                                    msg->getRemotePlayerType().animIndex,
+                                    msg->getRemotePlayerType().enabled);
+
+                        processRemoteMsg(msg);
+                    }
+
+
                     numTramas++;
+                }else if (msg->getTypeMsg() == TRAMA_SND_ORDER_TO_SERVER){
+
+                    msgType mType = msg->getMsgType();
+                    if (mType.msgTypeID == TYPE_MSG_FROM_SERVER){
+                        log->debug("[QUEUEMANAGER::REMOTEDATA] GET MSG FROM SERVER [%s]",mType.msg);
+                        mem->push(msg);
+                    }
                 }
+
                 DONE = (numTramas >= SIZE_REMOTE_ELEMS);
                 if (!DONE){
                     DONE = ((SDL_GetTicks()-ticks) >= TIMEOUT);
                 }
             }
         }
-
-        /*
-        if (numTramas <= SIZE_REMOTE_ELEMS){
-            log->warn("[QUEUEMANAGER::REMOTEDATA] NO RECOVE ALL THE INFORMATION. ACTIVE PREDICTION CLIENTSIDE ENGINE");
-            pEngine->processPrediction();
-        }
-        */
     }//FINAL PROCESO DONE
 
 };
 
-/*
-void QueueManager::runLocalData(){
-    //nClock->pause();
-    pEngine->processPrediction();
-    //nClock->unpause();
-}
-*/
 

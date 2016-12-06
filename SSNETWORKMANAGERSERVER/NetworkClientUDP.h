@@ -52,7 +52,7 @@ NetworkClientUDP(LogEngine *_logger){
     SDLNet_Quit();
 };
 
-void initCommunicationUDP();
+void initCommunicationUDP(Uint16 localPort);
 
 void clearBuffer(){
     for(int i=0; i<BUFFER_SIZE; i++){

@@ -2480,6 +2480,10 @@ https://www.cs.cmu.edu/afs/cs/academic/class/15213-f99/www/class26/udpserver.c
 
 Github tutorials: https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/
 http://www.gabrielgambetta.com/fpm_live.html
+http://mikolalysenko.github.io/local-perception-filter-demo/
+http://www.gamedonia.com/blog/lag-compensation-techniques-for-multiplayer-games-in-realtime
+https://developer.valvesoftware.com/wiki/Source_Multiplayer_Networking
+https://developer.valvesoftware.com/wiki/Latency_Compensating_Methods_in_Client/Server_In-game_Protocol_Design_and_Optimization
 
 05-11-2016:
 
@@ -2520,3 +2524,78 @@ Priority_queue: http://www.cplusplus.com/reference/queue/priority_queue/push/
 13-11-2016
 
 SSENTITYMANAGER ==> SQLite + Cache (LRU Strategy) + Performing Engine
+
+15-11-2016
+
+SSLUAMANAGER ==>
+http://blog.nuclex-games.com/tutorials/cxx/luabind-introduction/
+
+23-11-2016:
+
+BUMPMAPPING
+
+http://nehe.gamedev.net/tutorial/bump-mapping,_multi-texturing_&_extensions/16009/
+http://www.codesampler.com/oglsrc/oglsrc_4.htm
+
+https://github.com/prideout/iphone-3d-programming
+https://www.opengl.org/wiki/Texture_Combiners
+http://chimera.labs.oreilly.com/books/1234000001814/index.html
+
+http://fivedots.coe.psu.ac.th/~ad/jg/
+
+EJEMPLOS EN JAVA (PARA COGER IDEAS)
+**********************************************************
+https://www.youtube.com/watch?v=-uCgyI4t1MU
+https://www.youtube.com/watch?v=KjfbzDGrRfI&t=417s
+https://www.youtube.com/watch?v=-pNaqvR4NWw
+**********************************************************
+
+para experimentar con imagenes.
+http://www.andersriggelsen.dk/glblendfunc.php
+
+
+http://www.paulsprojects.net/tutorials/simplebump/simplebump.html
+
+http://stackoverflow.com/questions/2368728/can-normal-maps-be-generated-from-a-texture
+http://nehe.gamedev.net/article/bump_mapping/25006/
+http://nehe.gamedev.net/tutorial/bump-mapping,_multi-texturing_&_extensions/16009/
+
+24-11-2016:
+
+GENERACION PROYECTOS EVALUACION EFECTOS AVANZADOS TILES:
+
+SSTILEBLEND => Transparencia/Alpha Blending ==> (05/12/2016 HECHO!)
+SSTILEGLOOM => GLOOM/GAUSSIAN BLUR
+SSTILEBUMPMAPPING => BUMPMAPPING
+SSTILEANIM => Animacion de texturas
+SSTILEFOG => FOG
+
+
+05-12-2016:
+
+SSNETWORKMANAGER/SSNETWORKMANAGERSERVER
+
+1-Optimizacion de recursos
+1.1-SERVER:
+1.1.1-4 Colas de mensaje de salida
+1.1.2-Derivar Gestion de memoria por thread.
+
+1.2-CLIENT:
+1.2.1-Derivar Gestion de memoria por thread.
+
+Crear protocolo de mensajeria (notificacion de servidor a clientes; notificacion de cliente a cliente de una misma sesion)
+
+REHACER SSNETWORKMANAGER/SSNETWORKMANAGERSERVER
+
+1-Crear protocolo PING desde servidor (Servidor hace un ping al cliente; este le devuelve el ping y determina el tiempo)
+1.1-TEST
+1.2-PING
+1.3-PONG (Servidor obtiene tiempo de respuesta del cliente)
+1.4-RESULT-TEST (cliente obtiene tiempo de respuesta del servidor)
+1.5-Adapta el cliente tiempo de refresco de frame (render+input data+envio al servidor) al result test (tiempo_server = PRED+INTERPOL+RENDER+DELTA)
+1.6-RESULT-TEST (si se conecta otro cliente; el nuevo result test será adaptado al cliente mas lento)
+
+QueueManager, DAEMON encargado de recuperar info del servidor (lo devuelve siempre; sin solicitud 14)
+
+
+

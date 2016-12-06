@@ -296,7 +296,6 @@ private:
     LogEngine *logPackets;
 
     std::queue<positionXY> regresionLine;
-    std::priority_queue<positionXY> interpolationLine;
 
     bool left;
     bool down;

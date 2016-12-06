@@ -30,11 +30,14 @@ public:
 
 
         cQ1 = new Concurrent_queue_UDP();
-        cQ2 = new Concurrent_queue_UDP();
+        cQ2_1 = new Concurrent_queue_UDP();
+        cQ2_2 = new Concurrent_queue_UDP();
+        cQ2_3 = new Concurrent_queue_UDP();
+        cQ2_4 = new Concurrent_queue_UDP();
 
 
-        session_1 = new UDPDispatcherSession(logger, 1,1, nCUDP, cQ1, cQ2); //mapa 1 session 1
-        session_2 = new UDPDispatcherSession(logger, 1,2, nCUDP, cQ1, cQ2); //mapa 1 session 1
+        session_1 = new UDPDispatcherSession(logger, 1,1, nCUDP, cQ1, cQ2_1, cQ2_2, cQ2_3, cQ2_4); //mapa 1 session 1
+        session_2 = new UDPDispatcherSession(logger, 1,2, nCUDP, cQ1, cQ2_1, cQ2_2, cQ2_3, cQ2_4); //mapa 1 session 1
 
         clearInputClientsToServer();
         activeSessions();
@@ -76,7 +79,11 @@ LogEngine *logger;
 MemManager *mem;
 NetworkClientUDP *nCUDP;
 Concurrent_queue_UDP *cQ1;
-Concurrent_queue_UDP *cQ2;
+
+Concurrent_queue_UDP *cQ2_1;
+Concurrent_queue_UDP *cQ2_2;
+Concurrent_queue_UDP *cQ2_3;
+Concurrent_queue_UDP *cQ2_4;
 
 SDL_Thread *hebra_1;
 SDL_Thread *hebra_2;

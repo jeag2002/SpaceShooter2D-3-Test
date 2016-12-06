@@ -26,8 +26,7 @@ MemManager(){
     setDynElemMap_lvl3M = SDL_CreateMutex();
 
     setRemPlayerM = SDL_CreateMutex();
-
-
+    setMessageM = SDL_CreateMutex();
 };
 
 ~MemManager(){
@@ -436,7 +435,46 @@ void setRemPlayerMap(int key, DynamicEntity *data){
 std::map<int, DynamicEntity *>getRemPlayerMap(){return remPlayerMap;}
 ///////////////////////////////////////////////////////
 
+//REMOTE MSG
+///////////////////////////////////////////////////////
+void push(EventMsg* data){
+    SDL_LockMutex(setMessageM);
+    msgs.push(data);
+    SDL_UnlockMutex(setMessageM);
+}
 
+EventMsg *front(){
+    EventMsg *msg = NULL;
+    SDL_LockMutex(setMessageM);
+    msg = msgs.front();
+    SDL_UnlockMutex(setMessageM);
+    return msg;
+}
+
+bool isEmpty(){
+    bool res = false;
+    SDL_LockMutex(setMessageM);
+    res = (msgs.size() == 0);
+    SDL_UnlockMutex(setMessageM);
+    return res;
+}
+
+int sizeQueue(){
+    int res = 0;
+    SDL_LockMutex(setMessageM);
+    res = msgs.size();
+    SDL_UnlockMutex(setMessageM);
+    return res;
+}
+
+
+void pop(){
+    SDL_LockMutex(setMessageM);
+    msgs.pop();
+    SDL_UnlockMutex(setMessageM);
+}
+
+///////////////////////////////////////////////////////
 /********************************************************/
 
 
@@ -460,6 +498,7 @@ std::vector<DynamicEntity *>DynElem_lvl_3;
 
 std::vector<DynamicEntity *>remPlayer;
 
+std::queue<EventMsg *>msgs;
 /********************************************************/
 
 
@@ -472,7 +511,7 @@ SDL_mutex *setDynElemMap_lvl2M;
 SDL_mutex *setDynElemMap_lvl3M;
 
 SDL_mutex *setRemPlayerM;
-
+SDL_mutex *setMessageM;
 
 typedef std::map<int, DynamicEntity *> DynamicEntityType;
 

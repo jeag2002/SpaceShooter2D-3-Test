@@ -190,6 +190,59 @@ DynamicEntity *UDPDispatcherSession::getRemotePlayer(){
 
 }
 
+EventMsg *UDPDispatcherSession::sendEventMsg(const char *iMsg, UDPSession *session){
+
+    EventMsg *msg = new EventMsg();
+    msgType mType;
+
+    mType.actMap = this->mapId;
+    mType.session = this->sessionId;
+    mType.msgTypeID = TYPE_MSG_FROM_SERVER;
+    mType.originMsg = ID_SERVER;
+    mType.endMsg = session->getPlayerId();
+
+    for(int i=0; i<SIZE_MSG; i++){
+        mType.msg[i] = '\0';
+        mType.msg[i] = iMsg[i];
+    }
+
+    msg->setMsgType(mType);
+    msg->setTypeMsg(TRAMA_SND_ORDER_TO_SERVER);
+    msg->setTramaSend(session->getIndexDataSend());
+    msg->setTramaGet(session->getIndexDataGet());
+    msg->setMore(0);
+    msg->setNumTrazas(1);
+
+    packetDataType pDT;
+    pDT.address.host = session->getHost();
+    pDT.address.port = session->getPort();
+    pDT.len = SIZE_MSG;
+    pDT.maxlen = SIZE_MSG;
+    pDT.status = 0;
+
+    msg->setPacketUDP(pDT);
+    return msg;
+}
+
+
+void UDPDispatcherSession::sendNotificationServerToDiffClients(const char *msg, int userDest){
+
+
+    for(int i=0; i<clientes.size(); i++){
+        UDPSession *session = clientes[i];
+        if (userDest==0){
+            EventMsg *eMsg = sendEventMsg(msg,session);
+            //cQOutput->push(eMsg);
+            sendMsgToOutput(eMsg);
+        }else if (userDest == session->getPlayerId()){
+            EventMsg *eMsg = sendEventMsg(msg,session);
+            //cQOutput->push(eMsg);
+            sendMsgToOutput(eMsg);
+        }
+    }
+}
+
+
 
 EventMsg *UDPDispatcherSession::setClientForSession(EventMsg *msg){
 
@@ -223,6 +276,13 @@ EventMsg *UDPDispatcherSession::setClientForSession(EventMsg *msg){
 
 
             msgOutput->setMsg(sendAckMsg(dEntity,msg,true));
+
+            char msg[100];
+            for(int i=0; i<100; i++){msg[i]='\0';}
+            sprintf(msg,"activate client [%d] map [%d] session [%d]",dEntity->getIDDE(),this->mapId,this->sessionId);
+            sendNotificationServerToDiffClients((const char *)msg,0);
+
+
         }
     }else{
         if (numClients <= MAX_CLIENT){
@@ -258,6 +318,12 @@ EventMsg *UDPDispatcherSession::setClientForSession(EventMsg *msg){
                     numClients++;
                     msgOutput->setMsg(sendAckMsg(dEntity,msg,true));
                     logger->debug("[UDPDispatcherSession::setClientForSession Map[%d] Session[%d]] IDPLAYER:[%d] JOINED TO SESSION INC NUM_CLIENTS:[%d]",this->mapId,this->sessionId, msgOutput->getPlayerDataType().idPlayer,numClients);
+
+                    char msg[100];
+                    for(int i=0; i<100; i++){msg[i]='\0';}
+                    sprintf(msg,"activate client [%d] map [%d] session [%d]",dEntity->getIDDE(),this->mapId,this->sessionId);
+                    sendNotificationServerToDiffClients((const char *)msg,0);
+
                 }else{
                     logger->warn("[UDPDispatcherSession::setClientForSession Map[%d] Session[%d]] USER [%s]:[%d] NOT ID AVAILABLE, DISCARD PACKET",this->mapId,this->sessionId,rHD.host,rHD.port);
                 }
@@ -315,6 +381,16 @@ void UDPDispatcherSession::processSessions(EventMsg *msg){
     if (find_it){
             if (msg->getTypeMsg() == TRAMA_QRY_DATASERVER){
                 sendInfoDataSession(session->getPlayerId(), msg);
+            }else if (msg->getTypeMsg() == TRAMA_SND_ORDER_TO_SERVER){
+                msgType mType = msg->getMsgType();
+                logger->info("[UDPDispatcherSession::procesSessions Map [%d] Session [%d]] Send Msg [%s] from client [%d] to client [%d]",
+                             this->mapId,
+                             this->sessionId,
+                             mType.msg,
+                             mType.originMsg,
+                             mType.endMsg
+                             );
+                sendNotificationServerToDiffClients((const char *)mType.msg,mType.endMsg);
             }else{
                 session->Run(msg);
                 clientes[index]->setUDPSession(session);
@@ -416,7 +492,8 @@ void UDPDispatcherSession::sendInfoDataSession(int playerID, EventMsg *msg){
     }
 
     for(int data = 0; data < indexMsg; data++){
-        cQOutput->push(msgs[data]);
+        //cQOutput->push(msgs[data]);
+        sendMsgToOutput(msgs[data]);
     }
 }
 
@@ -447,7 +524,8 @@ void UDPDispatcherSession::processInputMsg(){
                               );
                         EventMsg *response = setClientForSession(msg);
                         cQInput->pop();
-                        cQOutput->push(response);
+                        sendMsgToOutput(response);
+                        //cQOutput->push(response);
 
                     }
                 }else if (msg->getTypeMsg() == TRAMA_COMMAND){
@@ -484,6 +562,19 @@ void UDPDispatcherSession::processInputMsg(){
                         processSessions(msg);
                         cQInput->pop();
                     }
+                }else if (msg->getTypeMsg() == TRAMA_SND_ORDER_TO_SERVER){
+                    msgType mType = msg->getMsgType();
+                    if ((mType.actMap == this->mapId) && (mType.session == this->sessionId)){
+                       logger->debug("[UDPDispatcherSession::processInputMsg Map[%d] Session[%d]] MSG [%s] from CLIENT [%d] to CLIENT [%d]",
+                                     this->mapId,
+                                     this->sessionId,
+                                     mType.msg,
+                                     mType.originMsg,
+                                     mType.endMsg
+                                     );
+                        processSessions(msg);
+                        cQInput->pop();
+                    }
                 }
             }
         }
@@ -493,11 +584,28 @@ void UDPDispatcherSession::processInputMsg(){
 }
 
 
+void UDPDispatcherSession::sendMsgToOutput(EventMsg *msg){
+
+    if (cQOutput_1->sizeQueue() <= MAX_SIZE_QUEUE){
+            cQOutput_1->push(msg);
+    }else if (cQOutput_2->sizeQueue() <= MAX_SIZE_QUEUE){
+            cQOutput_2->push(msg);
+    }else if (cQOutput_3->sizeQueue() <= MAX_SIZE_QUEUE){
+            cQOutput_3->push(msg);
+    }else{
+        cQOutput_4->push(msg);
+    }
+
+
+}
+
+
+
  void UDPDispatcherSession::Run(){
     while(true){
         pthread_t iThread = pthread_self();
         logger->debug("[UDPDispatcherSession::Run Map[%d] Session[%d]] [%08x] **** INI",this->mapId,this->sessionId,iThread);
-        pEngine->processPrediction();
+        //pEngine->processPrediction();
         processInputMsg();
         SDL_Delay(100);
         logger->debug("[UDPDispatcherSession::Run Map[%d] Session[%d]] [%08x] **** END",this->mapId,this->sessionId,iThread);

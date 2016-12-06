@@ -16,6 +16,7 @@ private:
     SDL_mutex *push_mutex;
     SDL_mutex *pop_mutex;
     SDL_mutex *front_mutex;
+    SDL_mutex *size_mutex;
     SDL_mutex *empty_mutex;
     SDL_cond *cond;
 
@@ -38,12 +39,14 @@ public:
         pop_mutex  = NULL;
         front_mutex  = NULL;
         empty_mutex  = NULL;
+        size_mutex = NULL;
         cond  = NULL;
 
         push_mutex = SDL_CreateMutex();
         pop_mutex = SDL_CreateMutex();
         front_mutex = SDL_CreateMutex();
         empty_mutex = SDL_CreateMutex();
+        size_mutex = SDL_CreateMutex();
         cond = SDL_CreateCond();
 
 
@@ -80,6 +83,15 @@ public:
 
         return msg;
     }
+
+    int sizeQueue(){
+        int sizeQ = 0;
+        SDL_LockMutex(size_mutex);
+        sizeQ = _queue_.size();
+        SDL_UnlockMutex(size_mutex);
+        return sizeQ;
+    }
+
 
     bool isEmpty(){
 

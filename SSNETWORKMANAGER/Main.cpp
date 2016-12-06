@@ -29,19 +29,13 @@ CollisionEntities *coll;
 AnimationEntities *aEnt;
 IAEntities *iAEnt;
 
-SDL_mutex* gBufferLock = NULL; //bloquea el uso de memoria
-SDL_mutex* gSocketLock = NULL; //bloquea el uso del socket
-
-//The conditions
-SDL_cond* gCanProduceMem = NULL;
-SDL_cond* gCanConsumeMem = NULL;
-
-SDL_cond* gCanProduceSock = NULL;
-SDL_cond* gCanConsumeSock = NULL;
-
 TTF_Font *font;
 
+//HEBRA RECUPERACION
 SDL_Thread *hebra_1;
+//HEBRA MEMORIA
+SDL_Thread *hebra_Mem;
+
 
 void createEnvirontment();
 void destroyAll();
@@ -54,6 +48,11 @@ void destroySDLWindows();
 void processPlayerSession(EventMsg *msg);
 void renderScenario();
 
+Uint16 mapClient = 0;
+Uint16 sessionClient = 0;
+
+Uint16 numMsg = 0;
+
 //pthread_t hebra_1;
 /*
 static void* execute_QueueManagerSession(void* ctx){
@@ -62,6 +61,8 @@ static void* execute_QueueManagerSession(void* ctx){
 };
 */
 
+int lowTime;
+
 
 int threadFunction(void* ctx){
     QueueManager *qM = (QueueManager*)ctx;
@@ -69,6 +70,13 @@ int threadFunction(void* ctx){
     return 0;
 };
 
+int threadFunctionMem(void* ctx){
+    PredictionEngine *pE = (PredictionEngine *)ctx;
+    pE->processPrediction();
+    return 0;
+}
+
+//MAIN
 int main (int argc, char *argv[])
 {
    logger = new LogEngine();
@@ -77,9 +85,24 @@ int main (int argc, char *argv[])
    logger->printLogFlag();
    logger->info("================ [SSNETWORKMANAGER-CLIENT - INI] ================");
 
+
+   char *remoteHost = REMOTE_HOST;
+   Uint16 remport = REMOTE_PORT;
    Uint16 port = LOCAL_PORT;
-   Uint16 mapClient = 0;
-   Uint16 sessionClient = 0;
+   lowTime = 0;
+
+   std::string remoteHostStr(remoteHost);
+
+
+
+   std::cout << "\r\n Enter remote host SSNETWORKMANAGER-CLIENT (IP v4 p.j 127.0.0.1): <push ENTER at the end> ";
+   getline(std::cin, remoteHostStr);
+   logger->info("[SSNETWORKMANAGER::Main] OPEN REMOTE HOST (%s)",remoteHostStr.c_str());
+   //std::string remoteHostStr(remoteHost);
+
+   std::cout << "\r\n Enter remote port SSNETWORKMANAGER-CLIENT: ";
+   std::cin >> remport;
+   logger->info("[SSNETWORKMANAGER::Main] OPEN REMOTE PORT (%d)",remport);
 
    std::cout << "\r\nEnter local port SSNETWORKMANAGER-CLIENT: ";
    std::cin >> port;
@@ -102,7 +125,7 @@ int main (int argc, char *argv[])
    createEnvirontment();
    initSDLWindows();
 
-   nClientUDP->initCommunicationUDP(port);
+   nClientUDP->initCommunicationUDP(remoteHost, remport, port);
 
    nClientUDP->establishCommunicationUDP();
    nClientUDP->getListActiveSessions();
@@ -161,6 +184,14 @@ int main (int argc, char *argv[])
            SDL_Delay(100);
            //delete nClientUDP;
            //exit(-1);
+       }else if (responseMsg->getTypeMsg() == TRAMA_SND_ORDER_TO_SERVER){
+           msgType mT = responseMsg->getMsgType();
+           if (mT.msgTypeID == TYPE_MSG_FROM_SERVER){
+               logger->debug("[SSNETWORKMANAGER::MAIN] MSG FROM SERVER [%s]",mT.msg);
+               mem->push(responseMsg);
+               attemps--;
+               SDL_Delay(100);
+           }
 
        }else if (responseMsg->getTypeMsg() == TRAMA_NULL){
             logger->warn("[SSNETWORKMANAGER::MAIN] RESULT NULL");
@@ -261,17 +292,6 @@ void createEnvirontment(){
 
     pEngine = new PredictionEngine(logger,mem,coll,aEnt,iAEnt); //prediction Engine.
 
-    //define threads
-    gBufferLock = SDL_CreateMutex();
-    gSocketLock = SDL_CreateMutex();
-
-    //define semaphores
-    gCanProduceMem = SDL_CreateCond();
-    gCanConsumeMem = SDL_CreateCond();
-
-    gCanProduceSock = SDL_CreateCond();
-    gCanConsumeSock = SDL_CreateCond();
-
     DynamicPlayer *player_1 = new DynamicPlayer(logger,1, nClientUDP);
     player_1->setActLevel(1);
     player_1->setX(0);
@@ -362,17 +382,6 @@ void destroyAll(){
 
     //nClient->closeClientSocket();
 
-   //define threads
-   SDL_DestroyMutex(gBufferLock);
-   SDL_DestroyMutex(gSocketLock);
-
-   //define semaphores
-   SDL_DestroyCond(gCanProduceMem);
-   SDL_DestroyCond(gCanConsumeMem);
-
-   SDL_DestroyCond(gCanProduceSock);
-   SDL_DestroyCond(gCanConsumeSock);
-
    delete coll;
    delete aEnt;
    delete iAEnt;
@@ -386,20 +395,27 @@ void destroyAll(){
 
 };
 
+
+//PROCESS EVENTS
 void getEventSDL(playerDataType pDT){
 
     SDL_Event event;
 
     bool DONE = false;
     bool PRESS = false;
+    bool MSG = false;
+    bool ORDER = false;
 
     localActionType lATPlayer;
+    msgType mType;
+    OrderType oType;
 
     logger->info("MAIN -  EVENT_MSG] ACTIVATING MEM PROCESS");
-    //pthread_create(&hebra_1,NULL,execute_QueueManagerSession,qMem);
 
-    qMem = new QueueManager(logger,mem,nClientUDP,pEngine,gBufferLock,gSocketLock,gCanProduceMem,gCanConsumeMem,gCanProduceSock,gCanConsumeSock, pDT);
+    qMem = new QueueManager(logger,mem,nClientUDP,pEngine, pDT);
+
     hebra_1 = SDL_CreateThread(threadFunction,"QueueManager",qMem);
+    hebra_Mem = SDL_CreateThread(threadFunctionMem,"MemManager",pEngine);
 
     while (!DONE){
         while (SDL_PollEvent(&event)){
@@ -504,6 +520,44 @@ void getEventSDL(playerDataType pDT){
                         PRESS = true;
                     }
 
+                    else if (keysym->sym == SDLK_m){
+
+                        mType.actMap = mapClient;
+                        mType.session = sessionClient;
+                        mType.originMsg = ((DynamicPlayer *)sub->getObserver(mem->getPlayerIndex()-1))->getIndexPlayer();
+                        mType.endMsg = 23;
+                        mType.msgTypeID = TYPE_MSG_FROM_SERVER;
+
+                        for(int i=0; i<SIZE_MSG; i++){
+                            mType.msg[i] = '\0';
+                        }
+
+                        sprintf(mType.msg,"Msg - [%d] Hello [%d] from [%d]",numMsg,mType.endMsg,mType.originMsg);
+                        logger->debug("[MAIN - EVENT_MSG] SEND MSG TO OTHER CLIENT SESSION [%s]",mType.msg);
+
+                        numMsg++;
+                        PRESS = true;
+                        MSG = true;
+                    }
+
+                    else if (keysym->sym == SDLK_o){
+
+                        oType.actMap = mapClient;
+                        oType.session = sessionClient;
+                        oType.height = 0;
+                        oType.width = 0;
+                        oType.level = 0;
+                        oType.entityID = ((DynamicPlayer *)sub->getObserver(mem->getPlayerIndex()-1))->getIndexPlayer();
+                        oType.pos_x = 0.0f;
+                        oType.pos_y = 0.0f;
+                        oType.orderID = 0;
+                        oType.orderType = 0;
+                        oType.value = 0;
+
+                        logger->debug("[MAIN - EVENT_MSG] SEND ORDER TO SERVER");
+                        PRESS = true;
+                        ORDER = true;
+                    }
 
                     else if (keysym->sym == SDLK_ESCAPE){   //-> salir de la aplicacion
                         logger->debug("[MAIN -  EVENT_MSG] ESCAPE KEY PRESSED");
@@ -516,30 +570,42 @@ void getEventSDL(playerDataType pDT){
                         if (DONE){
                             logger->warn("[MAIN -  EVENT_MSG] EXIT!!!! SSNETWORKMANAGER");
                         }else{
-                            EventMsg *msg = new EventMsg(lATPlayer);
+                            EventMsg *msg = NULL;
+
+                            if (MSG){
+                                msg = new EventMsg(mType);
+                                MSG = false;
+                            }else if (ORDER){
+                                msg = new EventMsg(oType);
+                                ORDER = false;
+                            }else{
+                                msg = new EventMsg(lATPlayer);
+                            }
                             sub->setMsg(msg);
                             sub->notify();
                         }
-
                     }
                     break;
             }
         }
 
         processLocalPlayer(((DynamicPlayer *)sub->getObserver(mem->getPlayerIndex()-1))->getActLevel());
-        SDL_Delay(16);
+        SDL_Delay(10);
     }
 
     SDL_WaitThread(hebra_1, NULL );
+    SDL_WaitThread(hebra_Mem, NULL);
 }
 
+//PROCESS ENVIRONMENT
 void processLocalPlayer(int level){
     const Uint32 timeout = 10;
-    pEngine->processPrediction(level);
+    //pEngine->processPrediction(level);
     evalLocalPlayerAgainstEnv((DynamicPlayer *)sub->getObserver(mem->getPlayerIndex()-1));
     renderScenario();
 }
 
+//COLISION, AI. ANIMACION LOCAL PLAYER
 void evalLocalPlayerAgainstEnv(DynamicPlayer *dPlayer){
     bool isCollition = coll->isCollDynamicPlayer(dPlayer);
     if (!isCollition){
@@ -549,6 +615,7 @@ void evalLocalPlayerAgainstEnv(DynamicPlayer *dPlayer){
 }
 
 
+//RENDER
 void renderScenario(){
 
     logger->info("[SSNETWORKMANAGER::renderScenario]  Render Scenario - INI");
@@ -724,6 +791,39 @@ void renderScenario(){
 
         }
     }
+
+    //MESSAGES
+    if (!mem->isEmpty()){
+
+
+        SDL_Color yellow = {0xff, 0xff, 0x00, 0xff};
+
+        EventMsg *inputMSG = mem->front();
+
+        textSurface = TTF_RenderText_Solid( font, inputMSG->getMsgType().msg, yellow);
+        textTexture = SDL_CreateTextureFromSurface( render, textSurface );
+
+        SDL_Rect text;
+        text.x = SCREEN_WIDTH - (SIZE_MSG*5) -10;
+        text.y = 0;
+        text.w = (SIZE_MSG*5);
+        text.h = 40;
+
+        SDL_RenderCopyEx(render,textTexture, NULL, &text, 0, NULL, SDL_FLIP_NONE);
+        SDL_FreeSurface(textSurface);
+        SDL_DestroyTexture(textTexture);
+
+        int data = (SDL_GetTicks() - lowTime);
+
+        if (data >= 10000){
+           lowTime = SDL_GetTicks();
+           if (mem->sizeQueue() > 1){
+                mem->pop();
+           }
+        }
+    }
+
+
 
     SDL_RenderPresent( render );
 

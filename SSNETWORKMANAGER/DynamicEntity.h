@@ -7,6 +7,7 @@
 #include "Constants.h"
 
 #define REGRESION_DATA 10
+#define SIZE_OF_PRIORITY_QUEUE 20
 
 class DynamicEntity : public Task
 {
@@ -213,7 +214,11 @@ public:
         pXY.x = _rPType.x_pos;
         pXY.y = _rPType.y_pos;
         pXY.order = getIndex;
-        //interpolationLine.push(pXY);
+        interpolationLine.push(pXY);
+
+        if (interpolationLine.size() > SIZE_OF_PRIORITY_QUEUE){
+            interpolationLine.pop();
+        }
 
     }
 
@@ -269,7 +274,7 @@ private:
     int indexCoord;
 
     std::deque<positionXY> regresionLine;
-    //std::priority_queue<positionXY> interpolationLine;
+    std::priority_queue<positionXY, std::vector<positionXY>, compare> interpolationLine;
 
 
     int num_data;

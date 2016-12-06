@@ -1,7 +1,7 @@
 #include "NetworkClientUDP.h"
 
 //https://www.libsdl.org/projects/SDL_net/docs/demos/udptftpserver.c
-void NetworkClientUDP::initCommunicationUDP(int localPort){
+void NetworkClientUDP::initCommunicationUDP(std::string _ip, int _remotePort, int _localPort){
 
 
     if ( SDLNet_Init() == -1 ){
@@ -9,16 +9,21 @@ void NetworkClientUDP::initCommunicationUDP(int localPort){
         exit(-1);
     }
 
-    clientSocket = SDLNet_UDP_Open(localPort);
+    clientSocket = SDLNet_UDP_Open(_localPort);
     if ( clientSocket == nullptr ){
         logger->warn("[SSNETWORKMANAGER::initConnectionUDP] -->  SDLNet_UDP_Open: %s\n",SDLNet_GetError());
         exit(-1);
     }
 
-    std::string ip = REMOTE_HOST;
-    int remoteport = REMOTE_PORT;
+    //std::string ip = REMOTE_HOST;
+    //int remoteport = REMOTE_PORT;
 
-    if ( SDLNet_ResolveHost( &serverIP, ip.c_str(), remoteport )  == -1 ){
+    std::string ip = _ip;
+    int remotePort = _remotePort;
+
+
+
+    if ( SDLNet_ResolveHost( &serverIP, ip.c_str(), remotePort )  == -1 ){
         logger->warn("[SSNETWORKMANAGER::initConnectionUDP] --> SDLNet_ResolveHost: %s\n",SDLNet_GetError());
         exit(-1);
     }

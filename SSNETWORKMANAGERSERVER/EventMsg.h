@@ -587,6 +587,7 @@ class EventMsg{
      };
 
 
+
     int getTypeMsg(){return typeMsg;}
     void setTypeMsg(int _typeMsg){typeMsg = _typeMsg;}
 

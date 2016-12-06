@@ -157,6 +157,18 @@ class EventMsg{
         setLocalActionType(_lAction);
     };
 
+    //mensaje local
+    EventMsg(msgType _mType){
+        clearMsg();
+        setMsgType(_mType);
+    };
+
+    //orden local
+    EventMsg(OrderType _oType){
+        clearMsg();
+        setOrderType(_oType);
+    };
+
 
     //TRAZAS UDP
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

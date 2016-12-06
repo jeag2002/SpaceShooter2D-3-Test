@@ -2,7 +2,7 @@
 
 
 //-->init SERVER UPD Communication
-void NetworkClientUDP::initCommunicationUDP(){
+void NetworkClientUDP::initCommunicationUDP(Uint16 localPort){
 
 
     if ( SDLNet_Init() == -1 ){
@@ -10,13 +10,13 @@ void NetworkClientUDP::initCommunicationUDP(){
         exit(-1);
     }
 
-    serverSocket = SDLNet_UDP_Open(LOCAL_PORT);
+    serverSocket = SDLNet_UDP_Open(localPort);
 
     if (serverSocket==NULL){
         logger->error("[SSNETWORKMANAGERSERVER::initCommunicationUDP] Error creating serverSocket [%s]",SDLNet_GetError());
         exit(-1);
     }else{
-        logger->debug("[SSNETWORKMANAGERSERVER::initCommunicationUDP] listen from 0.0.0.0/[%d]",LOCAL_PORT);
+        logger->debug("[SSNETWORKMANAGERSERVER::initCommunicationUDP] listen from 0.0.0.0/[%d]",localPort);
     }
 
     host = REMOTE_HOST;
@@ -159,6 +159,7 @@ EventMsg *NetworkClientUDP::getMsgFromClientUDP(){
 
     while(!DONE){
 
+        for(int i=0; i<BUFFER_SIZE; i++){packet->data[i] = '\0';}
         if ( SDLNet_UDP_Recv(serverSocket, packet))
 		{
 		    logger->debug("[SSNETWORKMANAGERSERVER::getMsgFromClientUDP] CHANNEL [%d] RAW DATA [%s]",packet->channel, packet->data);

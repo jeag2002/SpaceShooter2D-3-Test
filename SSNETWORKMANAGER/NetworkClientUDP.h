@@ -77,7 +77,7 @@ void sendMsgToServer(EventMsg *msg);
 EventMsg *getMsgFromServer();
 EventMsg **getMsgsFromServer();
 
-void initCommunicationUDP(int localPort);
+void initCommunicationUDP(std::string _ip, int _remotePort, int _localPort);
 void establishCommunicationUDP();
 void getListActiveSessions();
 void registerToActiveSession(int mapClient, int sessionClient);

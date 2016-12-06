@@ -18,12 +18,12 @@ char *EventMsg::marshallMsg(){
 msgType EventMsg::processSubMsgMType(const char *subbuffer){
     msgType mType;
     std::string buffer_to_string(subbuffer);
-    std::string tramaIDStr = buffer_to_string.substr(0,3);
-    std::string mapStr = buffer_to_string.substr(3,3);
-    std::string sessionStr = buffer_to_string.substr(6,3);
-    std::string originIDStr = buffer_to_string.substr(9,11);
-    std::string destIDStr = buffer_to_string.substr(20,11);
-    std::string msgStr = buffer_to_string.substr(31,74);
+    std::string mapStr = buffer_to_string.substr(0,3);
+    std::string sessionStr = buffer_to_string.substr(3,3);
+    std::string tramaIDStr = buffer_to_string.substr(6,3);
+    std::string originIDStr = buffer_to_string.substr(9,5);
+    std::string destIDStr = buffer_to_string.substr(14,5);
+    std::string msgStr = buffer_to_string.substr(19,74);
 
     int tramaIDInt = atoi(tramaIDStr.c_str());
     int mapInt = atoi(mapStr.c_str());
@@ -42,7 +42,7 @@ msgType EventMsg::processSubMsgMType(const char *subbuffer){
         mType.msg[i] = '\0';
     }
 
-    for(int i=0; i<74; i++){
+    for(int i=0; i<SIZE_MSG; i++){
         mType.msg[i] = buffer[i];
     }
 
@@ -615,7 +615,7 @@ void EventMsg::unmarshallMsg(const char *buffer){
     }else if (typeMsg == TRAMA_SND_ORDER_TO_SERVER){
 
         std::string subbuffer = buffer_to_string.substr(33,95);
-        std::string typeSubTramaStr = subbuffer.substr(0,3);
+        std::string typeSubTramaStr = subbuffer.substr(6,3);
         int typeSubTramaInt = atoi(typeSubTramaStr.c_str());
 
         //MSG FROM SERVER
@@ -812,9 +812,9 @@ std::string EventMsg::serializeMsg(){
         //SEND MESSAGE FROM SERVER
         }else if (mType.msgTypeID!=0){
             sprintf(subBuffer,"%03d%03d%03d%05d%05d%s",
-                    mType.msgTypeID,
                     mType.actMap,
                     mType.session,
+                    mType.msgTypeID,
                     mType.originMsg,
                     mType.endMsg,
                     mType.msg);

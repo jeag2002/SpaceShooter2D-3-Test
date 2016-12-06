@@ -1,7 +1,7 @@
 #ifndef CONSTANTS_H_INCLUDED
 #define CONSTANTS_H_INCLUDED
 
-#define SIZE_MSG 90
+#define SIZE_MSG 74
 
 /*
 01-SET CONECTION
@@ -75,6 +75,12 @@
 #define TYPE_REM_PLAYER_ELEMENT 4     /*Remote Players*/
 #define TYPE_SOUNDS 5                 /*Remote Sounds*/
 #define TYPE_MSG_FROM_SERVER 6        /*Message from server*/
+#define TYPE_MSG_FROM_CLIENT 7        /*Message from client*/
+////////////////////////////////////////////////////////////////////
+
+//ID SERVER
+////////////////////////////////////////////////////////////////////
+#define ID_SERVER   1
 ////////////////////////////////////////////////////////////////////
 
 
