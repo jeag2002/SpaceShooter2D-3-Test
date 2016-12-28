@@ -1,0 +1,909 @@
+# depslib dependency file v1.0
+1466942867 source:c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\logengine.cpp
+	"LogEngine.h"
+
+1468621428 c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\logengine.h
+	"Stdafx.h"
+
+1468259566 c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\stdafx.h
+	"Constants.h"
+	<windows.h>
+	<pthread.h>
+	<unistd.h>
+	<sys/types.h>
+	<errno.h>
+	<fcntl.h>
+	<SDL_thread.h>
+	<SDL_net.h>
+	<SDL.h>
+	<iostream>
+	<fstream>
+	<string>
+	<stdio.h>
+	<stdlib.h>
+	<cmath>
+	<vector>
+	<map>
+	<queue>
+	<time.h>
+	<algorithm>
+	<functional>
+	<semaphore.h>
+
+1451807846 c:\workspaces\libs\sdl_2.0.3\sdl2_net-devel-2.0.1-mingw\sdl2_net-2.0.1\i686-w64-mingw32\include\sdl2\sdl_net.h
+	<stdint.h>
+	"SDL.h"
+	"SDL_endian.h"
+	"SDL_version.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937196 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl.h
+	"SDL_main.h"
+	"SDL_stdinc.h"
+	"SDL_assert.h"
+	"SDL_atomic.h"
+	"SDL_audio.h"
+	"SDL_clipboard.h"
+	"SDL_cpuinfo.h"
+	"SDL_endian.h"
+	"SDL_error.h"
+	"SDL_events.h"
+	"SDL_filesystem.h"
+	"SDL_joystick.h"
+	"SDL_gamecontroller.h"
+	"SDL_haptic.h"
+	"SDL_hints.h"
+	"SDL_loadso.h"
+	"SDL_log.h"
+	"SDL_messagebox.h"
+	"SDL_mutex.h"
+	"SDL_power.h"
+	"SDL_render.h"
+	"SDL_rwops.h"
+	"SDL_system.h"
+	"SDL_thread.h"
+	"SDL_timer.h"
+	"SDL_version.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937196 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_main.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937198 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_stdinc.h
+	"SDL_config.h"
+	<sys/types.h>
+	<stdio.h>
+	<stdlib.h>
+	<stddef.h>
+	<stdarg.h>
+	<stdlib.h>
+	<malloc.h>
+	<stddef.h>
+	<stdarg.h>
+	<memory.h>
+	<string.h>
+	<strings.h>
+	<inttypes.h>
+	<stdint.h>
+	<ctype.h>
+	<math.h>
+	<float.h>
+	<iconv.h>
+	"begin_code.h"
+	<alloca.h>
+	<malloc.h>
+	<malloc.h>
+	<malloc.h>
+	<stdlib.h>
+	"close_code.h"
+
+1394937198 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_config.h
+	"SDL_platform.h"
+
+1438211250 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_platform.h
+	"AvailabilityMacros.h"
+	"TargetConditionals.h"
+	<winapifamily.h>
+	"begin_code.h"
+	"close_code.h"
+
+1394937198 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\begin_code.h
+
+1394937198 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\close_code.h
+
+1394937196 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_assert.h
+	"SDL_config.h"
+	"begin_code.h"
+	<signal.h>
+	"close_code.h"
+
+1394937196 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_atomic.h
+	"SDL_stdinc.h"
+	"SDL_platform.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937196 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_audio.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_endian.h"
+	"SDL_mutex.h"
+	"SDL_thread.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937196 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_error.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937196 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_endian.h
+	"SDL_stdinc.h"
+	<endian.h>
+	"begin_code.h"
+	"close_code.h"
+
+1394937198 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_mutex.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937198 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_thread.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_atomic.h"
+	"SDL_mutex.h"
+	"begin_code.h"
+	<process.h>
+	"close_code.h"
+
+1394937198 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_rwops.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937196 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_clipboard.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937196 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_cpuinfo.h
+	"SDL_stdinc.h"
+	<intrin.h>
+	<intrin.h>
+	<altivec.h>
+	<mmintrin.h>
+	<mm3dnow.h>
+	<xmmintrin.h>
+	<emmintrin.h>
+	"begin_code.h"
+	"close_code.h"
+
+1394937196 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_events.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"SDL_keyboard.h"
+	"SDL_mouse.h"
+	"SDL_joystick.h"
+	"SDL_gamecontroller.h"
+	"SDL_quit.h"
+	"SDL_gesture.h"
+	"SDL_touch.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937198 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_video.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_surface.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937198 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_pixels.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937198 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_rect.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_pixels.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937198 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_surface.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_blendmode.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937196 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_blendmode.h
+	"begin_code.h"
+	"close_code.h"
+
+1394937196 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_keyboard.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_keycode.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937196 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_keycode.h
+	"SDL_stdinc.h"
+	"SDL_scancode.h"
+
+1394937198 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_scancode.h
+	"SDL_stdinc.h"
+
+1394937196 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_mouse.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937196 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_joystick.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937196 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_gamecontroller.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_rwops.h"
+	"SDL_joystick.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937198 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_quit.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+
+1394937196 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_gesture.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"SDL_touch.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937198 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_touch.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937196 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_filesystem.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937196 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_haptic.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_joystick.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937196 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_hints.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937196 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_loadso.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937196 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_log.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937196 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_messagebox.h
+	"SDL_stdinc.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937198 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_power.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937198 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_render.h
+	"SDL_stdinc.h"
+	"SDL_rect.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937198 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_system.h
+	"SDL_stdinc.h"
+	"SDL_keyboard.h"
+	"SDL_render.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937198 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_timer.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1394937198 c:\workspaces\libs\sdl_2.0.3\sdl2-devel-2.0.3-mingw\sdl2-2.0.3\i686-w64-mingw32\include\sdl2\sdl_version.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1469061418 source:c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\main.cpp
+	"Stdafx.h"
+	"LogEngine.h"
+	"Subject.h"
+	"MemManager.h"
+	"QueueManager.h"
+	"NetworkClient.h"
+	"PredictionEngine.h"
+	"ClockEngine.h"
+
+1338121090 c:\workspaces\libs\pthreads-w32-2-9-1-release\pre-built.2\include\pthread.h
+	<windows.h>
+	"config.h"
+	<time.h>
+	<signal.h>
+	<limits.h>
+	"need_errno.h"
+	<errno.h>
+	<sched.h>
+	<sys/types.h>
+
+1309338364 c:\workspaces\libs\pthreads-w32-2-9-1-release\pre-built.2\include\sched.h
+	"need_errno.h"
+	<errno.h>
+	<sys/types.h>
+	<time.h>
+
+1306677398 c:\workspaces\libs\pthreads-w32-2-9-1-release\pre-built.2\include\semaphore.h
+	"need_errno.h"
+	<errno.h>
+
+1468267627 source:c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\collisionentities.cpp
+	"CollisionEntities.h"
+
+1467460918 c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\collisionentities.h
+	"MemManager.h"
+	"LogEngine.h"
+
+1468267341 c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\memmanager.h
+	<stdio.h>
+	<stdlib.h>
+	"DynamicEntity.h"
+	"DynamicPlayer.h"
+
+1468689727 c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\dynamicentity.h
+	"SDL.h"
+	"Task.h"
+	"LogEngine.h"
+
+1467539707 c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\task.h
+	<pthread.h>
+
+1469060731 c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\queuemanager.h
+	"MemManager.h"
+	"EventMsg.h"
+	<queue>
+	"NetworkClient.h"
+	"LogEngine.h"
+	"PredictionEngine.h"
+	"ClockEngine.h"
+
+1469048954 c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\eventmsg.h
+	"Constants.h"
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+
+1468689626 c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\dynamicplayer.h
+	"Observer.h"
+	"LogEngine.h"
+	"NetworkClient.h"
+
+1464295926 c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\observer.h
+	"EventMsg.h"
+	<stdlib.h>
+
+1467539741 source:c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\dynamicentity.cpp
+	"DynamicEntity.h"
+
+1468454940 source:c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\dynamicplayer.cpp
+	"DynamicPlayer.h"
+
+1463516334 source:c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\memmanager.cpp
+	"MemManager.h"
+
+1463864821 source:c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\task.cpp
+	"Task.h"
+
+1464295908 c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\subject.h
+	"EventMsg.h"
+	<vector>
+	"Observer.h"
+
+1467455892 c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\animationentities.h
+	"MemManager.h"
+	"LogEngine.h"
+
+1467455908 c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\iaentities.h
+	"MemManager.h"
+	"LogEngine.h"
+
+1469055955 c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\networkclient.h
+	"Stdafx.h"
+	"LogEngine.h"
+	"EventMsg.h"
+
+1468622761 source:c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\networkclient.cpp
+	"NetworkClient.h"
+
+1468266623 source:c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\taskmanager.cpp
+	"TaskManager.h"
+
+1467539205 c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\predictionengine.h
+	"TaskManager.h"
+
+1468266152 c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\taskmanager.h
+	"CollisionEntities.h"
+	"AnimationEntities.h"
+	"IAEntities.h"
+
+1467541453 c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\clockengine.h
+	"Stdafx.h"
+
+1468267028 source:c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\predictionengine.cpp
+	"PredictionEngine.h"
+
+1469061064 source:c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\queuemanager.cpp
+	"QueueManager.h"
+
+1469048866 c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\constants.h
+
+1469049657 source:c:\workspaces\development\workcodeblocks\SSNETWORKMANAGER2\eventmsg.cpp
+	"EventMsg.h"
+
+1468264027 source:c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\collisionentities.cpp
+	"CollisionEntities.h"
+
+1467457318 c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\collisionentities.h
+	"MemManager.h"
+	"LogEngine.h"
+
+1480778530 c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\memmanager.h
+	<stdio.h>
+	<stdlib.h>
+	"DynamicEntity.h"
+	"DynamicPlayer.h"
+
+1479155477 c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\dynamicentity.h
+	"SDL.h"
+	"Task.h"
+	"LogEngine.h"
+	"Constants.h"
+
+1467536107 c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\task.h
+	<pthread.h>
+
+1477521690 c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\logengine.h
+	"Stdafx.h"
+
+1472079806 c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\stdafx.h
+	"Constants.h"
+	<windows.h>
+	<pthread.h>
+	<unistd.h>
+	<sys/types.h>
+	<errno.h>
+	<fcntl.h>
+	<SDL_ttf.h>
+	<SDL_thread.h>
+	<SDL_net.h>
+	<SDL.h>
+	<iostream>
+	<fstream>
+	<string>
+	<stdio.h>
+	<stdlib.h>
+	<cmath>
+	<vector>
+	<map>
+	<queue>
+	<time.h>
+	<algorithm>
+	<functional>
+	<semaphore.h>
+
+1480707434 c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\constants.h
+
+1477345474 c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\dynamicplayer.h
+	"Observer.h"
+	"LogEngine.h"
+	"NetworkClientUDP.h"
+
+1464292326 c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\observer.h
+	"EventMsg.h"
+	<stdlib.h>
+
+1480711205 c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\eventmsg.h
+	"Constants.h"
+	"UtilsProtocol.h"
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<string>
+	<SDL_net.h>
+
+1470481713 c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\networkclient.h
+	"Stdafx.h"
+	"LogEngine.h"
+	"EventMsg.h"
+
+1477684054 source:c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\dynamicentity.cpp
+	"DynamicEntity.h"
+	"UtilsProtocol.h"
+
+1480875804 source:c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\dynamicplayer.cpp
+	"DynamicPlayer.h"
+
+1480708505 source:c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\eventmsg.cpp
+	"EventMsg.h"
+
+1477260742 source:c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\logengine.cpp
+	"LogEngine.h"
+
+1463512734 source:c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\memmanager.cpp
+	"MemManager.h"
+
+1480882792 source:c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\predictionengine.cpp
+	"PredictionEngine.h"
+
+1480882080 c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\predictionengine.h
+	"TaskManager.h"
+
+1468262552 c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\taskmanager.h
+	"CollisionEntities.h"
+	"AnimationEntities.h"
+	"IAEntities.h"
+
+1467452292 c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\animationentities.h
+	"MemManager.h"
+	"LogEngine.h"
+
+1467452308 c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\iaentities.h
+	"MemManager.h"
+	"LogEngine.h"
+
+1480882719 source:c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\queuemanager.cpp
+	"QueueManager.h"
+
+1480882691 c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\queuemanager.h
+	"MemManager.h"
+	"EventMsg.h"
+	<queue>
+	"NetworkClientUDP.h"
+	"LogEngine.h"
+	"PredictionEngine.h"
+	"ClockEngine.h"
+
+1467537853 c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\clockengine.h
+	"Stdafx.h"
+
+1463861221 source:c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\task.cpp
+	"Task.h"
+
+1470248662 source:c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\taskmanager.cpp
+	"TaskManager.h"
+
+1480882761 source:c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\main.cpp
+	"Stdafx.h"
+	"LogEngine.h"
+	"Subject.h"
+	"MemManager.h"
+	"QueueManager.h"
+	"NetworkClient.h"
+	"NetworkClientUDP.h"
+	"PredictionEngine.h"
+	"ClockEngine.h"
+
+1475958096 c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\subject.h
+	"EventMsg.h"
+	<vector>
+	"Observer.h"
+
+1478006739 source:c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\networkclient.cpp
+	"NetworkClient.h"
+
+1376156544 c:\workspaces\libs\sdl_2.0.3\sdl2_ttf-devel-2.0.12-mingw\sdl2_ttf-2.0.12\i686-w64-mingw32\include\sdl2\sdl_ttf.h
+	"SDL.h"
+	"begin_code.h"
+	"close_code.h"
+
+1477506591 c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\utilsprotocol.h
+	<cmath>
+	<stdint.h>
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	<SDL_net.h>
+	<SDL.h>
+	"Constants.h"
+
+1479677223 source:c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\networkclientudp.cpp
+	"NetworkClientUDP.h"
+
+1479676872 c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\networkclientudp.h
+	"Stdafx.h"
+	"LogEngine.h"
+	"EventMsg.h"
+	"CompressPacket.h"
+
+1423049091 c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\lzo\minilzo.h
+	<config.h>
+	<limits.h>
+	<stddef.h>
+	"lzodefs.h"
+	"lzoconf.h"
+
+1423049091 c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\lzo\lzodefs.h
+
+1423049091 c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\lzo\lzoconf.h
+	<config.h>
+	<limits.h>
+	<stddef.h>
+	<lzo/lzodefs.h>
+
+1423049091 source:c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\lzo\minilzo.c
+	<config.h>
+	<limits.h>
+	<stddef.h>
+	"minilzo.h"
+	<config.h>
+	<limits.h>
+	<stddef.h>
+	<lzo/lzodefs.h>
+	<lzo/lzoconf.h>
+	<string.h>
+	<string.h>
+	<assert.h>
+	<unchecked.h>
+	<intrin.h>
+	<lzo/lzo1x.h>
+
+1472937210 c:\workspaces\workcodeblocks\SSNETWORKMANAGER2\compresspacket.h
+	"lzo/minilzo.h"
+	"LogEngine.h"
+
+1468264027 source:c:\workspaces\development\workcodeblocks\ssnetworkmanager2\collisionentities.cpp
+	"CollisionEntities.h"
+
+1467457318 c:\workspaces\development\workcodeblocks\ssnetworkmanager2\collisionentities.h
+	"MemManager.h"
+	"LogEngine.h"
+
+1482708440 c:\workspaces\development\workcodeblocks\ssnetworkmanager2\memmanager.h
+	<stdio.h>
+	<stdlib.h>
+	"DynamicEntity.h"
+	"DynamicPlayer.h"
+
+1482743049 c:\workspaces\development\workcodeblocks\ssnetworkmanager2\dynamicentity.h
+	"SDL.h"
+	"Task.h"
+	"LogEngine.h"
+	"Constants.h"
+
+1467536107 c:\workspaces\development\workcodeblocks\ssnetworkmanager2\task.h
+	<pthread.h>
+
+1481021807 c:\workspaces\development\workcodeblocks\ssnetworkmanager2\logengine.h
+	"Stdafx.h"
+
+1472079806 c:\workspaces\development\workcodeblocks\ssnetworkmanager2\stdafx.h
+	"Constants.h"
+	<windows.h>
+	<pthread.h>
+	<unistd.h>
+	<sys/types.h>
+	<errno.h>
+	<fcntl.h>
+	<SDL_ttf.h>
+	<SDL_thread.h>
+	<SDL_net.h>
+	<SDL.h>
+	<iostream>
+	<fstream>
+	<string>
+	<stdio.h>
+	<stdlib.h>
+	<cmath>
+	<vector>
+	<map>
+	<queue>
+	<time.h>
+	<algorithm>
+	<functional>
+	<semaphore.h>
+
+1482739831 c:\workspaces\development\workcodeblocks\ssnetworkmanager2\constants.h
+
+1482269101 c:\workspaces\development\workcodeblocks\ssnetworkmanager2\dynamicplayer.h
+	"Observer.h"
+	"LogEngine.h"
+	"NetworkClientUDP.h"
+
+1482269082 c:\workspaces\development\workcodeblocks\ssnetworkmanager2\observer.h
+	"EventMsg.h"
+	<stdlib.h>
+
+1482739974 c:\workspaces\development\workcodeblocks\ssnetworkmanager2\eventmsg.h
+	"Constants.h"
+	"UtilsProtocol.h"
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	<string>
+	<SDL_net.h>
+
+1477506591 c:\workspaces\development\workcodeblocks\ssnetworkmanager2\utilsprotocol.h
+	<cmath>
+	<stdint.h>
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	<SDL_net.h>
+	<SDL.h>
+	"Constants.h"
+
+1482191658 c:\workspaces\development\workcodeblocks\ssnetworkmanager2\networkclientudp.h
+	"Stdafx.h"
+	"LogEngine.h"
+	"EventMsg.h"
+	"CompressPacket.h"
+
+1472937210 c:\workspaces\development\workcodeblocks\ssnetworkmanager2\compresspacket.h
+	"lzo/minilzo.h"
+	"LogEngine.h"
+
+1423049091 c:\workspaces\development\workcodeblocks\ssnetworkmanager2\lzo\minilzo.h
+	<config.h>
+	<limits.h>
+	<stddef.h>
+	"lzodefs.h"
+	"lzoconf.h"
+
+1423049091 c:\workspaces\development\workcodeblocks\ssnetworkmanager2\lzo\lzodefs.h
+
+1423049091 c:\workspaces\development\workcodeblocks\ssnetworkmanager2\lzo\lzoconf.h
+	<config.h>
+	<limits.h>
+	<stddef.h>
+	<lzo/lzodefs.h>
+
+1482929976 source:c:\workspaces\development\workcodeblocks\ssnetworkmanager2\dynamicentity.cpp
+	"DynamicEntity.h"
+	"UtilsProtocol.h"
+
+1482741827 source:c:\workspaces\development\workcodeblocks\ssnetworkmanager2\dynamicplayer.cpp
+	"DynamicPlayer.h"
+
+1482741540 source:c:\workspaces\development\workcodeblocks\ssnetworkmanager2\eventmsg.cpp
+	"EventMsg.h"
+
+1482743049 source:c:\workspaces\development\workcodeblocks\ssnetworkmanager2\logengine.cpp
+	"LogEngine.h"
+
+1423049091 source:c:\workspaces\development\workcodeblocks\ssnetworkmanager2\lzo\minilzo.c
+	<config.h>
+	<limits.h>
+	<stddef.h>
+	"minilzo.h"
+	<config.h>
+	<limits.h>
+	<stddef.h>
+	<lzo/lzodefs.h>
+	<lzo/lzoconf.h>
+	<string.h>
+	<string.h>
+	<assert.h>
+	<unchecked.h>
+	<intrin.h>
+	<lzo/lzo1x.h>
+
+1482961218 source:c:\workspaces\development\workcodeblocks\ssnetworkmanager2\main.cpp
+	"Stdafx.h"
+	"LogEngine.h"
+	"Subject.h"
+	"MemManager.h"
+	"QueueManager.h"
+	"NetworkClient.h"
+	"NetworkClientUDP.h"
+	"PredictionEngine.h"
+	"ClockEngine.h"
+
+1482269049 c:\workspaces\development\workcodeblocks\ssnetworkmanager2\subject.h
+	"EventMsg.h"
+	<vector>
+	"Observer.h"
+
+1482694816 c:\workspaces\development\workcodeblocks\ssnetworkmanager2\queuemanager.h
+	"MemManager.h"
+	"EventMsg.h"
+	<queue>
+	"NetworkClientUDP.h"
+	"LogEngine.h"
+	"PredictionEngine.h"
+	"ClockEngine.h"
+	"Subject.h"
+
+1482928634 c:\workspaces\development\workcodeblocks\ssnetworkmanager2\predictionengine.h
+	"TaskManager.h"
+
+1468262552 c:\workspaces\development\workcodeblocks\ssnetworkmanager2\taskmanager.h
+	"CollisionEntities.h"
+	"AnimationEntities.h"
+	"IAEntities.h"
+
+1467452292 c:\workspaces\development\workcodeblocks\ssnetworkmanager2\animationentities.h
+	"MemManager.h"
+	"LogEngine.h"
+
+1467452308 c:\workspaces\development\workcodeblocks\ssnetworkmanager2\iaentities.h
+	"MemManager.h"
+	"LogEngine.h"
+
+1467537853 c:\workspaces\development\workcodeblocks\ssnetworkmanager2\clockengine.h
+	"Stdafx.h"
+
+1470481713 c:\workspaces\development\workcodeblocks\ssnetworkmanager2\networkclient.h
+	"Stdafx.h"
+	"LogEngine.h"
+	"EventMsg.h"
+
+1463512734 source:c:\workspaces\development\workcodeblocks\ssnetworkmanager2\memmanager.cpp
+	"MemManager.h"
+
+1478006739 source:c:\workspaces\development\workcodeblocks\ssnetworkmanager2\networkclient.cpp
+	"NetworkClient.h"
+
+1482865961 source:c:\workspaces\development\workcodeblocks\ssnetworkmanager2\networkclientudp.cpp
+	"NetworkClientUDP.h"
+
+1482959171 source:c:\workspaces\development\workcodeblocks\ssnetworkmanager2\predictionengine.cpp
+	"PredictionEngine.h"
+
+1482958626 source:c:\workspaces\development\workcodeblocks\ssnetworkmanager2\queuemanager.cpp
+	"QueueManager.h"
+
+1463861221 source:c:\workspaces\development\workcodeblocks\ssnetworkmanager2\task.cpp
+	"Task.h"
+
+1470248662 source:c:\workspaces\development\workcodeblocks\ssnetworkmanager2\taskmanager.cpp
+	"TaskManager.h"
+
