@@ -182,11 +182,12 @@ public:
         this->actLevel = _mType.lvl;
         this->actMap = _mType.actMap;
         this->actSession = _mType.session;
+        /*
         log->debug("[DynamicEntity::setRemoteMovement] SET REMOTE PLAYER ID:[%d]-MAP[%d]-SESSION[%d] NEW SITUATION lvl:[%d] x:[%f] y:[%f] width:[%d] height:[%d]",
                    idDE,
                    actMap,
                    actSession,
-                   actLevel,x,y,width,height);
+                   actLevel,x,y,width,height);*/
     }
 
     void setRemoteShot(shotType _sType){

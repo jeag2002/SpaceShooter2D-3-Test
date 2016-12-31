@@ -11,6 +11,7 @@ void UDPSession::Run(EventMsg *msg){
                           msg->getMovementType().y
                           );
             mem->getRemPlayerMapElem(msg->getMovementType().idPlayer)->setRemoteMovement(msg->getMovementType());
+            dPlayerData->setRemoteMovement(msg->getMovementType());
 
         }else if (msg->getShotType().shotID == TYPE_COMMAND_SHOOT){
 

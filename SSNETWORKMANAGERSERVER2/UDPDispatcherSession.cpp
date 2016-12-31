@@ -408,8 +408,8 @@ void UDPDispatcherSession::sendTimeQOSToClients(EventMsg *msg, int indexServData
 
     for(int j=0; j<clientes.size(); j++){
         UDPSession *session = clientes[j];
-        isNewClient = (j == indexServData);
-        processingMsgQOSToOutput(mem->getSizeTimeServer(),mem->getTimeStampServer(),session,isNewClient);
+        processingMsgQOSToOutput(mem->getSizeTimeServer(),mem->getTimeStampServer(),session,false);
+        processingMsgQOSToOutput(mem->getSizeTimeServer(),mem->getTimeStampServer(),session,true);
         //session->setReady(true);
         clientes[j] = session;
     }
@@ -591,6 +591,20 @@ void UDPDispatcherSession::actClientInformation(bool data){
     }
 }
 
+
+void UDPDispatcherSession::actClientInformationPlayer(bool data){
+    for (int i=0; i<clientes.size(); i++){
+        ((UDPSession *)clientes[i])->setPlayerStateFlag(data);
+    }
+}
+
+void UDPDispatcherSession::actClientInformationActLevel(bool data){
+    for (int i=0; i<clientes.size(); i++){
+        ((UDPSession *)clientes[i])->setActiveElemStateFlag(data);
+    }
+}
+
+
 //PROCESS INPUT SESSION MSGS
 void UDPDispatcherSession::processSessions(EventMsg *msg){
 
@@ -662,18 +676,15 @@ void UDPDispatcherSession::processSessions(EventMsg *msg){
                 createNewActiveElement(msg);
                 session->Run(msg);
                 clientes[index]->setUDPSession(session);
-                actClientInformation(true);
+                actClientInformationActLevel(true);
 
-            }else{
+            }else if ((msg->getTypeMsg() == TRAMA_COMMAND) && (msg->getMovementType().movementID == TYPE_COMMAND_MOVEMENT)){
                 session->Run(msg);
                 clientes[index]->setUDPSession(session);
-
-                if ((msg->getTypeMsg() == TRAMA_COMMAND) && (msg->getMovementType().movementID == TYPE_COMMAND_MOVEMENT)){
-                    checkActClientForMovement++;
-                    if (checkActClientForMovement > 2){
-                        actClientInformation(true);
-                        checkActClientForMovement = 0;
-                    }
+                checkActClientForMovement++;
+                if (checkActClientForMovement > 1){
+                    actClientInformationPlayer(true);
+                    checkActClientForMovement = 0;
                 }
             }
     }
@@ -723,15 +734,18 @@ void UDPDispatcherSession::processInfoSession(int index){
       try{
 
           long serverTimeStamp = 0;
+          long firstSDLTick = SDL_GetTicks();
+
+          logger->debug("[UDPDispatcherSession::processInfoSession map [%d] session [%d]] DAEMON ACTIVE FOR OUTPUT FOR ActMap[%d]::Session[%d]::UserID[%d]",
+                        this->mapId,
+                        this->sessionId,
+                        this->mapId,
+                        this->sessionId,
+                        index
+                        );
+
           while(DONE){
              long data = SDL_GetTicks();
-             long limit = mem->getSizeTimeServer() * SIZE_REMOTE_ELEMS * clientes.size();
-             logger->debug("[UDPDispatcherSession::processInfoSession map [%d] session [%d]] TIME LIMIT FOR SENDING STATE OF [%d] ELEMENTS AND [%d] USERS is [%d]",
-                           this->mapId,
-                           this->sessionId,
-                           SIZE_REMOTE_ELEMS,
-                           clientes.size(),
-                           limit);
 
             UDPSession *session = nullptr;
 
@@ -743,8 +757,17 @@ void UDPDispatcherSession::processInfoSession(int index){
                             if (session->stateFlag()){
                                 sendInfoDataSession(session);
                                 ((UDPSession *)clientes[i])->setStateFlag(false);
+                            }else if (session->playerStateFlag()){
+                                sendInfoPlayerDataSession(session);
+                                ((UDPSession *)clientes[i])->setPlayerStateFlag(false);
+                            }else if (session->activeElemStateFlag()){
+                                sendInfoActElemDataSession(session);
+                                ((UDPSession *)clientes[i])->setActiveElemStateFlag(false);
+                            }else if ((SDL_GetTicks() - firstSDLTick) > 10000){
+                                sendInfoPlayerAllDataSession(session);
+                                firstSDLTick = SDL_GetTicks();
                             }
-                        }
+                        }//send info
                     }
                 }
             }
@@ -754,6 +777,192 @@ void UDPDispatcherSession::processInfoSession(int index){
         logger->debug("[UDPDispatcherSession::processInputMsg] get exception");
       }
 }
+
+
+
+//SEND ACT. STATE OF PLAYERS SESSION
+void UDPDispatcherSession::sendInfoPlayerDataSession(UDPSession *session){
+
+    int SIZE_WORLD = mem->getRemPlayerMap().size() + 20;
+
+    EventMsg **msgs = new EventMsg *[SIZE_WORLD];
+
+    for(int i=0; i<SIZE_WORLD; i++){
+        msgs[i] = new EventMsg();
+    }
+
+    int indexMsg = 0;
+
+
+    std::map<int, DynamicEntity *>RemPlayers = mem->getRemPlayerMap();
+
+    for(auto iterator = RemPlayers.begin(); iterator != RemPlayers.end(); iterator++){
+        int i = iterator->first;
+        DynamicEntity *dEntity = iterator->second;
+
+        msgs[indexMsg]->setMsg(sendWorldStateToClientSession(session, 1, indexMsg, dEntity));
+        indexMsg++;
+    }
+
+    for(int data = 0; data < indexMsg; data++){
+        sendMsgToOutputQueue(msgs[data]);
+    }
+
+}
+
+//SEND ACT. STATE OF PLAYERS SESSION
+void UDPDispatcherSession::sendInfoPlayerAllDataSession(UDPSession *session){
+
+    int SIZE_WORLD = mem->getEnemy_Lvl_1_Map().size() +
+                    mem->getEnemy_Lvl_2_Map().size() +
+                    mem->getEnemy_Lvl_3_Map().size() +
+                    mem->getDynElem_Lvl_1_Map().size() +
+                    mem->getDynElem_Lvl_2_Map().size() +
+                    mem->getDynElem_Lvl_3_Map().size() +
+                    mem->getRemPlayerMap().size() + 20;
+
+
+    EventMsg **msgs = new EventMsg *[SIZE_WORLD];
+
+    for(int i=0; i<SIZE_WORLD; i++){
+        msgs[i] = new EventMsg();
+    }
+
+    int indexMsg = 0;
+
+    if (session->getDynamicEntity()->getActLevel() == 1){
+        std::map<int, DynamicEntity *>EnemyLevel1 = mem->getEnemy_Lvl_1_Map();
+
+        for(auto iterator = EnemyLevel1.begin(); iterator != EnemyLevel1.end(); iterator++){
+            int i = iterator->first;
+            DynamicEntity *dEntity = iterator->second;
+            msgs[indexMsg]->setMsg(sendWorldStateToClientSession(session, 1, indexMsg, dEntity));
+            indexMsg++;
+        }
+
+        std::map<int, DynamicEntity *>DynOfLevel1 = mem->getDynElem_Lvl_1_Map();
+        for(auto iterator = DynOfLevel1.begin(); iterator != DynOfLevel1.end(); iterator++){
+            int i = iterator->first;
+            DynamicEntity *dEntity = iterator->second;
+            msgs[indexMsg]->setMsg(sendWorldStateToClientSession(session, 1, indexMsg, dEntity));
+            indexMsg++;
+        }
+
+    }
+
+    if (session->getDynamicEntity()->getActLevel() == 2){
+        std::map<int, DynamicEntity *>EnemyLevel2 = mem->getEnemy_Lvl_2_Map();
+
+        for(auto iterator = EnemyLevel2.begin(); iterator != EnemyLevel2.end(); iterator++){
+            int i = iterator->first;
+            DynamicEntity *dEntity = iterator->second;
+            msgs[indexMsg]->setMsg(sendWorldStateToClientSession(session, 1, indexMsg, dEntity));
+            indexMsg++;
+        }
+
+        std::map<int, DynamicEntity *>DynOfLevel2 = mem->getDynElem_Lvl_2_Map();
+
+        for(auto iterator = DynOfLevel2.begin(); iterator != DynOfLevel2.end(); iterator++){
+            int i = iterator->first;
+            DynamicEntity *dEntity = iterator->second;
+            msgs[indexMsg]->setMsg(sendWorldStateToClientSession(session, 1, indexMsg, dEntity));
+            indexMsg++;
+        }
+
+
+
+    }
+
+    if (session->getDynamicEntity()->getActLevel() == 3){
+        std::map<int, DynamicEntity *>EnemyLevel3 = mem->getEnemy_Lvl_3_Map();
+
+        for(auto iterator = EnemyLevel3.begin(); iterator != EnemyLevel3.end(); iterator++){
+            int i = iterator->first;
+            DynamicEntity *dEntity = iterator->second;
+            msgs[indexMsg]->setMsg(sendWorldStateToClientSession(session, 1, indexMsg, dEntity));
+            indexMsg++;
+        }
+
+        std::map<int, DynamicEntity *>DynOfLevel3 = mem->getDynElem_Lvl_3_Map();
+
+        for(auto iterator = DynOfLevel3.begin(); iterator != DynOfLevel3.end(); iterator++){
+            int i = iterator->first;
+            DynamicEntity *dEntity = iterator->second;
+            msgs[indexMsg]->setMsg(sendWorldStateToClientSession(session, 1, indexMsg, dEntity));
+            indexMsg++;
+        }
+    }
+
+
+    std::map<int, DynamicEntity *>RemPlayers = mem->getRemPlayerMap();
+
+    for(auto iterator = RemPlayers.begin(); iterator != RemPlayers.end(); iterator++){
+        int i = iterator->first;
+        DynamicEntity *dEntity = iterator->second;
+
+        msgs[indexMsg]->setMsg(sendWorldStateToClientSession(session, 1, indexMsg, dEntity));
+        indexMsg++;
+    }
+
+    for(int data = 0; data < indexMsg; data++){
+        sendMsgToOutputQueue(msgs[data]);
+    }
+}
+
+//SEND ACT. STATE OF ACT ELEMS SESSION
+void UDPDispatcherSession::sendInfoActElemDataSession(UDPSession *session){
+
+    int SIZE_WORLD = mem->getDynElem_Lvl_1_Map().size() +
+                     mem->getDynElem_Lvl_2_Map().size() +
+                     mem->getDynElem_Lvl_3_Map().size() + 20;
+
+    EventMsg **msgs = new EventMsg *[SIZE_WORLD];
+
+    for(int i=0; i<SIZE_WORLD; i++){
+        msgs[i] = new EventMsg();
+    }
+
+    int indexMsg = 0;
+
+
+    if (session->getDynamicEntity()->getActLevel() == 1){
+        std::map<int, DynamicEntity *>DynOfLevel1 = mem->getDynElem_Lvl_1_Map();
+        for(auto iterator = DynOfLevel1.begin(); iterator != DynOfLevel1.end(); iterator++){
+            int i = iterator->first;
+            DynamicEntity *dEntity = iterator->second;
+            msgs[indexMsg]->setMsg(sendWorldStateToClientSession(session, 1, indexMsg, dEntity));
+            indexMsg++;
+        }
+    }
+
+    if (session->getDynamicEntity()->getActLevel() == 2){
+        std::map<int, DynamicEntity *>DynOfLevel2 = mem->getDynElem_Lvl_2_Map();
+
+        for(auto iterator = DynOfLevel2.begin(); iterator != DynOfLevel2.end(); iterator++){
+            int i = iterator->first;
+            DynamicEntity *dEntity = iterator->second;
+            msgs[indexMsg]->setMsg(sendWorldStateToClientSession(session, 1, indexMsg, dEntity));
+            indexMsg++;
+        }
+    }
+
+    if (session->getDynamicEntity()->getActLevel() == 3){
+        std::map<int, DynamicEntity *>DynOfLevel3 = mem->getDynElem_Lvl_3_Map();
+
+        for(auto iterator = DynOfLevel3.begin(); iterator != DynOfLevel3.end(); iterator++){
+            int i = iterator->first;
+            DynamicEntity *dEntity = iterator->second;
+            msgs[indexMsg]->setMsg(sendWorldStateToClientSession(session, 1, indexMsg, dEntity));
+            indexMsg++;
+        }
+    }
+
+    for(int data = 0; data < indexMsg; data++){
+        sendMsgToOutputQueue(msgs[data]);
+    }
+}
+
+
 
 //SEND ACT. STATE OF THE WORLD
 void UDPDispatcherSession::sendInfoDataSession(UDPSession *session){

@@ -73,7 +73,7 @@ public:
 
     EventMsg *front(){
 
-        EventMsg *msg = NULL;
+        EventMsg *msg = new EventMsg();
 
         SDL_LockMutex( front_mutex);
         //pthread_mutex_lock(&front_mutex);
@@ -83,7 +83,9 @@ public:
             SDL_CondWait( cond, front_mutex);
         }
 
-        msg = _queue_.front();
+        EventMsg *msgQueue = _queue_.front();
+        msg->setMsg(msgQueue);
+
         //pthread_mutex_unlock(&front_mutex);
         SDL_UnlockMutex( front_mutex);
 

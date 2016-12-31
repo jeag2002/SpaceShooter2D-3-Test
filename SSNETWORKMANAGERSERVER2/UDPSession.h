@@ -27,6 +27,9 @@ public:
         playerID = _playerID;
         isReady = false;
         actStateFlag = true;
+        actPlayerStateFlag = true;
+        actActiveElemStateFlag = true;
+        dPlayerData = new DynamicEntity();
 
     };
 
@@ -63,6 +66,14 @@ public:
     bool stateFlag(){return actStateFlag;}
     void setStateFlag(bool _actStateFlag){actStateFlag = _actStateFlag;}
 
+    bool playerStateFlag(){return actPlayerStateFlag;}
+    void setPlayerStateFlag(bool _playerStateFlag){actPlayerStateFlag = _playerStateFlag;}
+
+    bool activeElemStateFlag(){return actActiveElemStateFlag;}
+    void setActiveElemStateFlag(bool _activeElemStateFlag){actActiveElemStateFlag = _activeElemStateFlag;}
+
+    DynamicEntity *getDynamicEntity(){return dPlayerData;}
+
     void Run(EventMsg *msg);
 
     ~UDPSession(){
@@ -74,6 +85,10 @@ public:
         timeQOS = 0;
         isReady = false;
         actStateFlag = true;
+        actPlayerStateFlag = true;
+        actActiveElemStateFlag = true;
+
+        delete dPlayerData;
     };
 
 
@@ -89,9 +104,12 @@ int port;
 long timeQOS;
 bool isReady;
 bool actStateFlag;
+bool actPlayerStateFlag;
+bool actActiveElemStateFlag;
 
 LogEngine *logger;
 MemManager *mem;
+DynamicEntity *dPlayerData;
 
 
 };

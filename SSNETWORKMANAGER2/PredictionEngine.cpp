@@ -21,10 +21,12 @@ void PredictionEngine::processPrediction(int index){
 
 
 void PredictionEngine::processPredictionIter(){
-    while(true){
+    while(!getDONE()){
        processPrediction();
-       SDL_Delay(750);
+       if (!getDONE()){SDL_Delay(750);}
     }
+    logger->debug("[PREDICTIONENGINE::PROCESSPREDICTIONITER::CLIENT] CLOSE PREDICTION ITERATOR");
+
 };
 
 

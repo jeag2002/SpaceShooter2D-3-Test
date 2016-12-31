@@ -11,6 +11,7 @@ public:
     PredictionEngine(LogEngine *_logger, MemManager *_mem, CollisionEntities *_coll, AnimationEntities *_aEnt, IAEntities *_iAEnt){
         logger = _logger;
         mem = _mem;
+        DONE = false;
         mTask = new TaskManager(_logger,_mem,_coll,_aEnt, _iAEnt);
     }
 
@@ -18,6 +19,9 @@ public:
     void processPrediction(int level);
     void processPrediction();
     void processPredictionIter();
+
+    bool getDONE(){return DONE;}
+    void setDONE(bool _DONE){DONE = _DONE;}
 
 private:
 
@@ -27,6 +31,7 @@ private:
     AnimationEntities *aEnt;
     IAEntities *iAEnt;
     TaskManager *mTask;
+    bool DONE;
 
 };
 

@@ -162,7 +162,7 @@ void DynamicPlayer::update(EventMsg *msg, long timeMark){
             ////////////////////////
         }else{
 
-            if (sendToServer < 10){
+            if (sendToServer < 8){
                 sendToServer++;
             }else{
 

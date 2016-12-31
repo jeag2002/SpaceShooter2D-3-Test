@@ -5,18 +5,22 @@ void UDPDispatcherSessionManager::activeSessions(){
 
     //SESSION-INCOMING MESSAGES
     hebra_1 = SDL_CreateThread(threadFunction,"Session_1",session_1);
-    hebra_2 = SDL_CreateThread(threadFunction,"Session_2",session_2);
+    //hebra_2 = SDL_CreateThread(threadFunction,"Session_2",session_2);
 
     //SESSION-OUTPUT MESSAGES
     session_t123 = SDL_CreateThread(threadFunctionSession23,"Session_1_t23",session_1);
     session_t124 = SDL_CreateThread(threadFunctionSession24,"Session_1_t24",session_1);
+    session_t125 = SDL_CreateThread(threadFunctionSession25,"Session_1_t25",session_1);
+    session_t126 = SDL_CreateThread(threadFunctionSession26,"Session_1_t26",session_1);
 
-    session_t223 = SDL_CreateThread(threadFunctionSession23,"Session_2_t23",session_2);
-    session_t224 = SDL_CreateThread(threadFunctionSession24,"Session_2_t24",session_2);
+    //session_t223 = SDL_CreateThread(threadFunctionSession23,"Session_2_t23",session_2);
+    //session_t224 = SDL_CreateThread(threadFunctionSession24,"Session_2_t24",session_2);
+    //session_t225 = SDL_CreateThread(threadFunctionSession25,"Session_2_t25",session_2);
+    //session_t226 = SDL_CreateThread(threadFunctionSession25,"Session_2_t26",session_2);
 
     //MEMORY MANAGEMENT/PREDICTION ENGINE
     mem_1 = SDL_CreateThread(threadFunctionMem,"Mem_1",session_1);
-    mem_2 = SDL_CreateThread(threadFunctionMem,"Mem_2",session_2);
+    //mem_2 = SDL_CreateThread(threadFunctionMem,"Mem_2",session_2);
 
 
     logger->info("[UDPDispatcherSessionManager::activeSession] --> SESSIONS CREATED");
@@ -251,14 +255,15 @@ EventMsg *UDPDispatcherSessionManager::processQueryActiveSessions(EventMsg *qryL
     lSAT.num_player_ava_1_1 = session_1->getNumClients();
     lSAT.num_player_max_1_1 = session_1->getMaxClients();
 
-    /*
     lSAT.session_1_2 = 0;
     lSAT.num_player_ava_1_2 = 0;
     lSAT.num_player_max_1_2 = 0;
-    */
+
+    /*
     lSAT.session_1_2 = session_2->getSessionId();
     lSAT.num_player_ava_1_2 = session_2->getNumClients();
     lSAT.num_player_max_1_2 = session_2->getMaxClients();
+    */
 
     lSAT.map_2_id = 0;
     lSAT.session_2_1 = 0;

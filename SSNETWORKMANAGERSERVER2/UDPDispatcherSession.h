@@ -113,11 +113,16 @@ public:
 
     void sendInfoDataSession(int playerID, EventMsg *msg);
     void sendInfoDataSession(UDPSession *session);
+    void sendInfoPlayerDataSession(UDPSession *session);
+    void sendInfoActElemDataSession(UDPSession *session);
+    void sendInfoPlayerAllDataSession(UDPSession *session);
 
     EventMsg *sendWorldStateToClient(EventMsg *msg, int more, int indexServData, DynamicEntity *dEntity);
     EventMsg *sendWorldStateToClientSession(UDPSession *session, int more, int indexServData, DynamicEntity *dEntity);
 
     void actClientInformation(bool data);
+    void actClientInformationPlayer(bool data);
+    void actClientInformationActLevel(bool data);
     ///////////////////////////////////////////////////
 
     //SEND QUIT
@@ -145,6 +150,9 @@ public:
     ////////////////////////////////////////////////////
     void processPredictionEngine(){
         long serverTimeStamp = 0;
+
+        logger->debug("[UDPDispatcherSession::processPredictionEngine Map[%d] Session[%d]] PREDICTION ENGINE ACTIVATED",this->mapId,this->sessionId);
+
         while(true){
             pEngine->processPrediction(serverTimeStamp);
             pEngine->processPhoto();

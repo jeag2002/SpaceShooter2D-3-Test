@@ -79,7 +79,6 @@ std::string remoteHostStr(remoteHost);
 
 int threadFunction(void* ctx){
     QueueManager *qM = (QueueManager*)ctx;
-    //qM->runRemoteData();
     qM->remoteRemoteProcessData();
     return 0;
 };
@@ -540,6 +539,7 @@ void getEventSDL(playerDataType pDT){
                         sub->notify(mem->getTimeStampServer());
 
                         qMem->setDONE(true);
+                        pEngine->setDONE(true);
                     }
 
                     break;
@@ -553,7 +553,8 @@ void getEventSDL(playerDataType pDT){
                         lATPlayer.idPlayer = ((DynamicPlayer *)sub->getObserver(mem->getPlayerIndex()-1))->getIndexPlayer();
                         //mem->getActPlayer(mem->getPlayerIndex())->getIndexPlayer();
                         lATPlayer.typeMovement = LEFT;
-                        lATPlayer._inc = 2.0;
+                        //lATPlayer._inc = 2.0;
+                        lATPlayer._inc = 0.02 * float(64) * (float(mem->getSizeTimeServer())/1000.0f);
                         lATPlayer._x = 0;
                         lATPlayer._y = 0;
                         lATPlayer.shot = 0;
@@ -572,7 +573,8 @@ void getEventSDL(playerDataType pDT){
                         lATPlayer.idPlayer = ((DynamicPlayer *)sub->getObserver(mem->getPlayerIndex()-1))->getIndexPlayer();
                         //mem->getActPlayer(mem->getPlayerIndex())->getIndexPlayer();
                         lATPlayer.typeMovement = RIGHT;
-                        lATPlayer._inc = 2.0;
+                        //lATPlayer._inc = 2.0;
+                        lATPlayer._inc = 0.02 * float(64) * (float(mem->getSizeTimeServer())/1000.0f);
                         lATPlayer._x = 0;
                         lATPlayer._y = 0;
                         lATPlayer._velocity = float(64) * (float(SDL_GetTicks()-dX)/1000.0f);
@@ -591,7 +593,8 @@ void getEventSDL(playerDataType pDT){
                         lATPlayer.idPlayer = ((DynamicPlayer *)sub->getObserver(mem->getPlayerIndex()-1))->getIndexPlayer();
                         //mem->getActPlayer(mem->getPlayerIndex())->getIndexPlayer();
                         lATPlayer.typeMovement = UP;
-                        lATPlayer._inc = 2.0;
+                        //lATPlayer._inc = 2.0;
+                        lATPlayer._inc = 0.02 * float(64) * (float(mem->getSizeTimeServer())/1000.0f);
                         lATPlayer._x = 0;
                         lATPlayer._y = 0;
                         lATPlayer._velocity = float(64) * (float(SDL_GetTicks()-dX)/1000.0f);
@@ -610,7 +613,8 @@ void getEventSDL(playerDataType pDT){
                         lATPlayer.idPlayer = ((DynamicPlayer *)sub->getObserver(mem->getPlayerIndex()-1))->getIndexPlayer();
                         //mem->getActPlayer(mem->getPlayerIndex())->getIndexPlayer();
                         lATPlayer.typeMovement = DOWN;
-                        lATPlayer._inc = 2.0;
+                        //lATPlayer._inc = 2.0;
+                        lATPlayer._inc = 0.02 * float(64) * (float(mem->getSizeTimeServer())/1000.0f);
                         lATPlayer._x = 0;
                         lATPlayer._y = 0;
                         lATPlayer._velocity = float(64) * (float(SDL_GetTicks()-dX)/1000.0f);;
@@ -747,6 +751,7 @@ void getEventSDL(playerDataType pDT){
                             sub->notify(mem->getTimeStampServer());
 
                             qMem->setDONE(true);
+                            pEngine->setDONE(true);
 
                             logger->warn("[MAIN -  EVENT_MSG] EXIT!!!! SSNETWORKMANAGER");
                         }else{
